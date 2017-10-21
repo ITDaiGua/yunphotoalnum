@@ -1,0 +1,103 @@
+@charset "utf-8";
+#headMenu{
+	width:100%;
+	height:30px;
+	background-color:#ccc;
+}
+#allContent{
+	position:relative;
+	width:1000px;
+	height:auto;
+	min-height:768px;
+	left:50%;
+	margin-left:-500px;
+	/*background-color:#ff0000;*/
+}
+#menuDiv{
+	white-space:nowrap;
+	width:1000px;
+	height:80px;
+	/*background-color:#ff0000;*/
+	font-size:0;
+	border-bottom:1px solid #ccc;
+}
+#logo{
+	width:150px;
+	height:80px;
+	display:inline-block;
+	vertical-align:middle;
+}
+#menu{
+	width:480px;
+	display:inline-block;
+	vertical-align:middle;
+}
+#menu ul{
+	margin:0;
+	padding:0;
+	list-style:none;
+	font-size:0;
+}
+#menu ul li{
+	width:120px;
+	height:40px;
+	margin:0;
+	padding:0;
+	display:inline-block;
+	font:20px "微软雅黑";
+	text-align:center;
+	line-height:40px;
+	/*color:#01d2ff;*/
+	color:#00a2ff;
+}
+#menu ul li:hover{
+	background-color:#00a2ff;
+	color:#fff;
+	cursor:pointer;
+	border-radius:40px;
+}
+#seachForm{
+	width:206px;
+	height:25px;
+	display:inline-block;
+	vertical-align:middle;
+	border-radius:25px;
+	border:1px solid #7f7f7f;
+	padding-left:10px;
+	margin-left:80px;
+}
+#seach{
+	width:180px;
+	height:25px;
+	display:inline-block;
+	border:0;
+	outline:none;
+}
+#seachbtt{
+	background-color:transparent;
+	border:0;
+	outline:none;
+	cursor:pointer;
+}
+#endInfo{
+	width:100%;
+	height:auto;
+	min-height:62px;
+	padding:10px;
+	text-align:center;
+	font-size:16px;
+	line-height:25px;
+	vertical-align:middle;
+	background-color:#ccc;
+}
+#endInfo a{
+	text-decoration:none;
+	color:#3b3b3b;
+}
+#endInfo a:hover{
+	text-decoration:underline;
+	color:#ff0000;
+}
+#beianbgs{
+	vertical-align:middle;
+}

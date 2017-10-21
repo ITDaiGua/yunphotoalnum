@@ -1,0 +1,24 @@
+@charset "utf-8";
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	margin:0 auto;
+	padding:0;
+	overflow-x:hidden;
+	color:#3b3b3b;
+}
+@font-face {
+  font-family: 'iconfont';
+  src: url('../iconfont/iconfont.eot');
+  src: url('../iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+  url('../iconfont/iconfont.woff') format('woff'),
+  url('../iconfont/iconfont.ttf') format('truetype'),
+  url('../iconfont/iconfont.svg#iconfont') format('svg');
+}
+.iconfont{
+	font-family:'iconfont';
+	font-size:16px;
+	color:#7f7f7f;
+}
