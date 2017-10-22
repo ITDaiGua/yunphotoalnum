@@ -13,7 +13,6 @@
 	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/index.js" charset="UTF-8"></script>
 </head>
 <body>
-	<div class="taslctLayer"></div>
 	<div id="headMenu"></div>
 	<div id="allContent">
 		<div id="menuDiv">
@@ -24,12 +23,10 @@
 			</div>
 			<div id="menu">
 				<ul>
-					<a href="/YunPhotoAlbum/">
-						<li <?php echo ($styleLi1); ?>>图片广场</li>
-					</a>
-					<li <?php echo ($styleLi2); ?>>我的相册</li>
-					<li <?php echo ($styleLi3); ?>>我的分享</li>
-					<li <?php echo ($styleLi4); ?>>我的收藏</li>
+					<li>图片广场</li>
+					<li>我的相册</li>
+					<li>我的分享</li>
+					<li>我的收藏</li>
 				</ul>
 			</div>
 			<form name="seachForm" action="" method="post" id="seachForm">

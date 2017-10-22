@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="__PUBLIC__/JS/index.js" charset="UTF-8"></script>
 </head>
 <body>
+	<div class="taslctLayer"></div>
 	<div id="headMenu"></div>
 	<div id="allContent">
 		<div id="menuDiv">
@@ -23,14 +24,16 @@
 			</div>
 			<div id="menu">
 				<ul>
-					<li>我的相册</li>
-					<li>我的分享</li>
-					<li>我的收藏</li>
-					<li>图片广场</li>
+					<a href="/YunPhotoAlbum/">
+						<li <{$styleLi1}>>图片广场</li>
+					</a>
+					<li <{$styleLi2}>>我的相册</li>
+					<li <{$styleLi3}>>我的分享</li>
+					<li <{$styleLi4}>>我的收藏</li>
 				</ul>
 			</div>
 			<form name="seachForm" action="" method="post" id="seachForm">
-				<input type="text" name="seach" id="seach" placeholder="搜索我的图片">
+				<input type="text" name="seach" id="seach" placeholder="搜索我的图片" autocomplete="off">
 				<input type="submit" class="iconfont" value="&#xe61e;" id="seachbtt">
 			</form>
 		</div>

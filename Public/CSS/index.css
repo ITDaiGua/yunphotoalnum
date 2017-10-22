@@ -49,6 +49,7 @@
 	line-height:40px;
 	/*color:#01d2ff;*/
 	color:#00a2ff;
+	border-radius:40px;
 }
 #menu ul li:hover{
 	background-color:#00a2ff;
