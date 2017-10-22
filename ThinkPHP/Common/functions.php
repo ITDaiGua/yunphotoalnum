@@ -1456,3 +1456,28 @@ function think_filter(&$value){
         $value .= ' ';
     }
 }
+function send_mail($to,$title,$content){
+    Vendor('PHPMailer.PHPMailerAutoload');
+    $mail = new PHPMailer($to,$title,$content);
+    //$mail->SMTPDebug = 1;
+    $mail->isSMTP();
+    $mail->SMTPAuth=true;
+    $mail->Host = 'smtp.qq.com';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+    $mail->CharSet = 'UTF-8';
+    $mail->FromName = 'YunPhotoAibum';
+    $mail->Username ='1571190644@qq.com';
+    $mail->Password = 'nniheojkxvxfjfea';
+    $mail->From = '1571190644@qq.com';
+    $mail->isHTML(true); 
+    $mail->addAddress($to,'YunPhotoAibum用户');
+    $mail->Subject = $title;
+    $mail->Body = $content;
+    $status = $mail->send();
+    if($status) {
+        return true;
+    }else{
+        return false;
+    }
+}
