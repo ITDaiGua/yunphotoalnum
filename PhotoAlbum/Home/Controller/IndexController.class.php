@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
-use Home\Controller\CommonController;
-class IndexController extends CommonController{
+use Home\Controller\CommonOneController;
+class IndexController extends CommonOneController{
     public function index(){
        $this->assign("title","首页");
        $styleLi1="style='background-color:#00a2ff;color:#fff;'";

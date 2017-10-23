@@ -12459,3 +12459,81 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
 INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
 
+[ 2017-10-23T19:06:22+08:00 ] ::1 /YunPhotoAlbum/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: DESCRIBE index_select [ RunTime:0.004000s ]
+ERR: 1146:La table 'yunphotoalbum.index_select' n'existe pas
+ [ SQL语句 ] : DESCRIBE index_select
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: styleLi2 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 34 行.
+NOTIC: [8] Undefined variable: styleLi3 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 35 行.
+NOTIC: [8] Undefined variable: styleLi4 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 36 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010000s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010000s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-10-23T19:06:33+08:00 ] ::1 /YunPhotoAlbum/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: DESCRIBE index_select [ RunTime:0.006000s ]
+ERR: 1146:La table 'yunphotoalbum.index_select' n'existe pas
+ [ SQL语句 ] : DESCRIBE index_select
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: styleLi2 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 34 行.
+NOTIC: [8] Undefined variable: styleLi3 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 35 行.
+NOTIC: [8] Undefined variable: styleLi4 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 36 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003000s ]
+
+[ 2017-10-23T19:06:51+08:00 ] ::1 /YunPhotoAlbum/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: DESCRIBE index_select [ RunTime:0.005001s ]
+ERR: 1146:La table 'yunphotoalbum.index_select' n'existe pas
+ [ SQL语句 ] : DESCRIBE index_select
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: styleLi2 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 34 行.
+NOTIC: [8] Undefined variable: styleLi3 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 35 行.
+NOTIC: [8] Undefined variable: styleLi4 E:\phpwebsite\YunPhotoAlbum\PhotoAlbum\Runtime\Cache\Home\19669fc78a6b599682e4d00467933d51.php 第 36 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.042002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.044002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.025002s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.026002s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
