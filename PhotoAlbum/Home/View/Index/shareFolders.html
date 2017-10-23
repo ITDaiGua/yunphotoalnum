@@ -1,4 +1,32 @@
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/CSS/shareFolders.css">
 <div class="allContent">
-	
+	<div class="pcTittle">图片分类</div>
+	<div class="photoClass">
+		<span class="pcContent" style="font-weight:bold;">
+			<a href=''>综合</a>
+		</span>
+	</div>
+	<script type="text/javascript">
+		var photoClassJson;
+		var classPan="";
+		$.getJSON("__PUBLIC__/Json/photoClassJson.json",function(data){
+			photoClassJson=data;
+			$.each(data,function(photoClass,childrenPC){
+				classPan+="<span class='pcContent'>";
+				classPan+="<a href=''>";
+				classPan+=photoClass+"</a></span>";
+			});
+			$(".photoClass").append(classPan);
+		}).fail(function(){
+			var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>&#xe691;</span>发生错误</div>";
+			$('body').prepend(_fail);
+			setTimeout(function(){
+				$(".errorORwarn").remove();
+			},1500);
+		});
+	</script>
+	<foreach name="selRst" key="selKey" item="selVal" >
+
+	</foreach>
 </div>
 

@@ -34,3 +34,23 @@ body{
 	z-index:100;
 	display:none;
 }
+.errorORwarn{
+	position:fixed;
+	width:200px;
+	height:100px;
+	left:50%;
+	top:25%;
+	margin-left:-100px;
+	z-index:101;
+	text-align:center;
+	border-radius:5px;
+	border:1px solid #ccc;
+	line-height:100px;
+	box-shadow:0 0 3px #ccc;
+	background-color:#e5e5e5;
+}
+.errorORwarnImg{
+	font-size:50px;
+	color:#FFD700;
+	vertical-align:middle;
+}

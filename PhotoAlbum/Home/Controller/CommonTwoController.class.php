@@ -5,5 +5,8 @@ use Think\Controller;
 		public function _initialize(){
 
 		}
+		public function _empty($name){
+			header("Location:/YunPhotoAlbum/");
+		}
 	}
 ?>
