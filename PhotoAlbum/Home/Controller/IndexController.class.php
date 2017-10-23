@@ -6,7 +6,8 @@ class IndexController extends CommonController{
        $this->assign("title","首页");
        $styleLi1="style='background-color:#00a2ff;color:#fff;'";
        $this->assign("styleLi1",$styleLi1);
-       $dd=D('IndexSelect');
-       $this->display();
+       $this->assign("viewType","shareFolders");
+       $dd=M("IndexSelect");
+       $this->display('/CommonView/Index');
     }
 }

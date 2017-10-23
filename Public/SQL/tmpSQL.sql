@@ -44,10 +44,11 @@ create table if not exists `photo`(
 	`pid` varchar(16) not null,	#图片id
 	`PAId` varchar(17) not null, #图片所属文件夹id
 	`PName` varchar(30) not null, #图片名
+	`PNameft` varchar(60) not null,#全文索引分词
 	`PLink` varchar(100) not null, #图片链接
 	`status` int not null default 0, #0:正常、1：被删除
 	primary key `p`(`uid`,`pid`,`PAId`)
-)DEFAULT CHARSET=UTF8;
+)ENGINE=MyISAM DEFAULT CHARSET=UTF8;
 #==============================================
 use YunPhotoAlbum;
 create table if not exists `sharePA`(
@@ -96,10 +97,10 @@ use YunPhotoAlbum;
 create table if not exists `collection`(
 	`cltId` varchar(18) not null primary key, #收藏的id
 	`uid` varchar(16) not null, #收藏的用户id
-	`sLink` varchar(30) not null, #收藏的共享文件夹的连接
+	`sid` varchar(30) not null, #收藏的共享文件夹的id
 	`cltTime` varchar(11) not null,#收藏的时间
 	`status` int not null default 0,#0：正常、1：取消收藏
-	unique key `clt`(`uid`,`sid`,`sLink`)
+	unique key `clt`(`uid`,`sid`)
 )DEFAULT CHARSET=UTF8;
 #==============================================
 create database YunCompany; #云公司内部数据库
@@ -117,3 +118,4 @@ create table if not exists `staff`(
 	`status` int not null #0：正常、1：离职
 )DEFAULT CHARSET=UTF8;
 #=======================================
+use YunCompany;
