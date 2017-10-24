@@ -55,8 +55,8 @@
 				<li <{$init.styleLi4}>>我的收藏</li>
 			</ul>
 		</div>
-		<form name="seachForm" action="" method="post" id="seachForm">
-			<input type="text" name="seach" id="seach" placeholder="搜索我的图片" autocomplete="off">
+		<form name="seachForm" action="<{$init.searchURL}>" method="post" id="seachForm">
+			<input type="text" name="condition" id="seach" placeholder="<{$init.placeholder}>" autocomplete="off">
 			<input type="submit" class="iconfont" value="&#xe61e;" id="seachbtt">
 		</form>
 	</div>

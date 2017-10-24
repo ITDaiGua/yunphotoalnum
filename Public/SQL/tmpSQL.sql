@@ -54,17 +54,37 @@ use YunPhotoAlbum;
 create table if not exists `sharePA`(
 	`sid` varchar(16) not null primary key, #共享文件夹id
 	`uid` varchar(16) not null, #所有者id
-	`PAId` varchar(17) not null, #所属文件夹id
+	`authorName` varchar(30) not null,#共享作者的用户名
+	#`PAId` varchar(17) not null, #所属文件夹id
 	`sName` varchar(30) not null, #共享文件夹名
 	`profile` varchar(200) not null, #共享文件夹简介
-	`class` varchar(10) not null, #共享文件夹所属分类
+	`sclass` varchar(10) not null, #共享文件夹所属分类
 	`skey` varchar(50) not null, #共享文件夹的关键词
 	`lookSum` int unsigned not null default 0, #查看人数
 	`likeSum` int unsigned not null default 0, #点赞人数
-	`status` int not null default 0, #0：正常、1：用户取消共享或删除文件、2：违规删除
-	unique key `s`(`uid`,`PAId`),
-	fulltext key `sft`(`class`,`skey`)
+	`shareTime` varchar(11) not null, #共享的时间
+	`status` int not null default 0 #0：正常、1：用户取消共享或删除文件、2：违规删除
+	/*unique key `s`(`uid`,`PAId`),*/
+	#FULLTEXT(`class`,`skey`)
 )ENGINE=MyISAM DEFAULT CHARSET=UTF8;
+ALTER TABLE `sharePA` ADD FULLTEXT `sft`(`sclass`,`skey`);
+select * from sharePA where match(class,skey) against('风景' IN BOOLEAN MODE);
+mysql -uroot -p
+#==============================================
+insert into sharePA values('s123456','u789123',
+	'莫白柏','这是文件夹','这是我的旅游记录','旅游','风景;热情',0,0,'1234567899',0)
+#=============================================
+insert into sharePA values('s123487','u7871123',
+	'刘焕子','2017.8.9北京','北京旅游纪念相册，图修得不好，请见谅','旅游','旅游、自然',0,0,'1508847812',0)
+#=================================================
+use YunPhotoAlbum;
+create table if not exists `sharePhoto`(
+	`sid` varchar(16) not null,	#共享文件夹的id
+	`pid` varchar(16) not null, #共享图片的id
+	`spLink` varchar(100) not null, #共享图片的链接
+	`status` int default 0, #0：正常、1：被删除
+	primary key `sapt`(`sid`,`pid`)
+)DEFAULT CHARSET=UTF8;
 #==============================================
 use YunPhotoAlbum;
 create table if not exists `SPATipOff`(
@@ -119,3 +139,8 @@ create table if not exists `staff`(
 )DEFAULT CHARSET=UTF8;
 #=======================================
 use YunCompany;
+
+
+
+#=======================================
+select sid,sName,profile,class,shareTime from sharePA where status=0  order by shareTime desc;

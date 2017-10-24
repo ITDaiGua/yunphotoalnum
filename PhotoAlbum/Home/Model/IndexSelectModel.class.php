@@ -7,5 +7,8 @@ use Think\Model;
 		protected $_map=array(
 
 		);
+		public function index(){
+			
+		}
 	}
 ?>

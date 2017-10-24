@@ -3,7 +3,7 @@
 	<div class="pcTittle">图片分类</div>
 	<div class="photoClass">
 		<span class="pcContent" style="font-weight:bold;">
-			<a href=''>综合</a>
+			<a href='/YunPhotoAlbum/'>综合</a>
 		</span>
 	</div>
 	<script type="text/javascript">
@@ -13,7 +13,7 @@
 			photoClassJson=data;
 			$.each(data,function(photoClass,childrenPC){
 				classPan+="<span class='pcContent'>";
-				classPan+="<a href=''>";
+				classPan+="<a href='/YunPhotoAlbum/Index/index/page/1/condition/"+photoClass+"'>";
 				classPan+=photoClass+"</a></span>";
 			});
 			$(".photoClass").append(classPan);
@@ -25,8 +25,54 @@
 			},1500);
 		});
 	</script>
-	<foreach name="selRst" key="selKey" item="selVal" >
-
-	</foreach>
+	<if condition="$selRst neq null">
+		<foreach name="selRst" key="selKey" item="selVal" >
+			<a href="" class="theA">
+				<div class="shareAlbum">
+					<div class="SAImg">
+						<img src="__PUBLIC__/SysImg/folderImg.png">
+					</div>
+					<div class="SPtxt">
+						<div class="SANmeAdTme">
+							<span class="sName"><{$selVal['sName']}></span>
+							<span class="titleCss1"><{$selVal['shareTime']}></span>
+						</div>
+						<div class="SAProfile">
+							<span class="titleCss2">简介：</span>
+							<span class="profile"><{$selVal['profile']}></span>
+						</div>
+						<div class="SAClsAndTme">
+							<span class="titleCss2">所属分类：</span>
+							<{$selVal['sclass']}>	
+						</div>
+					</div>
+				</div>
+			</a>
+		</foreach>
+		<script type="text/javascript">
+			$.each($(".sName"),function(){
+				var _this=$(this);
+				ellipsis(_this,9);
+			});
+			$.each($(".profile"),function(){
+				var _this=$(this);
+				ellipsis(_this,30);
+			});
+			function ellipsis(_this,maxLen){
+				var txt=$.trim(_this.text());
+				var len=txt.length;
+				var tmpTxt="";
+				if(len>maxLen){
+					tmpTxt+=txt.substring(0,maxLen);
+					tmpTxt+="...";
+					_this.text(tmpTxt);
+					_this.attr("title",txt);
+				}
+			}
+		</script>
+	<else />
+		<div class="nothing"></div>
+	</if>
+</div>
 </div>
 

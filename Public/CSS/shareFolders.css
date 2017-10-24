@@ -24,6 +24,7 @@
 	display:inline-block;
 }
 .pcContent a{
+	color:#3b3b3b;
 	text-decoration:none;
 }
 .pcContent a:visited{
@@ -35,4 +36,82 @@
 }
 .pcContent a:active{
 	color:#ff0000;
+}
+.theA{
+	display:inline-block;
+	width:498px;
+	height:128px;
+	color:#3b3b3b;
+	text-decoration:none;
+}
+.theA:hover{
+	background-color:#C6E2FF;
+	border:1px solid #ccc;
+	/*box-shadow:0 0 5px #C6E2FF;*/
+}
+.shareAlbum{
+	width:498px;
+	height:128px;
+	border:1px solid transparent;
+	vertical-align:middle;
+}
+.SAImg{
+	display:inline-block;
+	width:128px;
+	height:128px;
+	vertical-align:middle;
+}
+.SAImg img{
+	width:128px;
+	height:128px;
+}
+.SPtxt{
+	width:358px;
+	height:auto;
+	display:inline-block;
+	vertical-align:middle;
+	padding:2px;
+}
+.SANmeAdTme{
+	width:358px;
+	height:30px;
+	line-height:30px;
+	text-align:left;
+	font-weight:bold;
+}
+.sName:hover{
+	color:#ff0000;
+	text-decoration:underline;
+}
+.titleCss1{
+	font-weight:normal;
+	color:#5E5E5E;
+	margin-left:10px;
+	font-size:13px;	
+}
+.SAProfile{
+	width:358px;
+	height:auto;
+	min-height:30px;
+	max-height:60px;
+	font-size:14px;
+}
+.titleCss2{
+	color:#121212;
+	font-family:"黑体","宋体";
+	font-size:18px;
+}
+.SAClsAndTme{
+	width:358px;
+	height:30px;
+	line-height:30px;
+	display:inline-block;
+}
+.nothing{
+	position:relative;
+	width:400px;
+	height:300px;
+	left:50%;
+	margin-left:-200px;
+	background-image:url(../SysImg/nothing.png);
 }

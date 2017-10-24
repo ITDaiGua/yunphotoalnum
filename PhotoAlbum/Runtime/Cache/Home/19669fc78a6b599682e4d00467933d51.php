@@ -53,8 +53,8 @@
 				<li <?php echo ($init["styleLi4"]); ?>>我的收藏</li>
 			</ul>
 		</div>
-		<form name="seachForm" action="" method="post" id="seachForm">
-			<input type="text" name="seach" id="seach" placeholder="搜索我的图片" autocomplete="off">
+		<form name="seachForm" action="<?php echo ($init["searchURL"]); ?>" method="post" id="seachForm">
+			<input type="text" name="condition" id="seach" placeholder="<?php echo ($init["placeholder"]); ?>" autocomplete="off">
 			<input type="submit" class="iconfont" value="&#xe61e;" id="seachbtt">
 		</form>
 	</div>
@@ -63,7 +63,7 @@
 	<div class="pcTittle">图片分类</div>
 	<div class="photoClass">
 		<span class="pcContent" style="font-weight:bold;">
-			<a href=''>综合</a>
+			<a href='/YunPhotoAlbum/'>综合</a>
 		</span>
 	</div>
 	<script type="text/javascript">
@@ -73,7 +73,7 @@
 			photoClassJson=data;
 			$.each(data,function(photoClass,childrenPC){
 				classPan+="<span class='pcContent'>";
-				classPan+="<a href=''>";
+				classPan+="<a href='/YunPhotoAlbum/Index/index/page/1/condition/"+photoClass+"'>";
 				classPan+=photoClass+"</a></span>";
 			});
 			$(".photoClass").append(classPan);
@@ -85,7 +85,51 @@
 			},1500);
 		});
 	</script>
-	<?php if(is_array($selRst)): foreach($selRst as $selKey=>$selVal): endforeach; endif; ?>
+	<?php if($selRst != null): if(is_array($selRst)): foreach($selRst as $selKey=>$selVal): ?><a href="" class="theA">
+				<div class="shareAlbum">
+					<div class="SAImg">
+						<img src="/YunPhotoAlbum/Public/SysImg/folderImg.png">
+					</div>
+					<div class="SPtxt">
+						<div class="SANmeAdTme">
+							<span class="sName"><?php echo ($selVal['sName']); ?></span>
+							<span class="titleCss1"><?php echo ($selVal['shareTime']); ?></span>
+						</div>
+						<div class="SAProfile">
+							<span class="titleCss2">简介：</span>
+							<span class="profile"><?php echo ($selVal['profile']); ?></span>
+						</div>
+						<div class="SAClsAndTme">
+							<span class="titleCss2">所属分类：</span>
+							<?php echo ($selVal['sclass']); ?>	
+						</div>
+					</div>
+				</div>
+			</a><?php endforeach; endif; ?>
+		<script type="text/javascript">
+			$.each($(".sName"),function(){
+				var _this=$(this);
+				ellipsis(_this,9);
+			});
+			$.each($(".profile"),function(){
+				var _this=$(this);
+				ellipsis(_this,30);
+			});
+			function ellipsis(_this,maxLen){
+				var txt=$.trim(_this.text());
+				var len=txt.length;
+				var tmpTxt="";
+				if(len>maxLen){
+					tmpTxt+=txt.substring(0,maxLen);
+					tmpTxt+="...";
+					_this.text(tmpTxt);
+					_this.attr("title",txt);
+				}
+			}
+		</script>
+	<?php else: ?>
+		<div class="nothing"></div><?php endif; ?>
+</div>
 </div><?php endif; ?>
 	<div id="endInfo">
 		增值电信业务经营许可证:&nbsp;<a href="javascript:void(0)">粤B2-20110446</a>&nbsp;网络文化经营许可证:&nbsp;<a href="javascript:void(0)">粤网文[2015]0295-065号</a>&nbsp;<a href="javascript:void(0)">12318举报</a><br>互联网药品信息服务资质证书编号:&nbsp;<a href="javascript:void(0)">粤-（经营性）-2017-0005</a>&nbsp;&nbsp;<img src="/YunPhotoAlbum/Public/SysImg/beianbgs.png" width="20" height="20" id="beianbgs">粤公网安备&nbsp;<a href="javascript:void(0)">33010002000120号</a>
