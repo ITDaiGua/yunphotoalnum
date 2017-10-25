@@ -2,6 +2,10 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">    
+	<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache">    
+	<meta HTTP-EQUIV="Expires" CONTENT="0"> 
 	<title><?php echo ($init["title"]); ?></title>
 	<link rel="shortcut icon" type="image/x-icon" href="/YunPhotoAlbum/Public/SysImg/cloud.ico">
 	<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/commonCss.css">
@@ -130,7 +134,56 @@
 	<?php else: ?>
 		<div class="nothing"></div><?php endif; ?>
 </div>
-</div><?php endif; ?>
+<?php if($init['totalPage'] >= 2): ?><div class="pageNum">
+		<?php if($init['totalPage'] > 5): ?><a href="" id="lastPage">上一页</a><?php endif; ?>
+		<?php if($init['page'] >= $init['lastpg']): ?><a href="" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_12694__=$init['page']+1;$__FOR_END_12694__=$init['totalPage']+1;for($i=$__FOR_START_12694__;$i < $__FOR_END_12694__;$i+=1){ ?><a href=""><?php echo ($i); ?></a><?php } ?>
+			<?php else: ?>
+				<?php $__FOR_START_279__=$init['page']+1;$__FOR_END_279__=$init['page']+5;for($i=$__FOR_START_279__;$i < $__FOR_END_279__;$i+=1){ ?><a href=""><?php echo ($i); ?></a><?php } endif; ?>
+		<?php elseif($init['page'] < $init['lastpg']): ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_10500__=1;$__FOR_END_10500__=$init['page'];for($i=$__FOR_START_10500__;$i < $__FOR_END_10500__;$i+=1){ ?><a href=""><?php echo ($i); ?></a><?php } ?>
+			<?php else: ?>
+				<?php $__FOR_START_24301__=$init['page']-4;$__FOR_END_24301__=$init['page'];for($i=$__FOR_START_24301__;$i < $__FOR_END_24301__;$i+=1){ ?><a href=""><?php echo ($i); ?></a><?php } endif; ?>
+			<a href="" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
+		<?php if($init['totalPage'] > 5): ?><a href="" id="nextPage">下一页</a><?php endif; ?>
+		<?php if($init['totalPage'] > 2): ?><span id="showTotalPage">共<?php echo ($init['totalPage']); ?>页</span><?php endif; ?>
+		<?php if($init['totalPage'] >= 6): ?><form method="post" action="/YunPhotoAlbum/condition/<?php echo ($init['condition']); ?>/lastpg/$init['lastpg']/" id="pageFrom">
+				<dl>
+					<dt>
+						<span>到第</span>
+						<input type="text" name="gotoPage">
+						<span>页</span>
+						<input type="submit" name="gotoBtt" value="确定">
+					</dt>
+				</dl>
+			</form><?php endif; ?>
+	</div>
+	<script type="text/javascript">
+		var totalPage=<?php echo ($init['totalPage']); ?>;
+		$("input[name=gotoPage]").on("input propertychange",function(){
+			var gtpgval=$(this).val();
+			var gtpvaltmp1=gtpgval.replace(/[^0-9]+/g,"");
+			if(gtpvaltmp1>totalPage){
+				gtpvaltmp1=totalPage;
+			}
+			$(this).val(gtpvaltmp1);
+		});
+		var canOpt=true;
+		$("#pageFrom").on("submit",function(event){
+			if(canOpt){
+				canOpt=false;
+				setTimeout(function(){
+					canOpt=true;
+				},1500);
+				var gtpvaltmp2=$.trim($("input[name=gotoPage]").val());
+				if(gtpvaltmp2==""||gtpvaltmp2<=0){
+					return false;
+				}
+			}else{
+				return false;
+			}
+		});
+	</script><?php endif; endif; ?>
 	<div id="endInfo">
 		增值电信业务经营许可证:&nbsp;<a href="javascript:void(0)">粤B2-20110446</a>&nbsp;网络文化经营许可证:&nbsp;<a href="javascript:void(0)">粤网文[2015]0295-065号</a>&nbsp;<a href="javascript:void(0)">12318举报</a><br>互联网药品信息服务资质证书编号:&nbsp;<a href="javascript:void(0)">粤-（经营性）-2017-0005</a>&nbsp;&nbsp;<img src="/YunPhotoAlbum/Public/SysImg/beianbgs.png" width="20" height="20" id="beianbgs">粤公网安备&nbsp;<a href="javascript:void(0)">33010002000120号</a>
 	</div>

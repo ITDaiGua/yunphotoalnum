@@ -54,3 +54,93 @@ body{
 	color:#FFD700;
 	vertical-align:middle;
 }
+.allContent{
+	position:relative;
+	width:1000px;
+	height:auto;
+	min-height:700px;
+	left:50%;
+	margin-left:-500px;
+}
+.pageNum{
+	position:relative;
+	width:1000px;
+	height:40px;
+	left:50%;
+	margin-left:-500px;
+	background-color:#e5e5e5;
+	border-top:1px solid #ccc;
+	line-height:40px;
+	text-align:center;
+	color:#7A7A7A;
+	font-size:15px;
+	vertical-align:middle;
+}
+.pageNum a{
+	width:30px;
+	height:30px;
+	display:inline-block;
+	border:1px solid #ADADAD;
+	vertical-align:middle;
+	line-height:30px;
+	text-align:center;
+	color:#7A7A7A;
+	border-radius:3px;
+	text-decoration:none;
+	margin:0 3px;
+}
+.pageNum a:hover{
+	border-color:#00a2ff;
+	color:#00a2ff;
+}
+#lastPage,#nextPage{
+	width:60px;
+}
+#showTotalPage{
+	margin-left:20px;
+	vertical-align:middle;
+	display:inline-block;
+	height:30px;
+	line-height:30px;
+}
+#pageFrom{
+	position:relative;
+	height:30px;
+	display:inline-block;
+	vertical-align:middle;
+	line-height:30px;
+	margin-bottom:8px;
+}
+dl{
+	width:135px;
+	font-size:0;
+	white-space:nowrap;
+	
+}
+dl,dt,dt span{
+	height:30px;
+	line-height:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+dt,dt span{
+	font-size:15px;
+}
+input[name=gotoPage]{
+	width:25px;
+	height:16px;
+	display:inline-block;
+	vertical-align:middle;
+	margin:auto -5px;
+	text-align:center;
+}
+input[name=gotoBtt]{
+	/*margin-left:5px;*/
+	width:40px;
+	height:20px;
+	vertical-align:middle;
+	display:inline-block;
+	line-height:20px;
+	font-size:12px;
+	margin:auto -5px;
+}

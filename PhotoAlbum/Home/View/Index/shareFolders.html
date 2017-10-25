@@ -74,5 +74,78 @@
 		<div class="nothing"></div>
 	</if>
 </div>
-</div>
+<if condition="$init['totalPage'] egt 2">
+	<div class="pageNum">
+		<if condition="$init['totalPage'] gt 5">
+			<a href="" id="lastPage">上一页</a>
+		</if>
+		<if condition="$init['page'] egt $init['lastpg']">
+			<a href="" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
+			<if condition="$init['page']+5 gt $init['totalPage']">
+				<for start="$init['page']+1" end="$init['totalPage']+1">
+					<a href=""><{$i}></a>
+				</for>
+			<else/>
+				<for start="$init['page']+1" end="$init['page']+5">
+					<a href=""><{$i}></a>
+				</for>
+			</if>
+		<elseif condition="$init['page'] lt $init['lastpg']" />
+			<if condition="$init['page']-4 elt 0">
+				<for start="1" comparison="lt" step="1" end="$init['page']">
+					<a href=""><{$i}></a>
+				</for>
+			<else/>
+				<for start="$init['page']-4" comparison="lt" step="1" end="$init['page']">
+					<a href=""><{$i}></a>
+				</for>
+			</if>
+			<a href="" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
+		</if>
+		<if condition="$init['totalPage'] gt 5">
+			<a href="" id="nextPage">下一页</a>
+		</if>
+		<if condition="$init['totalPage'] gt 2">
+			<span id="showTotalPage">共<{$init['totalPage']}>页</span>
+		</if>
+		<if condition="$init['totalPage'] egt 6">
+			<form method="post" action="/YunPhotoAlbum/condition/<{$init['condition']}>/lastpg/$init['lastpg']/" id="pageFrom">
+				<dl>
+					<dt>
+						<span>到第</span>
+						<input type="text" name="gotoPage">
+						<span>页</span>
+						<input type="submit" name="gotoBtt" value="确定">
+					</dt>
+				</dl>
+			</form>
+		</if>
+	</div>
+	<script type="text/javascript">
+		var totalPage=<{$init['totalPage']}>;
+		$("input[name=gotoPage]").on("input propertychange",function(){
+			var gtpgval=$(this).val();
+			var gtpvaltmp1=gtpgval.replace(/[^0-9]+/g,"");
+			if(gtpvaltmp1>totalPage){
+				gtpvaltmp1=totalPage;
+			}
+			$(this).val(gtpvaltmp1);
+		});
+		var canOpt=true;
+		$("#pageFrom").on("submit",function(event){
+			if(canOpt){
+				canOpt=false;
+				setTimeout(function(){
+					canOpt=true;
+				},1500);
+				var gtpvaltmp2=$.trim($("input[name=gotoPage]").val());
+				if(gtpvaltmp2==""||gtpvaltmp2<=0){
+					return false;
+				}
+			}else{
+				return false;
+			}
+		});
+	</script>
+</if>
 
