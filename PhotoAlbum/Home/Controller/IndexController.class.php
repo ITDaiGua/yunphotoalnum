@@ -12,16 +12,16 @@ class IndexController extends CommonOneController{
 	       	"placeholder"=>"搜索共享文件夹"
         );
         $getSharePA=D("IndexSelect");
-        $condition=I('condition',"");
+        $condition=I('param.condition',"综合");
         $init['condition']=$condition;
-        $lastpg=I('lastpg',"1",'trim');
-        $page=I('page',"1",'trim');
+        $lastpg=I('param.lastpg',"1");
+        $page=I('param.page',"1");
          //echo $page;
-      	if(empty($condition)){
-      		$count=$getSharePA->where("status=%d",0)->cache(true,0)->count();
+      	if($condition=="综合"){
+      		$count=$getSharePA->where("status=%d",0)->cache(true,1)->count();
           $totalPage=ceil($count/50);
           $page=$this->numCheck($page,$totalPage);
-      		$selRst=$getSharePA->where("status=%d",0)->field('sid,sName,profile,sclass,shareTime')->order('shareTime desc')->page($page.',50')->cache(true,0)->select();
+      		$selRst=$getSharePA->where("status=%d",0)->field('sid,sName,profile,sclass,shareTime')->order('shareTime desc')->page($page.',50')->cache(true,1)->select();
       	}else{
           $condLen=mb_strlen($condition,"utf8");
           if($condLen>30){
@@ -40,10 +40,10 @@ class IndexController extends CommonOneController{
       		$selRst=$getSharePA->query("select sid,sName,profile,sclass,shareTime from sharePA where match(sclass,skey) against('{$condition}' IN BOOLEAN MODE) order by shareTime desc limit {$offset},50");
       	}
       	$lastpg=$this->numCheck($lastpg,$totalPage);
-        $init['page']=29;//$page;
-        $init['lastpg']=16;//$lastpg;
+        $init['page']=$page;
+        $init['lastpg']=$lastpg;
         $selRst=$this->timeFmtCge($selRst);
-        $init["totalPage"]=29;//$totalPage;
+        $init["totalPage"]=$totalPage;
         $this->assign("init",$init);
         $this->assign("selRst",$selRst);
         $this->display('/CommonView/Index');
@@ -95,5 +95,29 @@ class IndexController extends CommonOneController{
           }
         }
         return $selRst;
+    }
+
+    private function timeFmtCge2($selRst){
+      foreach ($selRst as $key => $value) {
+        $selRst[$key]['shareTime']=date("Y-m-d",$value['shareTime']);
+      }
+      return $selRst;
+    }
+
+    public function showSH(){ //查找共享的图片
+      $sid=trim(I("sid"));
+      if(!$sid){
+        echo '<script>window.location.href="/YunPhotoAlbum/";</script>';
+        exit;
+      }
+      $getSH=D("IndexSelect");
+      $selSPRst=$getSH->field("sid,uid,authorName,sName,profile,lookSum,likeSum,cltSum,shareTime")->where("sid='%s' AND status=0",$sid)->select();
+      $selSPRst=$this->timeFmtCge2($selSPRst);
+      $selRst=$getSH->field("spLink,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
+        if($selSPRst){
+          $this->assign("selRst",$selRst);
+        }
+        $this->assign("selSPRst",$selSPRst);
+        $this->display();
     }
 }

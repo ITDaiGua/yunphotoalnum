@@ -27,7 +27,7 @@
 	</script>
 	<if condition="$selRst neq null">
 		<foreach name="selRst" key="selKey" item="selVal" >
-			<a href="" class="theA">
+			<a href="/YunPhotoAlbum/Index/showSH/sid/<{$selVal['sid']}>/" target="_blank" class="theA">
 				<div class="shareAlbum">
 					<div class="SAImg">
 						<img src="__PUBLIC__/SysImg/folderImg.png">
@@ -77,43 +77,43 @@
 <if condition="$init['totalPage'] egt 2">
 	<div class="pageNum">
 		<if condition="$init['totalPage'] gt 5">
-			<a href="" id="lastPage">上一页</a>
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']-1}>/" id="lastPage">上一页</a>
 		</if>
 		<if condition="$init['page'] egt $init['lastpg']">
-			<a href="" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']}>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
 			<if condition="$init['page']+5 gt $init['totalPage']">
 				<for start="$init['page']+1" end="$init['totalPage']+1">
-					<a href=""><{$i}></a>
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
 				</for>
 			<else/>
 				<for start="$init['page']+1" end="$init['page']+5">
-					<a href=""><{$i}></a>
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
 				</for>
 			</if>
 		<elseif condition="$init['page'] lt $init['lastpg']" />
 			<if condition="$init['page']-4 elt 0">
 				<for start="1" comparison="lt" step="1" end="$init['page']">
-					<a href=""><{$i}></a>
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
 				</for>
 			<else/>
 				<for start="$init['page']-4" comparison="lt" step="1" end="$init['page']">
-					<a href=""><{$i}></a>
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
 				</for>
 			</if>
-			<a href="" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']}>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
 		</if>
 		<if condition="$init['totalPage'] gt 5">
-			<a href="" id="nextPage">下一页</a>
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']+1}>/" id="nextPage">下一页</a>
 		</if>
 		<if condition="$init['totalPage'] gt 2">
 			<span id="showTotalPage">共<{$init['totalPage']}>页</span>
 		</if>
 		<if condition="$init['totalPage'] egt 6">
-			<form method="post" action="/YunPhotoAlbum/condition/<{$init['condition']}>/lastpg/$init['lastpg']/" id="pageFrom">
+			<form method="post" action="" id="pageFrom">
 				<dl>
 					<dt>
 						<span>到第</span>
-						<input type="text" name="gotoPage">
+						<input type="text" name="page" autocomplete="off">
 						<span>页</span>
 						<input type="submit" name="gotoBtt" value="确定">
 					</dt>
@@ -123,13 +123,19 @@
 	</div>
 	<script type="text/javascript">
 		var totalPage=<{$init['totalPage']}>;
-		$("input[name=gotoPage]").on("input propertychange",function(){
+		$("input[name=page]").on("input propertychange",function(){
 			var gtpgval=$(this).val();
 			var gtpvaltmp1=gtpgval.replace(/[^0-9]+/g,"");
 			if(gtpvaltmp1>totalPage){
 				gtpvaltmp1=totalPage;
 			}
 			$(this).val(gtpvaltmp1);
+		});
+		$("input[name=page]").on("blur",function(){
+			var gtpgval=$(this).val();
+			if(gtpgval<=0){
+				$(this).val("1");
+			}
 		});
 		var canOpt=true;
 		$("#pageFrom").on("submit",function(event){
@@ -138,10 +144,12 @@
 				setTimeout(function(){
 					canOpt=true;
 				},1500);
-				var gtpvaltmp2=$.trim($("input[name=gotoPage]").val());
+				var gtpvaltmp2=$.trim($("input[name=page]").val());
 				if(gtpvaltmp2==""||gtpvaltmp2<=0){
 					return false;
 				}
+				event.preventDefault();
+				window.location.href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/"+gtpvaltmp2+"/";
 			}else{
 				return false;
 			}

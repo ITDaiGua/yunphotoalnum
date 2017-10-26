@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">    
+		<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache">    
+		<meta HTTP-EQUIV="Expires" CONTENT="0"> 
+		<title>图片</title>
+		<link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/SysImg/cloud.ico">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/commonCss.css">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/showPH.css">
+		<script type="text/javascript" src="__PUBLIC__/JS/jquery-3.1.1.min.js"></script>
+		<!--[if lte IE 8]>
+			<script type="text/javascript" src="__PUBLIC__/JS/jquery.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="__PUBLIC__/JS/showPH.js"></script>
+	</head>
+	<body>
+		<include file="CommonView/HeadMenu"/>
+		<div class="iconfont rightOpt">
+			<div class="tipoff">
+				<div class="explain">
+					举报
+					<span class="triangle"></span>
+				</div>
+				&#xe695;
+			</div>
+			<div class="collection">
+				<div class="explain">
+					收藏
+					<span class="triangle"></span>
+				</div>
+				&#xe617;
+			</div>
+			<div class="swPHTop">
+				<div class="explain">
+					回到顶部
+					<span class="triangle"></span>
+				</div>
+				&#xe64a;
+			</div>
+		</div>
+		<div class="allContent showPhotos">
+			<if condition="$selSPRst heq ''">
+				<div class="nothing"></div>
+			<else/>
+				<foreach name="selSPRst" key="key" item="value">
+					<div class="shareUInfo">
+						<a href="">
+							<img src="__PUBLIC__/UserImg/<{$value['uid']}>.jpg" class="swPHUImg">
+							<span class="authorName"><{$value['authorName']}></span>
+						</a>
+					</div>
+					<div class="PATitle">
+						<{$value['sName']}>&nbsp;&nbsp;&nbsp;
+						<span class="iconfont">&#xe60b;&nbsp;<{$value['lookSum']}></span>
+						<span class="iconfont">&#xe61f;&nbsp;<{$value['likeSum']}></span>
+						<span class="iconfont"><span style="font-size:18px;">&#xe617;</span>&nbsp;<{$value['cltSum']}></span>
+						<span class="iconfont">&#xe63a;&nbsp;<{$value['shareTime']}></span>
+					</div>
+					<hr class="hr"/>
+					<div class="shwProfile">
+						<span>相册简介：</span><br/>&nbsp;&nbsp;<{$value['profile']}>
+					</div>
+				</foreach>
+				<foreach name="selRst" key="key" item="value">
+					<div class="spImg">
+						<img src="<{$value['spLink']}>">
+						<span><{$value['PName']}></span>
+					</div>
+				</foreach>
+			</if>
+		</div>
+	</body>
+</html>

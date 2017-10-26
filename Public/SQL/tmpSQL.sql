@@ -62,6 +62,7 @@ create table if not exists `sharePA`(
 	`skey` varchar(50) not null, #共享文件夹的关键词
 	`lookSum` int unsigned not null default 0, #查看人数
 	`likeSum` int unsigned not null default 0, #点赞人数
+	`cltSum` int unsigned not null default 0,#收藏人数
 	`shareTime` varchar(11) not null, #共享的时间
 	`status` int not null default 0 #0：正常、1：用户取消共享或删除文件、2：违规删除
 	/*unique key `s`(`uid`,`PAId`),*/
@@ -81,10 +82,15 @@ use YunPhotoAlbum;
 create table if not exists `sharePhoto`(
 	`sid` varchar(16) not null,	#共享文件夹的id
 	`pid` varchar(16) not null, #共享图片的id
+	`PName`  varchar(30) not null, #图片名
 	`spLink` varchar(100) not null, #共享图片的链接
 	`status` int default 0, #0：正常、1：被删除
 	primary key `sapt`(`sid`,`pid`)
 )DEFAULT CHARSET=UTF8;
+#=============================================
+insert into sharePhoto values('s123456','p1547896','__PUBLIC__/image/p1547896.jpg',0),
+	('s123487','p1547897','__PUBLIC__/image/p1547897.jpg',0),
+	('s123456','p4678945','__PUBLIC__/image/p4678945.jpg',0)
 #==============================================
 use YunPhotoAlbum;
 create table if not exists `SPATipOff`(
@@ -144,3 +150,12 @@ use YunCompany;
 
 #=======================================
 select sid,sName,profile,class,shareTime from sharePA where status=0  order by shareTime desc;
+insert into sharephoto values("s123456","p79456","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
+	("s123456","p79457","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
+	("s123456","p794555","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
+	("s123456","p79267","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
+	("s123456","p791457","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
+	("s123456","p78456","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
+	("s123456","p85457","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
+	("s123456","p25496","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0)
+	
