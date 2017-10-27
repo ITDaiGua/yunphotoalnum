@@ -17,6 +17,21 @@
 		<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/showPH.js"></script>
 	</head>
 	<body>
+		<div class="enlarge" onselectstart="return false">
+			<div class="noMore"></div>
+			<div class="enlargeOpt">
+				<ul>
+					<li title="向左旋转" id="rotateLft">&#xe644;</li>
+					<li title="向右旋转" id="rotateRgt">&#xe642;</li>
+					<li title="上一张" id="goPrev">&#xe600;</li>
+					<li title="下一张" id="goNext">&#xe602;</li>
+					<li title="关闭窗口" id="swSHClose">&#xe601;</li>
+				</ul>
+			</div>
+			<div class="enlargeImgDiv">
+				<span class="loading"><img src="/YunPhotoAlbum/Public/SysImg/loading.gif" class="loadingGif"></span>
+			</div>
+		</div>
 		<div class="taslctLayer"></div>
 <div id="headMenu">
 	<?php if($isLogin === 'isLogin'): ?><a href="">
@@ -59,28 +74,43 @@
 				&#xe64a;
 			</div>
 		</div>
-		<div class="allContent showPhotos">
-			<?php if($selSPRst === ''): ?><div class="nothing"></div>
+		<div class="allContent">
+			<?php if($selSPRst == ''): ?><div class="nothing"></div>
 			<?php else: ?>
-				<?php if(is_array($selSPRst)): foreach($selSPRst as $key=>$value): ?><div class="shareUInfo">
+				<?php if(is_array($selSPRst)): foreach($selSPRst as $key=>$value): ?><div class="showPhHead">
+					<div class="shareUInfo">
 						<a href="">
 							<img src="/YunPhotoAlbum/Public/UserImg/<?php echo ($value['uid']); ?>.jpg" class="swPHUImg">
 							<span class="authorName"><?php echo ($value['authorName']); ?></span>
 						</a>
 					</div>
 					<div class="PATitle">
-						<?php echo ($value['sName']); ?>&nbsp;&nbsp;&nbsp;
-						<span class="iconfont">&#xe60b;&nbsp;<?php echo ($value['lookSum']); ?></span>
-						<span class="iconfont">&#xe61f;&nbsp;<?php echo ($value['likeSum']); ?></span>
-						<span class="iconfont"><span style="font-size:18px;">&#xe617;</span>&nbsp;<?php echo ($value['cltSum']); ?></span>
-						<span class="iconfont">&#xe63a;&nbsp;<?php echo ($value['shareTime']); ?></span>
+						<div class="titleDIV">
+							<?php echo ($value['sName']); ?>
+						</div>
+						<div class="SPinfo">
+							<span class="iconfont">&#xe60b; <?php echo ($value['lookSum']); ?></span>
+							<span class="iconfont">&#xe61f; <?php echo ($value['likeSum']); ?></span>
+							<span class="iconfont"><span style="font-size:18px;">&#xe617;</span> <?php echo ($value['cltSum']); ?></span>
+							<span class="iconfont">&#xe63a; <?php echo ($value['shareTime']); ?></span>
+						</div>
 					</div>
-					<hr class="hr"/>
+					</div>
+					<div class="hr"></div>
 					<div class="shwProfile">
 						<span>相册简介：</span><br/>&nbsp;&nbsp;<?php echo ($value['profile']); ?>
 					</div><?php endforeach; endif; ?>
+				<div class="choice">
+					<ul>
+						<li class="choiceOn Li">图片区</li>
+						<li class="Li">评论区</li>
+						<li class="Li ">赞 <span class="iconfont">&#xe615;</span></li>
+					</ul>
+				</div>
 				<?php if(is_array($selRst)): foreach($selRst as $key=>$value): ?><div class="spImg">
-						<img src="<?php echo ($value['spLink']); ?>">
+						<div class="imgDIV">
+							<img src="<?php echo ($value['spLink']); ?>">
+						</div>
 						<span><?php echo ($value['PName']); ?></span>
 					</div><?php endforeach; endif; endif; ?>
 		</div>

@@ -114,9 +114,9 @@ class IndexController extends CommonOneController{
       $selSPRst=$getSH->field("sid,uid,authorName,sName,profile,lookSum,likeSum,cltSum,shareTime")->where("sid='%s' AND status=0",$sid)->select();
       $selSPRst=$this->timeFmtCge2($selSPRst);
       $selRst=$getSH->field("spLink,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
-        if($selSPRst){
+       // if($selSPRst){
           $this->assign("selRst",$selRst);
-        }
+        //}
         $this->assign("selSPRst",$selSPRst);
         $this->display();
     }

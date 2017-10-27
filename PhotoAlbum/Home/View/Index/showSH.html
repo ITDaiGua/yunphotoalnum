@@ -17,6 +17,21 @@
 		<script type="text/javascript" src="__PUBLIC__/JS/showPH.js"></script>
 	</head>
 	<body>
+		<div class="enlarge" onselectstart="return false">
+			<div class="noMore"></div>
+			<div class="enlargeOpt">
+				<ul>
+					<li title="向左旋转" id="rotateLft">&#xe644;</li>
+					<li title="向右旋转" id="rotateRgt">&#xe642;</li>
+					<li title="上一张" id="goPrev">&#xe600;</li>
+					<li title="下一张" id="goNext">&#xe602;</li>
+					<li title="关闭窗口" id="swSHClose">&#xe601;</li>
+				</ul>
+			</div>
+			<div class="enlargeImgDiv">
+				<span class="loading"><img src="__PUBLIC__/SysImg/loading.gif" class="loadingGif"></span>
+			</div>
+		</div>
 		<include file="CommonView/HeadMenu"/>
 		<div class="iconfont rightOpt">
 			<div class="tipoff">
@@ -41,11 +56,12 @@
 				&#xe64a;
 			</div>
 		</div>
-		<div class="allContent showPhotos">
-			<if condition="$selSPRst heq ''">
+		<div class="allContent">
+			<if condition="$selSPRst eq ''">
 				<div class="nothing"></div>
 			<else/>
 				<foreach name="selSPRst" key="key" item="value">
+					<div class="showPhHead">
 					<div class="shareUInfo">
 						<a href="">
 							<img src="__PUBLIC__/UserImg/<{$value['uid']}>.jpg" class="swPHUImg">
@@ -53,20 +69,34 @@
 						</a>
 					</div>
 					<div class="PATitle">
-						<{$value['sName']}>&nbsp;&nbsp;&nbsp;
-						<span class="iconfont">&#xe60b;&nbsp;<{$value['lookSum']}></span>
-						<span class="iconfont">&#xe61f;&nbsp;<{$value['likeSum']}></span>
-						<span class="iconfont"><span style="font-size:18px;">&#xe617;</span>&nbsp;<{$value['cltSum']}></span>
-						<span class="iconfont">&#xe63a;&nbsp;<{$value['shareTime']}></span>
+						<div class="titleDIV">
+							<{$value['sName']}>
+						</div>
+						<div class="SPinfo">
+							<span class="iconfont">&#xe60b; <{$value['lookSum']}></span>
+							<span class="iconfont">&#xe61f; <{$value['likeSum']}></span>
+							<span class="iconfont"><span style="font-size:18px;">&#xe617;</span> <{$value['cltSum']}></span>
+							<span class="iconfont">&#xe63a; <{$value['shareTime']}></span>
+						</div>
 					</div>
-					<hr class="hr"/>
+					</div>
+					<div class="hr"></div>
 					<div class="shwProfile">
 						<span>相册简介：</span><br/>&nbsp;&nbsp;<{$value['profile']}>
 					</div>
 				</foreach>
+				<div class="choice">
+					<ul>
+						<li class="choiceOn Li">图片区</li>
+						<li class="Li">评论区</li>
+						<li class="Li ">赞 <span class="iconfont">&#xe615;</span></li>
+					</ul>
+				</div>
 				<foreach name="selRst" key="key" item="value">
 					<div class="spImg">
-						<img src="<{$value['spLink']}>">
+						<div class="imgDIV">
+							<img src="<{$value['spLink']}>">
+						</div>
 						<span><{$value['PName']}></span>
 					</div>
 				</foreach>
