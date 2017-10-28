@@ -97,8 +97,10 @@
 				</div>
 				<div id="commentsArea">
 					<div id="cmntBoxDiv">
-						<div id="canotCmnt">登陆后可评论</div>
-						<form name="example" method="post" action="demo.php">
+						<if condition="$isLogin neq 'isLogin'">
+							<div id="canotCmnt">登陆后可评论</div>
+						</if>
+						<form name="cmetForm" id="cmetForm" method="post">
 							<textarea name="cmntBox" id="cmntBox"></textarea>
 							<span id="strLenWarn">字数：<span id="cmntStrLen">0</span>/140<span id="showWarn"> 超过限定字数</span></span>
 							<input type="submit" name="cmntBtt" id="cmntBtt" value="评论" /> 
@@ -127,19 +129,45 @@
 										setTimeout(function(){
      									isCanCount=true;
      								},200);
-										if(strLen>3){
-											var cmd = K.cmd(document);
-											cmd.select();
+										if(strLen>140){
 											showWarn.show();
 											var strValue = this.text();
-     									strValue = strValue.substring(0,3);
-     									this.html(strValue);
+     									strValue = strValue.substring(0,140);
+     									this.html("").appendHtml(strValue);
 										}else{
 											showWarn.hide();
 										}
 									}
 									this.sync();
 								}
+							});
+							$("#cmetForm").on("submit",function(event){
+								event.preventDefault();
+								if(editor1.isEmpty()){
+									showWarn.text('评论不能为空').show();
+									return false;
+								}else{
+									showWarn.hide().text('超过限定字数');
+								}
+								var commentCont=editor1.text();
+								commentCont=commentCont.replace(/[\s]+/g," ");
+								var url="/YunPhotoAlbum/AjaxOpt/comment/";
+								$.post(url,{"sid":"<{$selSPRst[0]['sid']}>","comment":commentCont},function(data){
+									if(data.info=="success"){
+										var _success="<div class='errorORwarn' style='background-color:#fff'><span class='iconfont errorORwarnImg'>&#xe687;</span>评论成功</div>";
+										$('body').prepend(_success);
+										setTimeout(function(){
+											location.reload();
+										},1500);
+									}
+								}).fail(function(){
+									var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>&#xe613;</span>评论失败</div>";
+										$('body').prepend(_fail);
+										setTimeout(function(){
+											$(".errorORwarn").hide().remove();
+											location.reload();
+										},1500);
+								});
 							});
 						});
 					</script>

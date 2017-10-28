@@ -7,19 +7,20 @@ $(document).ready(function(){
 		explain.stop(true,false).fadeOut(400).animate({left:"-120px"},{queue:false,duration:400});
 	});
 	var _allContent=$(".allContent");
-	var _this;
-	var _thisImg;
+	var _this="";
+	var _thisImg="";
 	_allContent.on("mouseenter",".imgDIV",function(){
 		_this=$(this);
 		_thisImg=_this.find("img");
 		_thisImg.css({position:"absolute"}).stop(true,false).animate({width:"164px",height:"190px",margin:"-5px"});
-	});
-	_allContent.on("mouseleave",".imgDIV",function(){
-		_thisImg.stop(true,false).animate({width:"154px",height:"180px",margin:0}).queue(function(next){
-			_thisImg.css({position:"static"});
-			next();
+		_allContent.on("mouseleave",".imgDIV",function(){
+			_thisImg.stop(true,false).animate({width:"154px",height:"180px",margin:0}).queue(function(next){
+				_thisImg.css({position:"static"});
+				next();
+			});
 		});
 	});
+	
 	var _taslctLayer=$(".taslctLayer");
 	var _enlarge=$(".enlarge");
 	var _enlargeImgDiv=$(".enlargeImgDiv");

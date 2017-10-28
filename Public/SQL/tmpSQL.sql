@@ -111,7 +111,7 @@ create table if not exists `comments`(
 	`cid` varchar(16) not null primary key, #评论的id
 	`sid` varchar(16) not null, #评论的共享文件夹
 	`uname` varchar(30) not null, #评论的用户名
-	`content` varchar(140) not null, #评论的内容
+	`content` text not null, #评论的内容
 	`time` varchar(11) not null, #评论时间
 	`status` int not null default 0, #0：正常、1：被删除
 	`tipOffSum` int not null default 0, #举报次数，举报超过10次将推送给管理员处理
