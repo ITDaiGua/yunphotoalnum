@@ -28,7 +28,7 @@
 	<if condition="$selRst neq null">
 		<foreach name="selRst" key="selKey" item="selVal" >
 			<a href="/YunPhotoAlbum/Index/showSH/sid/<{$selVal['sid']}>/" target="_blank" class="theA">
-				<div class="shareAlbum">
+				<div class="shareAlbum" id="<{$selVal['sid']}>">
 					<div class="SAImg">
 						<img src="__PUBLIC__/SysImg/folderImg.png">
 					</div>

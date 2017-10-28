@@ -10,11 +10,14 @@
 		<link rel="shortcut icon" type="image/x-icon" href="/YunPhotoAlbum/Public/SysImg/cloud.ico">
 		<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/commonCss.css">
 		<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/showPH.css">
+		<link rel="stylesheet" href="/YunPhotoAlbum/Public/kindeditor/themes/default/default.css" />
 		<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/jquery-3.1.1.min.js"></script>
 		<!--[if lte IE 8]>
 			<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/jquery.min.js"></script>
 		<![endif]-->
 		<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/showPH.js"></script>
+		<script charset="utf-8" src="/YunPhotoAlbum/Public/kindeditor/kindeditor.js"></script>
+		<script charset="utf-8" src="/YunPhotoAlbum/Public/kindeditor/lang/zh_CN.js"></script>
 	</head>
 	<body>
 		<div class="enlarge" onselectstart="return false">
@@ -100,19 +103,70 @@
 					<div class="shwProfile">
 						<span>相册简介：</span><br/>&nbsp;&nbsp;<?php echo ($value['profile']); ?>
 					</div><?php endforeach; endif; ?>
-				<div class="choice">
+				<div class="choice" onselectstart="return false;">
 					<ul>
-						<li class="choiceOn Li">图片区</li>
-						<li class="Li">评论区</li>
-						<li class="Li ">赞 <span class="iconfont">&#xe615;</span></li>
+						<li class="choiceOn Li" id="ptsAreaBtt">图片区</li>
+						<li class="Li" id="cmntsAreaBtt">评论区</li>
+						<li class="Li" id="likeBtt">赞 <span class="iconfont">&#xe615;</span></li>
 					</ul>
 				</div>
-				<?php if(is_array($selRst)): foreach($selRst as $key=>$value): ?><div class="spImg">
-						<div class="imgDIV">
-							<img src="<?php echo ($value['spLink']); ?>">
-						</div>
-						<span><?php echo ($value['PName']); ?></span>
-					</div><?php endforeach; endif; endif; ?>
+				<div id="commentsArea">
+					<div id="cmntBoxDiv">
+						<div id="canotCmnt">登陆后可评论</div>
+						<form name="example" method="post" action="demo.php">
+							<textarea name="cmntBox" id="cmntBox"></textarea>
+							<span id="strLenWarn">字数：<span id="cmntStrLen">0</span>/140<span id="showWarn"> 超过限定字数</span></span>
+							<input type="submit" name="cmntBtt" id="cmntBtt" value="评论" /> 
+						</form>
+					</div>
+					<script type="text/javascript">
+						var isCanCount=true;
+						var cmntStrLen=$("#cmntStrLen");
+						var showWarn=$("#showWarn");
+						KindEditor.ready(function(K) {
+							var editor1 = K.create('#cmntBox', {
+								width:"600px",
+								height:"100px",
+								allowFileManager : false,
+								filterMode:false,
+								resizeType:0,
+								pasteType:1,
+								allowImageRemote:false,
+								allowImageUpload:false,
+								items:["undo","|","redo","|","emoticons","|","link","|","unlink"],
+								afterChange:function(){
+									var strLen=this.count('text');
+									cmntStrLen.text(strLen);
+									if(isCanCount){
+										isCanCount=false;
+										setTimeout(function(){
+     									isCanCount=true;
+     								},200);
+										if(strLen>3){
+											var cmd = K.cmd(document);
+											cmd.select();
+											showWarn.show();
+											var strValue = this.text();
+     									strValue = strValue.substring(0,3);
+     									this.html(strValue);
+										}else{
+											showWarn.hide();
+										}
+									}
+									this.sync();
+								}
+							});
+						});
+					</script>
+				</div>
+				<div id="photosArea">
+					<?php if(is_array($selRst)): foreach($selRst as $key=>$value): ?><div class="spImg" id="<?php echo ($value['pid']); ?>">
+							<div class="imgDIV">
+								<img src="<?php echo ($value['spLink']); ?>">
+							</div>
+							<span><?php echo ($value['PName']); ?></span>
+						</div><?php endforeach; endif; ?>
+				</div><?php endif; ?>
 		</div>
 	</body>
 </html>

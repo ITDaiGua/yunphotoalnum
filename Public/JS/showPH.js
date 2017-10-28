@@ -113,4 +113,20 @@ $(document).ready(function(){
 	$(".swPHTop").click(function(){
 		$('body').animate({"scrollTop":0},200);
 	});
+	var commentsArea=$("#commentsArea");
+	var photosArea=$("#photosArea");
+	$(".Li").click(function(event){
+		var id=event.target.id;
+		if(id=="ptsAreaBtt"||id=="cmntsAreaBtt"){
+			$(".choiceOn").removeClass("choiceOn");
+			$(this).addClass("choiceOn");
+		}
+		if(id=="ptsAreaBtt"){
+			commentsArea.hide();
+			photosArea.show();
+		}else if(id=="cmntsAreaBtt"){
+			commentsArea.show();
+			photosArea.hide();
+		}
+	});
 });
