@@ -31,9 +31,11 @@ $(document).ready(function(){
 		_enlarge.hide();
 	});
 	var angle=0;
-	var _spImg=$(".spImg");
-	var _spImgLen=_spImg.length-1;
+	var _spImg="";
+	var _spImgLen=0;
 	_allContent.on("click",".spImg",function(){
+		_spImg=$(".spImg");
+		_spImgLen=_spImg.length-1;
 		loading.show();
 		_this=$(this);
 		var enlargeImg=new Image();
@@ -125,9 +127,13 @@ $(document).ready(function(){
 		if(id=="ptsAreaBtt"){
 			commentsArea.hide();
 			photosArea.show();
+			$("#getMoreCmtDiv").hide();
+			$("#getMorePhDiv").show();
 		}else if(id=="cmntsAreaBtt"){
 			commentsArea.show();
 			photosArea.hide();
+			$("#getMorePhDiv").hide();
+			$("#getMoreCmtDiv").show();
 		}
 	});
 });

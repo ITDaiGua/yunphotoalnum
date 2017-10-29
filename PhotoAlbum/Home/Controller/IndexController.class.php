@@ -50,7 +50,7 @@ class IndexController extends CommonOneController{
     }
 
     private function numCheck($arg,$totalPage){
-      if(is_numeric($arg)){
+      /*if(is_numeric($arg)){
         if($arg<=1){
           $arg=1;
         }elseif(!is_int($arg)){
@@ -58,11 +58,25 @@ class IndexController extends CommonOneController{
         }
       }else{
         $arg=1;
-      }
+      }*/
+      $arg=$this->numCheck2($arg,1);
       if($arg>$totalPage){
         $arg=$totalPage;
       }
       return $arg;
+    }
+
+    private function numCheck2($num,$minNum){
+      if(is_numeric($num)){
+        if($num<=$minNum){
+          $num=$minNum;
+        }elseif(!is_int($num)){
+          $num=floor($num);
+        }
+      }else{
+        $num=$minNum;
+      }
+      return $num;
     }
 
     private function timeFmtCge($selRst){
@@ -113,9 +127,25 @@ class IndexController extends CommonOneController{
       $getSH=D("IndexSelect");
       $selSPRst=$getSH->field("sid,uid,authorName,sName,profile,lookSum,likeSum,cltSum,shareTime")->where("sid='%s' AND status=0",$sid)->select();
       $selSPRst=$this->timeFmtCge2($selSPRst);
-      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
+      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,3")->select();
       $this->assign("selSPRst",$selSPRst);
       $this->assign("selRst",$selRst);
       $this->display();
+    }
+
+    public function showMoreSH(){
+      $sid=trim(I("get.sid"));
+      if(!IS_AJAX&&!$sid){
+        PHPerr();
+      }
+      $page=trim(I('get.page'));
+      $page=$this->numCheck2($page,2);
+      $getSH=D("IndexSelect");
+      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("$page,3")->select();
+      foreach ($selRst as $key => $value) {
+        $selRst[$key]['PName']=$value['PName']."_".$page;
+      }
+      $this->ajaxReturn($selRst);
+      print_r($selRst);
     }
 }

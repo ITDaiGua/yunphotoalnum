@@ -54,29 +54,29 @@
 		<a href="">注册</a>
 		<img src="/YunPhotoAlbum/Public/SysImg/uimg.jpg" class="uImg"><?php endif; ?>
 </div>
-		<div class="iconfont rightOpt">
-			<div class="tipoff">
-				<div class="explain">
-					举报
-					<span class="triangle"></span>
+		<?php if($selSPRst != ''): ?><div class="iconfont rightOpt">
+				<div class="tipoff">
+					<div class="explain">
+						举报
+						<span class="triangle"></span>
+					</div>
+					&#xe695;
 				</div>
-				&#xe695;
-			</div>
-			<div class="collection">
-				<div class="explain">
-					收藏
-					<span class="triangle"></span>
+				<div class="collection">
+					<div class="explain">
+						收藏
+						<span class="triangle"></span>
+					</div>
+					&#xe617;
 				</div>
-				&#xe617;
-			</div>
-			<div class="swPHTop">
-				<div class="explain">
-					回到顶部
-					<span class="triangle"></span>
+				<div class="swPHTop">
+					<div class="explain">
+						回到顶部
+						<span class="triangle"></span>
+					</div>
+					&#xe64a;
 				</div>
-				&#xe64a;
-			</div>
-		</div>
+			</div><?php endif; ?>
 		<div class="allContent">
 			<?php if($selSPRst == ''): ?><div class="nothing"></div>
 			<?php else: ?>
@@ -154,6 +154,7 @@
 									this.sync();
 								}
 							});
+							var isCanCmt=true;
 							$("#cmetForm").on("submit",function(event){
 								event.preventDefault();
 								if(editor1.isEmpty()){
@@ -161,6 +162,11 @@
 									return false;
 								}else{
 									showWarn.hide().text('超过限定字数');
+								}
+								if(!isCanCmt){
+									return false;
+								}else{
+									isCanCmt=false;
 								}
 								var commentCont=editor1.text();
 								commentCont=commentCont.replace(/[\s]+/g," ");
@@ -178,8 +184,9 @@
 										$('body').prepend(_fail);
 										setTimeout(function(){
 											$(".errorORwarn").hide().remove();
-											location.reload();
+											//location.reload();
 										},1500);
+										isCanCmt=true;
 								});
 							});
 						});
@@ -192,7 +199,56 @@
 							</div>
 							<span><?php echo ($value['PName']); ?></span>
 						</div><?php endforeach; endif; ?>
-				</div><?php endif; ?>
+				</div>
+				<div class="gtMreLodg">
+					<img src="/YunPhotoAlbum/Public/SysImg/loading.gif" class="loadingGif2">
+				</div>
+				<div id="getMorePhDiv" class="getMoreDiv">
+					<button id="getMorePh" class="getMore">获取更多&#xe6b9;</button>
+				</div>
+				<div id="getMoreCmtDiv" class="getMoreDiv" style="display:none;">
+					<button id="getMoreCmt" class="getMore">获取更多&#xe6b9;</button>
+				</div>
+				<script type="text/javascript">
+					var url="/YunPhotoAlbum/Index/showMoreSH/sid/<?php echo ($selSPRst[0]['sid']); ?>";
+					var page=1;
+					var canGetMore=true; //节流
+					var isCanGetMore=true;	//判断有没有更多的数据
+					var morePH="";
+					var _photosArea=$("#photosArea");
+					$("#getMorePh").on("click",function(){
+						if(canGetMore&&isCanGetMore){
+							$(".gtMreLodg").show();
+							canGetMore=false;
+								page++;
+								$.get(url,{page:page},function(data){
+									if(data==null){
+										isCanGetMore=false;
+										$("#getMorePh").prop("disabled",true).text("没有更多啦~");
+										$(".gtMreLodg").hide();
+									}else{
+										$.each(data,function(k,v){
+											morePH+='<div class="spImg" id="'+v.pid+'">';
+											morePH+='<div class="imgDIV">';
+											morePH+='<img src="'+v.spLink+'"></div>';
+											morePH+='<span>'+v.PName+'</span></div>';
+										});
+										$(".gtMreLodg").hide();
+										_photosArea.append(morePH);
+										morePH="";
+									}	
+								}).fail(function(){
+									$(".gtMreLodg").hide();
+									var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>&#xe613;</span>出错啦~</div>";
+										$('body').prepend(_fail);
+										setTimeout(function(){
+											$(".errorORwarn").hide().remove();
+										},1500);
+								});
+								setTimeout(function(){canGetMore=true;},1000);
+						}
+					});
+				</script><?php endif; ?>
 		</div>
 	</body>
 </html>

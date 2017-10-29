@@ -1481,3 +1481,13 @@ function send_mail($to,$title,$content){
         return false;
     }
 }
+
+function PHPerr(){
+    exit("发生错误,<span id='PHPerr'>3</span>秒后为你跳转...<script>
+        var PHPerr=document.getElementById('PHPerr');var time=3;
+        setInterval(function(){
+            if(time==0){location.reload();}
+            PHPerr.innerText=time;
+            time--;
+        },1000);</script>");
+}

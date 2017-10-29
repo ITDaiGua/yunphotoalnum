@@ -235,6 +235,8 @@
 	width:1000px;
 	height:auto;
 	min-width:160px;
+	padding:10px;
+	overflow:hidden;
 }
 .spImg{
 	display:block;
@@ -323,4 +325,35 @@
 }
 #cmntBtt:hover{
 	background-color:#5ab9f0;
+}
+.gtMreLodg{
+	width:1000px;
+	height:auto;
+	text-align:center;
+	display:none;
+}
+.getMoreDiv{
+	width:1000px;
+	height:40px;
+	text-align:center;
+	border-top:1px solid #ccc;
+}
+.getMore{
+	width:130px;
+	height:40px;
+	border:0;
+	outline:none;
+	font:20px iconfont;
+	color:#3b3b3b;
+	cursor:pointer;
+	line-height:40px;
+}
+
+.getMore:hover{
+	background-color:#00a2ff;
+	color:#fff;
+}
+.getMore:active{
+	background-color:#ccc;
+	color:#fff;
 }
