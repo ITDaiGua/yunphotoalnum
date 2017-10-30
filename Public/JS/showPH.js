@@ -26,6 +26,7 @@ $(document).ready(function(){
 	var _enlargeImgDiv=$(".enlargeImgDiv");
 	var _enlargeImg;
 	var loading=$(".loading");
+	var date_Obj=new Date();
 	$("#swSHClose").click(function(){
 		_taslctLayer.hide();
 		_enlarge.hide();
@@ -40,7 +41,7 @@ $(document).ready(function(){
 		_this=$(this);
 		var enlargeImg=new Image();
 		enlargeImg.src=_this.find("img:not(.loadingGif)").attr("src");
-		enlargeImg.id="T"+(new Date().getTime());
+		enlargeImg.id="T"+date_Obj.getTime();
 		_taslctLayer.show();
 		_enlarge.show();
 		if(enlargeImg.complete){
@@ -113,9 +114,11 @@ $(document).ready(function(){
 			$goPrev.trigger('click');
 		}
 	});
+
 	$(".swPHTop").click(function(){
 		$('body').animate({"scrollTop":0},200);
 	});
+
 	var commentsArea=$("#commentsArea");
 	var photosArea=$("#photosArea");
 	$(".Li").click(function(event){
@@ -134,6 +137,156 @@ $(document).ready(function(){
 			photosArea.hide();
 			$("#getMorePhDiv").hide();
 			$("#getMoreCmtDiv").show();
+			var cmtDivLen=$(this).children(".cmtDiv").length;
+			if(cmtDivLen<=0){
+				$("#getMoreCmt").trigger('click');
+			}
 		}
 	});
+
+	var sid=$(".allContent").attr("id");
+	$("#likeBtt").one('click',function(){
+		var likeURL="/YunPhotoAlbum/AjaxOpt/like";
+		$.post(likeURL,{sid:sid},function(data){
+			if(data.info=="noLogin"){
+
+			}else if(data.info=="success"){
+				fail("&#xe687;","点赞成功");
+			}else if(data.info=="exists"){
+				fail("&#xe687;","赞过啦~");
+			}
+		});
+	});
+
+	var url="/YunPhotoAlbum/Index/showMoreSH/sid/"+sid;
+	var page=1;
+	var canGetMore=true; //节流
+	var isCanGetMore=true;	//判断有没有更多的数据
+	var morePH="";
+	var _photosArea=$("#photosArea");
+	$("#getMorePh").on("click",function(){
+		if(canGetMore&&isCanGetMore){
+			$(".gtMreLodg").show();
+			canGetMore=false;
+				page++;
+				$.get(url,{page:page},function(data){
+					if(data==null){
+						isCanGetMore=false;
+						$("#getMorePh").prop("disabled",true).text("没有更多啦~");
+						$(".gtMreLodg").hide();
+					}else{
+						$.each(data,function(k,v){
+							morePH+='<div class="spImg" id="'+v.pid+'">';
+							morePH+='<div class="imgDIV">';
+							morePH+='<img src="'+v.spLink+'"></div>';
+							morePH+='<span>'+v.PName+'</span></div>';
+						});
+						$(".gtMreLodg").hide();
+						_photosArea.append(morePH);
+						morePH="";
+					}
+				}).fail(function(){
+					$(".gtMreLodg").hide();
+					fail("&#xe613;","出错啦~");
+				});
+				setTimeout(function(){canGetMore=true;},1000);
+		}
+	});
+
+	var url2="/YunPhotoAlbum/AjaxOpt/getComment/sid/"+sid;
+	var page2=0;
+	var canGetMore2=true; //节流
+	var isCanGetMore2=true;	//判断有没有更多的数据
+	var morePH2="";
+	var _commentsArea=$("#commentsArea");
+	var cmtTipoffURL="/YunPhotoAlbum/AjaxOpt/cmtTipoff";
+	$("#getMoreCmt").on("click",function(){
+		if(canGetMore2&&isCanGetMore2){
+			$(".gtMreLodg").show();
+			canGetMore2=false;
+				page2++;
+				$.get(url2,{page:page2},function(data){
+					if(data==null){
+						isCanGetMore2=false;
+						if(page2==1){
+							$("#getMoreCmt").hide();
+							_commentsArea.append($("<div class=noCmt></div>"));
+						}else{
+							$("#getMoreCmt").prop("disabled",true).text("没有更多啦~");
+						}
+						$(".gtMreLodg").hide();
+					}else{
+						$.each(data,function(k,v){
+							morePH2+="<div class='cmtDiv' id="+v.cid+">";
+							morePH2+="<div class='cmtHead'>"+v.uname;
+							morePH2+="<span class='cmtTime'>"+v.time+"</span></div>";
+							morePH2+="<div class='cmtCont'>&nbsp;&nbsp;"+v.content+"</div>";
+							morePH2+="<div class='cmtTipoff'><span class='cmtTxt'>举报</span></div>";
+							morePH2+="</div>";
+						});
+						$(".gtMreLodg").hide();
+						_commentsArea.append(morePH2);
+						morePH2="";
+						$(".cmtTxt").one('click',function(){
+							var cid=$(this).parents(".cmtDiv").attr('id');
+							$.post(cmtTipoffURL,{cid:cid},function(data){
+								if(data.info=="noLogin"){
+
+								}else if(data.info=="exists"){
+									fail("&#xe613;","举报过啦~");
+								}else{
+									fail("&#xe687;","感谢您的反馈");
+								}
+							}).fail(function(){
+								fail("&#xe613;","出错啦~");
+							});
+						});
+					}	
+				}).fail(function(){
+					$(".gtMreLodg").hide();
+					fail("&#xe613;","出错啦~");
+				});
+				setTimeout(function(){canGetMore2=true;},1000);
+		}
+	});
+
+	function fail(img,info){
+		var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
+		$('body').prepend(_fail);
+		setTimeout(function(){
+			$(".errorORwarn").hide().remove();
+		},1500);
+	}
+
+	var cmtTipoff="";
+	_commentsArea.on("mouseenter",".cmtDiv",function(){
+		cmtTipoff=$(this).children(".cmtTipoff");
+		cmtTipoff.css("color","#3b3b3b");
+	});
+
+	_commentsArea.on("mouseleave",".cmtDiv",function(){
+		cmtTipoff.css("color","transparent");
+	});
+
+	/*$(".collection").click(function(){
+		var cltURL="/YunPhotoAlbum/AjaxOpt/collection";
+		$.post(cltURL,{sid:sid},function(data){
+			if(data.info=="noLogin"){
+
+			}else{
+				fail("&#xe687;","收藏成功");
+			}
+		});
+	});*/
+	$(".collection").one('click',function(){
+		var cltURL="/YunPhotoAlbum/AjaxOpt/collection";
+		$.post(cltURL,{sid:sid},function(data){
+			if(data.info=="noLogin"){
+
+			}else{
+				fail("&#xe687;","收藏成功");
+			}
+		});
+	});
+
 });

@@ -1491,3 +1491,23 @@ function PHPerr(){
             time--;
         },1000);</script>");
 }
+
+function numCheck2($num,$minNum){
+  if(is_numeric($num)){
+    if($num<=$minNum){
+      $num=$minNum;
+    }elseif(!is_int($num)){
+      $num=floor($num);
+    }
+  }else{
+    $num=$minNum;
+  }
+  return $num;
+}
+
+function timeFmtCge2($selRst){
+  foreach ($selRst as $key => $value) {
+    $selRst[$key]['shareTime']=date("Y-m-d",$value['shareTime']);
+  }
+  return $selRst;
+}

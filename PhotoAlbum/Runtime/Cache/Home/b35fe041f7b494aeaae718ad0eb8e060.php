@@ -77,7 +77,7 @@
 					&#xe64a;
 				</div>
 			</div><?php endif; ?>
-		<div class="allContent">
+		<div class="allContent" id="<?php echo ($selSPRst[0]['sid']); ?>">
 			<?php if($selSPRst == ''): ?><div class="nothing"></div>
 			<?php else: ?>
 				<?php if(is_array($selSPRst)): foreach($selSPRst as $key=>$value): ?><div class="showPhHead">
@@ -123,6 +123,7 @@
 						var isCanCount=true;
 						var cmntStrLen=$("#cmntStrLen");
 						var showWarn=$("#showWarn");
+						var sid=$(".allContent").attr("id");
 						KindEditor.ready(function(K) {
 							var editor1 = K.create('#cmntBox', {
 								width:"600px",
@@ -171,7 +172,7 @@
 								var commentCont=editor1.text();
 								commentCont=commentCont.replace(/[\s]+/g," ");
 								var url="/YunPhotoAlbum/AjaxOpt/comment/";
-								$.post(url,{"sid":"<?php echo ($selSPRst[0]['sid']); ?>","comment":commentCont},function(data){
+								$.post(url,{"sid":sid,"comment":commentCont},function(data){
 									if(data.info=="success"){
 										var _success="<div class='errorORwarn' style='background-color:#fff'><span class='iconfont errorORwarnImg'>&#xe687;</span>评论成功</div>";
 										$('body').prepend(_success);
@@ -208,47 +209,7 @@
 				</div>
 				<div id="getMoreCmtDiv" class="getMoreDiv" style="display:none;">
 					<button id="getMoreCmt" class="getMore">获取更多&#xe6b9;</button>
-				</div>
-				<script type="text/javascript">
-					var url="/YunPhotoAlbum/Index/showMoreSH/sid/<?php echo ($selSPRst[0]['sid']); ?>";
-					var page=1;
-					var canGetMore=true; //节流
-					var isCanGetMore=true;	//判断有没有更多的数据
-					var morePH="";
-					var _photosArea=$("#photosArea");
-					$("#getMorePh").on("click",function(){
-						if(canGetMore&&isCanGetMore){
-							$(".gtMreLodg").show();
-							canGetMore=false;
-								page++;
-								$.get(url,{page:page},function(data){
-									if(data==null){
-										isCanGetMore=false;
-										$("#getMorePh").prop("disabled",true).text("没有更多啦~");
-										$(".gtMreLodg").hide();
-									}else{
-										$.each(data,function(k,v){
-											morePH+='<div class="spImg" id="'+v.pid+'">';
-											morePH+='<div class="imgDIV">';
-											morePH+='<img src="'+v.spLink+'"></div>';
-											morePH+='<span>'+v.PName+'</span></div>';
-										});
-										$(".gtMreLodg").hide();
-										_photosArea.append(morePH);
-										morePH="";
-									}	
-								}).fail(function(){
-									$(".gtMreLodg").hide();
-									var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>&#xe613;</span>出错啦~</div>";
-										$('body').prepend(_fail);
-										setTimeout(function(){
-											$(".errorORwarn").hide().remove();
-										},1500);
-								});
-								setTimeout(function(){canGetMore=true;},1000);
-						}
-					});
-				</script><?php endif; ?>
+				</div><?php endif; ?>
 		</div>
 	</body>
 </html>

@@ -128,7 +128,15 @@ create table if not exists `collection`(
 	`status` int not null default 0,#0：正常、1：取消收藏
 	unique key `clt`(`uid`,`sid`)
 )DEFAULT CHARSET=UTF8;
-#==============================================
+#===============================================
+use YunPhotoAlbum;
+create table if not exists `like`(
+	`sid` varchar(16) not null,
+	`uid` varchar(16) not null,
+	`likeTime` varchar(11) not null,
+	primary key `lk`(`sid`,`uid`)
+)DEFAULT CHARSET=UTF8;
+#===============================================
 create database YunCompany; #云公司内部数据库
 #=======================================
 use YunCompany;

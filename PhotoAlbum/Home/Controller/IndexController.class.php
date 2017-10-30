@@ -59,14 +59,15 @@ class IndexController extends CommonOneController{
       }else{
         $arg=1;
       }*/
-      $arg=$this->numCheck2($arg,1);
+      //$arg=$this->numCheck2($arg,1);
+      $arg=numCheck2($arg,1);
       if($arg>$totalPage){
         $arg=$totalPage;
       }
       return $arg;
     }
 
-    private function numCheck2($num,$minNum){
+   /* private function numCheck2($num,$minNum){
       if(is_numeric($num)){
         if($num<=$minNum){
           $num=$minNum;
@@ -77,7 +78,7 @@ class IndexController extends CommonOneController{
         $num=$minNum;
       }
       return $num;
-    }
+    }*/
 
     private function timeFmtCge($selRst){
         $timeNow=time();
@@ -111,12 +112,12 @@ class IndexController extends CommonOneController{
         return $selRst;
     }
 
-    private function timeFmtCge2($selRst){
+    /*private function timeFmtCge2($selRst){
       foreach ($selRst as $key => $value) {
         $selRst[$key]['shareTime']=date("Y-m-d",$value['shareTime']);
       }
       return $selRst;
-    }
+    }*/
 
     public function showSH(){ //查找共享的图片
       $sid=trim(I("sid"));
@@ -126,8 +127,9 @@ class IndexController extends CommonOneController{
       }
       $getSH=D("IndexSelect");
       $selSPRst=$getSH->field("sid,uid,authorName,sName,profile,lookSum,likeSum,cltSum,shareTime")->where("sid='%s' AND status=0",$sid)->select();
-      $selSPRst=$this->timeFmtCge2($selSPRst);
-      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,3")->select();
+     // $selSPRst=$this->timeFmtCge2($selSPRst);
+      $selSPRst=timeFmtCge2($selSPRst);
+      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
       $this->assign("selSPRst",$selSPRst);
       $this->assign("selRst",$selRst);
       $this->display();
@@ -139,13 +141,14 @@ class IndexController extends CommonOneController{
         PHPerr();
       }
       $page=trim(I('get.page'));
-      $page=$this->numCheck2($page,2);
+      //$page=$this->numCheck2($page,2);
+      $page=numCheck2($page,2);
       $getSH=D("IndexSelect");
-      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("$page,3")->select();
+      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("$page,30")->select();
       foreach ($selRst as $key => $value) {
         $selRst[$key]['PName']=$value['PName']."_".$page;
       }
       $this->ajaxReturn($selRst);
-      print_r($selRst);
+      //print_r($selRst);
     }
 }
