@@ -137,7 +137,10 @@ class IndexController extends CommonOneController{
 
     public function showMoreSH(){
       $sid=trim(I("get.sid"));
-      if(!IS_AJAX&&!$sid){
+      if(!IS_AJAX){
+        PHPerr();
+      }
+      if(empty($sid)){
         PHPerr();
       }
       $page=trim(I('get.page'));
@@ -150,5 +153,21 @@ class IndexController extends CommonOneController{
       }
       $this->ajaxReturn($selRst);
       //print_r($selRst);
+    }
+
+    function lookSum(){
+      $sid=trim(I("post.sid"));
+      if(!IS_AJAX){
+        PHPerr();
+      }
+      if(empty($sid)){
+        PHPerr();
+      }
+      $lookSumKey=md5($sid."lookSum");
+      if(!cookie("$lookSumKey")){
+        $IncLookSum=D("IndexSelect");
+        $IncLookSum->where("sid='%s'",$sid)->setInc("lookSum");
+      }
+      cookie($lookSumKey,"1",time()+31536000);
     }
 }

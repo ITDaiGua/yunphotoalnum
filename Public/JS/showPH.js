@@ -1,5 +1,6 @@
+
 $(document).ready(function(){
-	var explain;
+	var explain="";
 	$(".tipoff,.collection,.swPHTop").hover(function(){
 		explain=$(this).find(".explain");
 		explain.stop(true,false).fadeIn(400).animate({left:"-100px"},{queue:false,duration:400});
@@ -268,16 +269,6 @@ $(document).ready(function(){
 		cmtTipoff.css("color","transparent");
 	});
 
-	/*$(".collection").click(function(){
-		var cltURL="/YunPhotoAlbum/AjaxOpt/collection";
-		$.post(cltURL,{sid:sid},function(data){
-			if(data.info=="noLogin"){
-
-			}else{
-				fail("&#xe687;","收藏成功");
-			}
-		});
-	});*/
 	$(".collection").one('click',function(){
 		var cltURL="/YunPhotoAlbum/AjaxOpt/collection";
 		$.post(cltURL,{sid:sid},function(data){
@@ -287,6 +278,27 @@ $(document).ready(function(){
 				fail("&#xe687;","收藏成功");
 			}
 		});
+	});
+
+	var canTipoff=true;
+	$(".tipoff").on("click",function(){
+		if(!canTipoff){
+			fail("&#xe687;","举报过了");
+			return false;
+		}
+		if($(".tipoffHtml").length>0){
+			$(".taslctLayer").show();
+			$(".tipoffHtml").show();
+			return false;
+		}
+		$("<link>").attr({
+			rel:"stylesheet",
+			type:"text/css",
+			href:"/YunPhotoAlbum/Public/CSS/spatipoff.css"
+		}).appendTo('head');
+		$("body").prepend($('<div class="tipoffHtml"></div>'));
+		$('.tipoffHtml').load("/YunPhotoAlbum/Public/TPL/spatipoff.html");
+		$(".taslctLayer").show();
 	});
 
 });

@@ -1,0 +1,48 @@
+<div class="tipoffTitie">
+	<span class="tpIconfont">&#xe691;</span>
+	举报
+	<span class="tpIconfont" id="tpfclose" title="关闭窗口">&#xe601;</span>
+</div>
+<form action="" method="post" id="ss">
+	<dl>
+		<dt><span>*</span>举报类型：</dt>
+		<dd>
+			<select id="tpselect">
+				<option>---请选择---</option>
+				<option value="图片无法查看">图片无法查看</option>
+				<option value="血腥恐怖">血腥恐怖</option>
+				<option value="反动色情">反动色情</option>
+				<option value="广告内容">广告内容</option>
+				<option value="侵犯版权">侵犯版权</option>
+				<option value="其他">其他</option>
+			</select>
+		</dd>
+		<dd id="tpselectInfo"></dd>
+	</dl>
+	<dl>
+		<dt><span>*</span>举报说明：</dt>
+		<dd>
+			<textarea id="tptextarea"></textarea>
+		</dd>
+		<dd id="tptextareaInfo"></dd>
+	</dl>
+	<dl>
+		<dt>上传图片:</dt>
+		<dd id="tpfImg">
+			<div class="tfpUploadImg">
+				<input type="file" name="tpImg" accept="image/jpeg,image/png,image/jpg">&#xe78c;
+			</div>
+		</dd>
+		<span style="font-size:13px;">最多3张1M大小的jpg、png图片</span>
+	</dl>
+	<dl style="margin-top:10px;">
+		<dt></dt>
+		<dd><input type="submit" value="提交举报" id="tpfSubmit"></dd>
+	</dl>
+</form>
+<script type="text/javascript">
+	$("#tpfclose").click(function(){
+		$(".tipoffHtml").hide();
+		$(".taslctLayer").hide();
+	});
+</script>

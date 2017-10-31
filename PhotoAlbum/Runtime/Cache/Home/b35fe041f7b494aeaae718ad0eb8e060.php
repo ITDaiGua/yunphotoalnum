@@ -212,4 +212,11 @@
 				</div><?php endif; ?>
 		</div>
 	</body>
+	<script type="text/javascript">
+		var sid=$(".allContent").attr("id");
+		var lookSumURL="/YunPhotoAlbum/Index/lookSum";
+		window.onload=function(){
+			$.post(lookSumURL,{sid:sid});
+		}
+	</script>
 </html>
