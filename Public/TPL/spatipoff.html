@@ -20,20 +20,27 @@
 		<dd id="tpselectInfo"></dd>
 	</dl>
 	<dl>
+		<dt><span>*</span>联系方式：</dt>
+		<dd>
+			<input type="text" name="tpContactWay" id="tpContactWay" placeholder="手机号码">
+		</dd>
+		<dd id="tptextareaInfo"></dd>
+	</dl>
+	<dl>
 		<dt><span>*</span>举报说明：</dt>
 		<dd>
-			<textarea id="tptextarea"></textarea>
+			<textarea id="tptextarea" placeholder="详细原因说明，最多140字符"></textarea>
 		</dd>
 		<dd id="tptextareaInfo"></dd>
 	</dl>
 	<dl>
 		<dt>上传图片:</dt>
-		<dd id="tpfImg">
+		<dd id="tpfImgDiv">
 			<div class="tfpUploadImg">
-				<input type="file" name="tpImg" accept="image/jpeg,image/png,image/jpg">&#xe78c;
+				<input type="file" name="tpImgs" accept="image/gif,image/jpeg,image/png,image/jpg">&#xe78c;
 			</div>
-		</dd>
-		<span style="font-size:13px;">最多3张1M大小的jpg、png图片</span>
+		</dd><br/>
+		<span style="font-size:13px;margin-left:100px;">最多3张小于1M的jpg、png图片</span>
 	</dl>
 	<dl style="margin-top:10px;">
 		<dt></dt>
@@ -44,5 +51,38 @@
 	$("#tpfclose").click(function(){
 		$(".tipoffHtml").hide();
 		$(".taslctLayer").hide();
+	});
+	$("#tpContactWay").on("propertychange input",function(){
+		var val=$(this).val();
+		val=val.replace(/[^0-9]/g,"");
+		if(val.length>11){
+			val=val.substring(0,11);
+		}
+		$(this).val(val);
+	});
+	$("#tptextarea").on("propertychange input",function(){
+		var val=$.trim($(this).val());
+		if(val.length>140){
+			val=val.substring(0,140);
+		}
+		$(this).val(val);
+	});
+	var tfpUploadImg=$(".tfpUploadImg");
+	var tfpDataObj=new Date();
+	$("input[name='tpImgs']").change(function(even){
+		var tpImgsLink=$.trim($(this).val());
+		if(tpImgsLink==null){
+			return false;
+		}
+		var tmpArr=tpImgsLink.split(".");
+		var imgType=(tmpArr.pop()).toLowerCase();
+		var id="tfp"+tfpDataObj.getTime();
+		var isCorrect=(imgType=="gif"||imgType=="png"||imgType=="jpg"||imgType=="jpeg");
+		if(!isCorrect){
+			return false;
+		}
+		var img=$("<img src='/YunPhotoAlbum/Public/SysImg/imgbg.png' width='80' height='80'>").attr({id:id});
+		tfpUploadImg.before(img);
+		img.wrap("<div class='tpfImg'></div>")
 	});
 </script>

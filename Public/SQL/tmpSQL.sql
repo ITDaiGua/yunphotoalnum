@@ -98,7 +98,8 @@ create table if not exists `SPATipOff`(
 	`uid` varchar(16) not null, #举报人id
 	`sid` varchar(16) not null, #共享文件夹id
 	`style` varchar(10) not null, #举报的类型
-	`explain` varchar(150) not null, #举报说明
+	`tpContactWay` varchar(11) not null,#举报人的联系方式
+	`tpexplain` varchar(150) not null, #举报说明
 	`TipOffTime` varchar(11) not null, #举报时间
 	`handleAd` varchar(17), #处理的管理员
 	`result` varchar(100), #处理结果
