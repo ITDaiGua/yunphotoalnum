@@ -100,11 +100,13 @@ create table if not exists `SPATipOff`(
 	`style` varchar(10) not null, #举报的类型
 	`tpContactWay` varchar(11) not null,#举报人的联系方式
 	`tpexplain` varchar(150) not null, #举报说明
+	`tpImgs` text,#举报的图片
 	`TipOffTime` varchar(11) not null, #举报时间
 	`handleAd` varchar(17), #处理的管理员
 	`result` varchar(100), #处理结果
 	`handleTime` varchar(11), #处理时间
-	`status` int not null #0：处理中、1：处理不通过、2：处理通过
+	`status` int not null, #0：处理中、1：处理不通过、2：处理通过
+	unique key `stfuk`(`uid`,`sid`)
 )DEFAULT CHARSET=UTF8;
 #==============================================
 use YunPhotoAlbum;

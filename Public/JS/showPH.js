@@ -155,7 +155,11 @@ $(document).ready(function(){
 				fail("&#xe687;","点赞成功");
 			}else if(data.info=="exists"){
 				fail("&#xe687;","赞过啦~");
+			}else{
+				fail("&#xe613;","出错啦~");
 			}
+		}).fail(function(){
+			fail("&#xe613;","出错啦~");
 		});
 	});
 
@@ -272,33 +276,36 @@ $(document).ready(function(){
 	$(".collection").one('click',function(){
 		var cltURL="/YunPhotoAlbum/AjaxOpt/collection";
 		$.post(cltURL,{sid:sid},function(data){
-			if(data.info=="noLogin"){
+			if(data.info='success'){
+				fail("&#xe687;","收藏成功");
+			}else if(data.info=="noLogin"){
 
 			}else{
-				fail("&#xe687;","收藏成功");
+				fail("&#xe613;","出错啦~");
 			}
 		});
 	});
 
 	var canTipoff=true;
 	$(".tipoff").on("click",function(){
-		if(!canTipoff){
-			fail("&#xe687;","举报过了");
-			return false;
-		}
 		if($(".tipoffHtml").length>0){
 			$(".taslctLayer").show();
 			$(".tipoffHtml").show();
 			return false;
 		}
+		if(!canTipoff){
+			return false;
+		}
+		canTipoff=false;
 		$("<link>").attr({
 			rel:"stylesheet",
 			type:"text/css",
 			href:"/YunPhotoAlbum/Public/CSS/spatipoff.css"
 		}).appendTo('head');
 		$("body").prepend($('<div class="tipoffHtml"></div>'));
-		$('.tipoffHtml').load("/YunPhotoAlbum/Public/TPL/spatipoff.html");
-		$(".taslctLayer").show();
+		$('.tipoffHtml').load("/YunPhotoAlbum/Public/TPL/spatipoff.html",function(){
+			$(".taslctLayer").show();
+		});
 	});
 
 });

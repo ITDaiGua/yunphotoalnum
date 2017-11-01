@@ -18,8 +18,12 @@ use Home\Controller\CommonTwoController;
 			$data['status']=0;
 			$data['tipOffSum']=0;
 			$data['isIgnore']=0;
-			$commentTB->table('comments')->add($data);
-			$this->ajaxReturn(array("info"=>"success"));
+			$rst=$commentTB->table('comments')->add($data);
+			if($rst){
+				$this->ajaxReturn(array("info"=>"success"));
+			}else{
+				$this->ajaxReturn(array("info"=>"error"));
+			}
 		}
 
 		public function getComment(){
@@ -100,6 +104,7 @@ use Home\Controller\CommonTwoController;
 			$uid=trim(session("uid"));
 			$likeCkKey=md5($sid.$uid);
 			if(cookie("$likeCkKey")){
+				cookie($likeCkKey,1,time()+31536000);
 				$this->ajaxReturn(array("info"=>"exists"));
 			}else{
 				$likeTB=M();
@@ -109,9 +114,14 @@ use Home\Controller\CommonTwoController;
 					$data['sid']=$sid;
 					$data['uid']=$uid;
 					$data['likeTime']=time();
-					$likeTB->table("like")->add($data);
-					cookie($likeCkKey,1,time()+31536000);
-					$this->ajaxReturn(array("info"=>"success"));
+					$rst=$likeTB->table("like")->add($data);
+					if($rst){
+						cookie($likeCkKey,1,time()+31536000);
+						$this->ajaxReturn(array("info"=>"success"));
+					}else{
+						$this->ajaxReturn(array("info"=>"error"));
+					}
+					
 				}else{
 					cookie($likeCkKey,1,time()+31536000);
 					$this->ajaxReturn(array("info"=>"exists"));
@@ -133,14 +143,84 @@ use Home\Controller\CommonTwoController;
 			$data['status']=0;
 			$cltTB=M();
 			$selRst=$cltTB->table("collection")->where("sid='%s' AND uid='%s' AND status=0",$data['sid'],$data['uid'])->select();
+			$rst='';
 			if(empty($selRst)){
-				$cltTB->table("collection")->field('cltId,uid,sid,cltTime,status')->add($data,$options=array(),$replace=true);
+				$rst=$cltTB->table("collection")->field('cltId,uid,sid,cltTime,status')->add($data,$options=array(),$replace=true);
 			}else{
 				$cltTime=time();
-				$cltTB->table("collection")->where("sid='%s' AND uid='%s'",$data['sid'],$data['uid'])->save(array("cltTime"=>$cltTime));
+				$rst=$cltTB->table("collection")->where("sid='%s' AND uid='%s'",$data['sid'],$data['uid'])->save(array("cltTime"=>$cltTime));
 			}
-			
+			if($rst){
+				$this->ajaxReturn(array("info"=>"success"));
+			}else{
+				$this->ajaxReturn(array("info"=>"error"));
+			}
 		}
 
+		public function ajaxUpload1(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$sid=trim(I('get.sid'));
+			if(empty($sid)){
+				PHPerr();
+			}
+			$uid=trim(session("uid"));
+			$spatipoffTB=M();
+			$selRst=$spatipoffTB->table('spatipoff')->where("sid='%s' AND uid='%s'",$sid,$uid)->cache(true,120)->find();
+			if(!empty($selRst)){
+				$this->ajaxReturn(array("info"=>"exists"));
+			}
+			$upload = new \Think\Upload();
+			$upload->maxSize = 1048576 ;
+			$upload->exts = array('jpg', 'gif', 'png', 'jpeg');
+			$upload->rootPath="./";
+			$upload->savePath = 'Public/tipoffImg/';
+			$upload->subName = session("uid");
+			$filename="tpi".time();
+			$upload->saveName = $filename;
+			$info = $upload->upload();
+			if(!$info) { 
+				$this->ajaxReturn(array("info"=>"error"));
+			}else{ 
+				$this->ajaxReturn(array("info"=>"success","filename"=>session("uid")."/".$filename));
+			}
+		}
+
+		public function tipiff(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$data['sid']=trim(I('post.sid'));
+			$data['uid']=session('uid');
+			$data['style']=trim(I('post.tipoffType'));
+			$data['tpContactWay']=trim(I('post.tpContactWay'));
+			$data['tpexplain']=trim(I('post.tptextarea'));
+			$data['tpImgs']=trim(I('post.imgsSrc'));
+			$isFalse=empty($data['sid'])||empty($data['style'])||empty($data['tpContactWay'])||empty($data['tpexplain']);
+			if($isFalse){
+				PHPerr();
+			}
+			$cookieKey=md5($data['sid'].$data['uid']."rst");
+			$data['stfId']='stf'.time().mt_rand(0,9).mt_rand(0,9);
+			$spatipoffTB=M();
+			if(cookie("$cookieKey")){
+				cookie($likeCkKey,1,time()+31536000);
+				$this->ajaxReturn(array("info"=>"exists"));
+			}else{
+				$selRst=$spatipoffTB->table('spatipoff')->where("sid='%s' AND uid='%s'",$data['sid'],$data['uid'])->find();
+				if(!empty($selRst)){
+					cookie($likeCkKey,1,time()+31536000);
+					$this->ajaxReturn(array("info"=>"exists"));
+				}
+			}
+			$rst=$spatipoffTB->table('spatipoff')->field('stfId,sid,uid,style,tpContactWay,tpexplain,tpImgs,status')->add($data);
+			if($rst){
+				cookie($likeCkKey,1,time()+31536000);
+				$this->ajaxReturn(array("info"=>'success'));
+			}else{
+				$this->ajaxReturn(array("info"=>'error'));
+			}
+		}
 	}
 ?>

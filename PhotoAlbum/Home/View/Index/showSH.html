@@ -163,23 +163,24 @@
 								var url="/YunPhotoAlbum/AjaxOpt/comment/";
 								$.post(url,{"sid":sid,"comment":commentCont},function(data){
 									if(data.info=="success"){
-										var _success="<div class='errorORwarn' style='background-color:#fff'><span class='iconfont errorORwarnImg'>&#xe687;</span>评论成功</div>";
-										$('body').prepend(_success);
-										setTimeout(function(){
-											location.reload();
-										},1500);
+										fail("&#xe687;","感谢评论");
+										location.reload();
+									}else{
+										fail("&#xe613;","出错啦~");
 									}
 								}).fail(function(){
-									var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>&#xe613;</span>评论失败</div>";
-										$('body').prepend(_fail);
-										setTimeout(function(){
-											$(".errorORwarn").hide().remove();
-											//location.reload();
-										},1500);
+										fail("&#xe613;","评论失败");
 										isCanCmt=true;
 								});
 							});
 						});
+						function fail(img,info){
+							var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
+							$('body').prepend(_fail);
+							setTimeout(function(){
+								$(".errorORwarn").hide().remove();
+							},1500);
+						}
 					</script>
 				</div>
 				<div id="photosArea">
