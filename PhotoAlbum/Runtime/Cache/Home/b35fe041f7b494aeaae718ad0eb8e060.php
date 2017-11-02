@@ -78,6 +78,7 @@
 				</div>
 			</div><?php endif; ?>
 		<div class="allContent" id="<?php echo ($selSPRst[0]['sid']); ?>">
+			<input type="hidden" name="hidUid" value="<?php echo ($selSPRst[0]['uid']); ?>">
 			<?php if($selSPRst == ''): ?><div class="nothing"></div>
 			<?php else: ?>
 				<?php if(is_array($selSPRst)): foreach($selSPRst as $key=>$value): ?><div class="showPhHead">

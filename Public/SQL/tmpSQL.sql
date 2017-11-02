@@ -133,6 +133,16 @@ create table if not exists `collection`(
 )DEFAULT CHARSET=UTF8;
 #===============================================
 use YunPhotoAlbum;
+delimiter //
+CREATE TRIGGER `inc_afterClt`
+AFTER INSERT ON `collection`
+FOR EACH ROW
+BEGIN
+      update `sharePA` set cltSum=cltSum+1 where sid=new.sid;
+END//
+delimiter ;
+#===============================================
+use YunPhotoAlbum;
 create table if not exists `like`(
 	`sid` varchar(16) not null,
 	`uid` varchar(16) not null,
@@ -169,4 +179,7 @@ insert into sharephoto values("s123456","p79456","大海","/YunPhotoAlbum/Public
 	("s123456","p78456","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
 	("s123456","p85457","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
 	("s123456","p25496","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0)
-	
+#==========================================
+管理员身份：admid、admRank、admSectionId、admAuth=e51b9d5c21e543b8f93b9aa95b4c7cc7
+admRank=ad_1：普通员工、ad_2：部门主管、ad_3：高级管理
+admSectionId=a001:高级管理、a002:客服部、a003:法务部、a004:运营部

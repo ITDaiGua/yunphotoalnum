@@ -1511,3 +1511,18 @@ function timeFmtCge2($selRst){
   }
   return $selRst;
 }
+
+function echoImg($path,$type,$w,$h,$t){
+  $image=new \Think\Image();
+  $image->open($path);
+  $image->thumb($w,$h, $t);
+  switch($type){
+    case 'jpeg':
+    case 'jpg':@header('Content-Type:image/jpg');break;
+    case 'gif':@header('Content-Type:image/gif');break;
+    case 'png':@header('Content-Type:image/png');break;
+    default:@header('Content-Type:image/jpg');
+  }
+  $image->save(NULL);
+  die();
+}

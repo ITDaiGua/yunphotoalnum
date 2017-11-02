@@ -183,7 +183,7 @@ use Home\Controller\CommonTwoController;
 			if(!$info) { 
 				$this->ajaxReturn(array("info"=>"error"));
 			}else{ 
-				$this->ajaxReturn(array("info"=>"success","filename"=>session("uid")."/".$filename));
+				$this->ajaxReturn(array("info"=>"success","subdir"=>$uid,"filename"=>$filename));
 			}
 		}
 
@@ -197,6 +197,7 @@ use Home\Controller\CommonTwoController;
 			$data['tpContactWay']=trim(I('post.tpContactWay'));
 			$data['tpexplain']=trim(I('post.tptextarea'));
 			$data['tpImgs']=trim(I('post.imgsSrc'));
+			$data['tpImgs']=str_ireplace("thumb1","thumbAuth",$data['tpImgs']);
 			$isFalse=empty($data['sid'])||empty($data['style'])||empty($data['tpContactWay'])||empty($data['tpexplain']);
 			if($isFalse){
 				PHPerr();

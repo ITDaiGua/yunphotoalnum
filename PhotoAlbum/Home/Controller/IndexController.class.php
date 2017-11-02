@@ -2,6 +2,8 @@
 namespace Home\Controller;
 use Home\Controller\CommonOneController;
 class IndexController extends CommonOneController{
+    private $admAuthStr="e51b9d5c21e543b8f93b9aa95b4c7cc7";
+    private $typeArr=array("gif","jpeg","png","jpg");
     public function index(){
         $styleLi1="style='background-color:#00a2ff;color:#fff;'";
         $init=array(
@@ -16,7 +18,6 @@ class IndexController extends CommonOneController{
         $init['condition']=$condition;
         $lastpg=I('param.lastpg',"1");
         $page=I('param.page',"1");
-         //echo $page;
       	if($condition=="综合"){
       		$count=$getSharePA->where("status=%d",0)->cache(true,1)->count();
           $totalPage=ceil($count/50);
@@ -50,35 +51,12 @@ class IndexController extends CommonOneController{
     }
 
     private function numCheck($arg,$totalPage){
-      /*if(is_numeric($arg)){
-        if($arg<=1){
-          $arg=1;
-        }elseif(!is_int($arg)){
-          $arg=floor($arg);
-        }
-      }else{
-        $arg=1;
-      }*/
-      //$arg=$this->numCheck2($arg,1);
       $arg=numCheck2($arg,1);
       if($arg>$totalPage){
         $arg=$totalPage;
       }
       return $arg;
     }
-
-   /* private function numCheck2($num,$minNum){
-      if(is_numeric($num)){
-        if($num<=$minNum){
-          $num=$minNum;
-        }elseif(!is_int($num)){
-          $num=floor($num);
-        }
-      }else{
-        $num=$minNum;
-      }
-      return $num;
-    }*/
 
     private function timeFmtCge($selRst){
         $timeNow=time();
@@ -112,13 +90,6 @@ class IndexController extends CommonOneController{
         return $selRst;
     }
 
-    /*private function timeFmtCge2($selRst){
-      foreach ($selRst as $key => $value) {
-        $selRst[$key]['shareTime']=date("Y-m-d",$value['shareTime']);
-      }
-      return $selRst;
-    }*/
-
     public function showSH(){ //查找共享的图片
       $sid=trim(I("sid"));
       if(!$sid){
@@ -127,7 +98,6 @@ class IndexController extends CommonOneController{
       }
       $getSH=D("IndexSelect");
       $selSPRst=$getSH->field("sid,uid,authorName,sName,profile,lookSum,likeSum,cltSum,shareTime")->where("sid='%s' AND status=0",$sid)->select();
-     // $selSPRst=$this->timeFmtCge2($selSPRst);
       $selSPRst=timeFmtCge2($selSPRst);
       $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
       $this->assign("selSPRst",$selSPRst);
@@ -144,18 +114,16 @@ class IndexController extends CommonOneController{
         PHPerr();
       }
       $page=trim(I('get.page'));
-      //$page=$this->numCheck2($page,2);
       $page=numCheck2($page,2);
       $getSH=D("IndexSelect");
-      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("$page,30")->select();
+      $selRst=$getSH->field("sid,spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("$page,30")->select();
       foreach ($selRst as $key => $value) {
         $selRst[$key]['PName']=$value['PName']."_".$page;
       }
       $this->ajaxReturn($selRst);
-      //print_r($selRst);
     }
 
-    function lookSum(){
+    public function lookSum(){
       $sid=trim(I("post.sid"));
       if(!IS_AJAX){
         PHPerr();
@@ -170,4 +138,120 @@ class IndexController extends CommonOneController{
       }
       cookie($lookSumKey,"1",time()+31536000);
     }
+
+    public function thumb1(){
+      $subPath=trim(I('param.p'))."/";
+      $fileName=trim(I('param.fn'));
+      $type=strtolower(trim(I('param.t')));
+      $path=$this->pathAuth1($subPath,$fileName,$type);
+      $w=trim(I('param.w'));
+      $h=trim(I('param.h'));
+      $w=$this->imageSize($w);
+      $h=$this->imageSize($h);
+      echoImg($path,$type,$w,$h,6);
+    }
+
+    public function thumb1org(){
+      $subPath=trim(I('param.p'))."/";
+      $fileName=trim(I('param.fn'));
+      $type=strtolower(trim(I('param.t')));
+      $path=$this->pathAuth1($subPath,$fileName,$type);
+      switch($type){
+        case 'jpeg':
+        case 'jpg':@header('Content-Type:image/jpg');break;
+        case 'gif':@header('Content-Type:image/gif');break;
+        case 'png':@header('Content-Type:image/png');break;
+        default:@header('Content-Type:image/jpg');
+      }
+      readfile($path);
+    }
+
+    public function thumbAuth(){
+      $sid=I('param.sid','','trim');
+      $fileName=I('param.fn','','trim');
+      $uid=I('param.u','','trim');
+      $type=strtolower(I('param.t','','trim'));
+      $path=$this->pathAuth($sid,$fileName,$uid,$type);
+      $w=I('param.w','','trim');
+      $h=I('param.h','','trim');
+      $w=$this->imageSize($w);
+      $h=$this->imageSize($h);
+      echoImg($path,$type,$w,$h,6);
+    }
+
+    public function originImg(){
+      $sid=I('param.sid','','trim');
+      $fileName=I('param.fn','','trim');
+      $uid=I('param.u','','trim');
+      $type=strtolower(I('param.t','','trim'));
+      $path=$this->pathAuth($sid,$fileName,$uid,$type);
+      switch($type){
+        case 'jpeg':
+        case 'jpg':@header('Content-Type:image/jpg');break;
+        case 'gif':@header('Content-Type:image/gif');break;
+        case 'png':@header('Content-Type:image/png');break;
+        default:@header('Content-Type:image/jpg');
+      }
+      readfile($path);
+    }
+
+    private function pathAuth1($subPath,$fileName,$type){
+      $rootPath="./Public/";
+      if(stripos($subPath,"tipoffImg")!==FALSE){
+        $uid="-".session('uid');
+        $admAuth=session('admAuth');
+        if(stripos($subPath,$uid)===FALSE&&$admAuth!==$this->admAuthStr){
+          $subPath="";
+        }else{
+          $subPath=$subPath;
+        }
+      }
+      if(stripos($subPath,"image")!==FALSE){
+        $subPath="";
+      }
+      if(!in_array($type,$this->typeArr)){
+        $type="";
+      }
+      if(empty($subPath)||empty($fileName)||empty($type)){
+        $path='./Public/SysImg/noexists.png';
+      }else{
+        $subPath=str_ireplace("-","/",$subPath);
+        $path=$rootPath.$subPath.$fileName.".".$type;
+      }
+      return $path;
+    }
+
+    private function pathAuth($sid,$fileName,$uid,$type){
+      $rootPath="./Public/image/";
+      if(!in_array($type,$this->typeArr)||empty($fileName)){
+        $path='./Public/SysImg/noAuth.png';
+      }elseif(session("uid")===$uid){
+        $path=$rootPath.$uid."/".$fileName.".".$type;
+      }elseif(session("admSectionId")==="a001"&&session('admAuth')===$this->admAuth&&session('admRank')==="ad_1"){
+        $path=$rootPath.$uid."/".$fileName.".".$type;
+      }else{
+        $authTb=D("IndexSelect");
+        $sidSel=$authTb->field('sid,uid,status')->where("sid='%s' AND status=0",$sid)->cache(true,31536000)->find();
+        if(!empty($sidSel)){
+          $path=$rootPath.$sidSel['uid']."/".$fileName.".".$type;
+        }else{
+          $path='./Public/SysImg/noAuth.png';
+        }
+      }
+      return $path;
+    }
+
+    private function imageSize($num){
+      if(is_numeric($num)){
+        if($num<=10){
+          $num=10;
+        }else{
+          $num=$num;
+        }
+      }else{
+        $num=150;
+      }
+      return floor($num);
+    }
+    
 }

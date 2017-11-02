@@ -1,3 +1,0 @@
-<?php
-//000000000120a:12:{s:5:"stfId";s:15:"stf150955224636";s:3:"uid";s:16:"u145678945123458";s:3:"sid";s:7:"s123456";s:5:"style";s:18:"图片无法查看";s:12:"tpContactWay";s:11:"18813757931";s:9:"tpexplain";s:66:"这些图片都是盗取我的，我有直接证据证明其侵权";s:6:"tpImgs";s:176:"http://localhost:8080/YunPhotoAlbum/Public/tipoffImg/u145678945123458/tpi1509552240.jpg|http://localhost:8080/YunPhotoAlbum/Public/tipoffImg/u145678945123458/tpi1509552243.jpg|";s:10:"TipOffTime";s:0:"";s:8:"handleAd";N;s:6:"result";N;s:10:"handleTime";N;s:6:"status";s:1:"0";}
-?>

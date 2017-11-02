@@ -96,7 +96,7 @@ body{
 	min-height:700px;
 	left:50%;
 	margin-left:-500px;
-	/*z-index:1;*/
+	z-index:1;
 }
 .pageNum{
 	position:relative;
