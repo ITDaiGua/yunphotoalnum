@@ -54,7 +54,7 @@
 		<a href="">注册</a>
 		<img src="/YunPhotoAlbum/Public/SysImg/uimg.jpg" class="uImg"><?php endif; ?>
 </div>
-		<?php if($selSPRst != ''): ?><div class="iconfont rightOpt">
+		<?php if(!empty($selSPRst[0]['uid'])): ?><div class="iconfont rightOpt">
 				<div class="tipoff">
 					<div class="explain">
 						举报
@@ -79,12 +79,12 @@
 			</div><?php endif; ?>
 		<div class="allContent" id="<?php echo ($selSPRst[0]['sid']); ?>">
 			<input type="hidden" name="hidUid" value="<?php echo ($selSPRst[0]['uid']); ?>">
-			<?php if($selSPRst == ''): ?><div class="nothing"></div>
+			<?php if(empty($selSPRst[0]['uid'])): ?><div class="nothing"></div>
 			<?php else: ?>
 				<?php if(is_array($selSPRst)): foreach($selSPRst as $key=>$value): ?><div class="showPhHead">
 					<div class="shareUInfo">
-						<a href="">
-							<img src="/YunPhotoAlbum/Public/UserImg/<?php echo ($value['uid']); ?>.jpg" class="swPHUImg">
+						<a href="/YunPhotoAlbum/User/authorInfo/uid/<?php echo ($selSPRst[0]['uid']); ?>">
+							<img src="<?php echo ($selSPRst[0]['userImg']); ?>/w/100/h/100" class="swPHUImg">
 							<span class="authorName"><?php echo ($value['authorName']); ?></span>
 						</a>
 					</div>
@@ -196,19 +196,22 @@
 					</script>
 				</div>
 				<div id="photosArea">
-					<?php if(is_array($selRst)): foreach($selRst as $key=>$value): ?><div class="spImg" id="<?php echo ($value['pid']); ?>">
-							<div class="imgDIV">
-								<img src="<?php echo ($value['spLink']); ?>">
-							</div>
-							<span><?php echo ($value['PName']); ?></span>
-						</div><?php endforeach; endif; ?>
+					<?php if(empty($selRst)): ?><div class="nothing"></div>
+					<?php else: ?>
+						<?php if(is_array($selRst)): foreach($selRst as $key=>$value): ?><div class="spImg" id="<?php echo ($value['pid']); ?>">
+								<div class="imgDIV">
+									<img src="<?php echo ($value['spLink']); ?>">
+								</div>
+								<span><?php echo ($value['PName']); ?></span>
+							</div><?php endforeach; endif; endif; ?>
 				</div>
 				<div class="gtMreLodg">
 					<img src="/YunPhotoAlbum/Public/SysImg/loading.gif" class="loadingGif2">
 				</div>
-				<div id="getMorePhDiv" class="getMoreDiv">
-					<button id="getMorePh" class="getMore">获取更多&#xe6b9;</button>
-				</div>
+				<?php if(!empty($selRst)): ?><div id="getMorePhDiv" class="getMoreDiv">
+						<button id="getMorePh" class="getMore">获取更多&#xe6b9;</button>
+					</div><?php endif; ?>
+				
 				<div id="getMoreCmtDiv" class="getMoreDiv" style="display:none;">
 					<button id="getMoreCmt" class="getMore">获取更多&#xe6b9;</button>
 				</div><?php endif; ?>

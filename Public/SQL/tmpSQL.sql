@@ -13,10 +13,15 @@ create table if not exists `user`(
 	`userImg` varchar(100),	#用户头像地址
 	`securityQst` varchar(100), #密保
 	`securityAsw` varchar(32),	#密保答案
-	`rgstTime` varchar(11) not null, #注册时间
+	`rgstTime` date not null, #注册时间
 	`status` int default 0,	#0：正常、1：临时冻结、2：冻结
 	key `login`(`umail`,`upw`,`status`)
 )DEFAULT CHARSET=UTF8;
+#==============================================
+insert into `user`(`uid`,`umail`,`uname`,`upw`,`usex`,`rgstTime`,`status`) 
+values('u789123','1571190643@qq.com','莫白柏','asadce15xscvbn2er','男','1234567899
+','0'),('u7871123','1789461315@qq.com','刘焕子','asadce15xscvbn2er','男','1508847812
+','0');
 #==============================================
 use YunPhotoAlbum;
 create table if not exists `uloginlog`(

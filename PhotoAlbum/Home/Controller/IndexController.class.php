@@ -97,10 +97,13 @@ class IndexController extends CommonOneController{
         exit;
       }
       $getSH=D("IndexSelect");
-      $selSPRst=$getSH->field("sid,uid,authorName,sName,profile,lookSum,likeSum,cltSum,shareTime")->where("sid='%s' AND status=0",$sid)->select();
+      $selSPRst=$getSH->field("a.sid,a.uid,a.authorName,a.sName,a.profile,a.lookSum,a.likeSum,a.cltSum,a.shareTime,b.userImg")->table('sharepa a,user b')->where("a.sid='%s' AND a.status=0 AND a.uid=b.uid",$sid)->select();
+      if(empty($selSPRst[0]['userImg'])){
+        $selSPRst[0]['userImg']='/YunPhotoAlbum/Public/SysImg/uimg.jpg';
+      }
       $selSPRst=timeFmtCge2($selSPRst);
       $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
-      $this->assign("selSPRst",$selSPRst);
+     $this->assign("selSPRst",$selSPRst);
       $this->assign("selRst",$selRst);
       $this->display();
     }
@@ -117,9 +120,9 @@ class IndexController extends CommonOneController{
       $page=numCheck2($page,2);
       $getSH=D("IndexSelect");
       $selRst=$getSH->field("sid,spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("$page,30")->select();
-      foreach ($selRst as $key => $value) {
+      /*foreach ($selRst as $key => $value) {
         $selRst[$key]['PName']=$value['PName']."_".$page;
-      }
+      }*/
       $this->ajaxReturn($selRst);
     }
 

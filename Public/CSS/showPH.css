@@ -363,7 +363,7 @@
 	height:300px;
 	left:50%;
 	margin-left:-200px;
-	background-image:url(/YunPhotoAlbum/Public/SysImg/noCmt.png);
+	background-image:url('/YunPhotoAlbum/Public/SysImg/noCmt.png');
 }
 .cmtDiv{
 	width:1000px;

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">    
+	<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache">    
+	<meta HTTP-EQUIV="Expires" CONTENT="0"> 
+	<title>作者空间</title>
+	<link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/SysImg/cloud.ico">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/commonCss.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/authorInfo.css">
+	<script type="text/javascript" src="__PUBLIC__/JS/jquery-3.1.1.min.js"></script>
+	<!--[if lte IE 8]>
+		<script type="text/javascript" src="__PUBLIC__/JS/jquery.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="__PUBLIC__/JS/authorInfo.js"></script>
+</head>
+<body>
+	<include file="CommonView/HeadMenu"/>
+	<div class="goTop" onselectstart="return false;" title="回到顶部">&#xe64a;</div>
+	<script type="text/javascript">
+		$(".goTop").click(function(){
+			$("body,html").stop(true,false).animate({scrollTop:0},200);
+		});
+	</script>
+	<notempty name="selRst['uid']">
+		<div class="allContent" id="<{$selRst['uid']}>">
+			<div class='uInfoHead'>
+				<div class='uInfoImg'>
+					<img src="<{$selRst['userImg']}>/w/100/h/110">
+				</div>
+				<div  class='uInfoTitle'>
+					<{$selRst['uname']}>的个人空间
+				</div>
+			</div>
+			<div class="hr"></div>
+			<div id="ahProfile">
+				<span id='ahProfile-Title'>作者简介：</span>
+				<{$selRst['profile']}>
+			</div>
+			<div class="detailInfo">
+				<span class="detailInfo-title">作者昵称：</span>
+				<{$selRst['uname']}>
+			</div>
+			<div class="detailInfo">
+				<span class="detailInfo-title">姓名：</span>
+				<{$selRst['autonym']}>
+			</div>
+			<div class="detailInfo">
+				<span class="detailInfo-title">性别：</span>
+				<{$selRst['usex']}>
+			</div>
+			<div class="detailInfo">
+				<span class="detailInfo-title">注册时间：</span>
+				<{$selRst['rgstTime']}>
+			</div>
+			<div class="authorSeBg"></div>
+			<div class="shareDiv">
+				<if condition="$hisshare eq 'nothing'">
+					<div class="nothing"></div>
+				<else />
+					<foreach name="hisshare" item="v" key="k">
+						<a href="/YunPhotoAlbum/Index/showSH/sid/<{$v['sid']}>/" class="hisshare">
+							<img src="__PUBLIC__/SysImg/folderImg2.png">
+							<span class="hisshareNm"><{$v['sName']}></span>
+						</a>
+					</foreach>
+				</if>
+			</div>
+			
+			<div class="loadingai">
+				<img src="/YunPhotoAlbum/Public/SysImg/loading.gif">
+			</div>
+		</div>
+	<else />
+		<div class="nothing"></div>
+	</notempty>
+</body>
+</html>

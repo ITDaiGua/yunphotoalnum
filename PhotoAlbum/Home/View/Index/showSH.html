@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<include file="CommonView/HeadMenu"/>
-		<if condition="$selSPRst neq ''">
+		<notempty name="selSPRst[0]['uid']">
 			<div class="iconfont rightOpt">
 				<div class="tipoff">
 					<div class="explain">
@@ -60,17 +60,17 @@
 					&#xe64a;
 				</div>
 			</div>
-		</if>
+		</notempty>
 		<div class="allContent" id="<{$selSPRst[0]['sid']}>">
 			<input type="hidden" name="hidUid" value="<{$selSPRst[0]['uid']}>">
-			<if condition="$selSPRst eq ''">
+			<empty name="selSPRst[0]['uid']">
 				<div class="nothing"></div>
 			<else/>
 				<foreach name="selSPRst" key="key" item="value">
 					<div class="showPhHead">
 					<div class="shareUInfo">
-						<a href="">
-							<img src="__PUBLIC__/UserImg/<{$value['uid']}>.jpg" class="swPHUImg">
+						<a href="/YunPhotoAlbum/User/authorInfo/uid/<{$selSPRst[0]['uid']}>">
+							<img src="<{$selSPRst[0]['userImg']}>/w/100/h/100" class="swPHUImg">
 							<span class="authorName"><{$value['authorName']}></span>
 						</a>
 					</div>
@@ -185,25 +185,32 @@
 					</script>
 				</div>
 				<div id="photosArea">
-					<foreach name="selRst" key="key" item="value">
-						<div class="spImg" id="<{$value['pid']}>">
-							<div class="imgDIV">
-								<img src="<{$value['spLink']}>">
+					<empty name="selRst">
+						<div class="nothing"></div>
+					<else />
+						<foreach name="selRst" key="key" item="value">
+							<div class="spImg" id="<{$value['pid']}>">
+								<div class="imgDIV">
+									<img src="<{$value['spLink']}>">
+								</div>
+								<span><{$value['PName']}></span>
 							</div>
-							<span><{$value['PName']}></span>
-						</div>
-					</foreach>
+						</foreach>
+					 </empty>
 				</div>
 				<div class="gtMreLodg">
 					<img src="__PUBLIC__/SysImg/loading.gif" class="loadingGif2">
 				</div>
-				<div id="getMorePhDiv" class="getMoreDiv">
-					<button id="getMorePh" class="getMore">获取更多&#xe6b9;</button>
-				</div>
+				<notempty name="selRst">
+					<div id="getMorePhDiv" class="getMoreDiv">
+						<button id="getMorePh" class="getMore">获取更多&#xe6b9;</button>
+					</div>
+				</notempty>
+				
 				<div id="getMoreCmtDiv" class="getMoreDiv" style="display:none;">
 					<button id="getMoreCmt" class="getMore">获取更多&#xe6b9;</button>
 				</div>
-			</if>
+			</empty>
 		</div>
 	</body>
 	<script type="text/javascript">

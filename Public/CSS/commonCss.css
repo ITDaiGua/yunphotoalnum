@@ -186,5 +186,5 @@ input[name=gotoBtt]{
 	height:300px;
 	left:50%;
 	margin-left:-200px;
-	background-image:url(../SysImg/nothing.png);
+	background-image:url('../SysImg/nothing.png');
 }
