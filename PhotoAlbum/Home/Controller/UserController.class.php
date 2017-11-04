@@ -3,9 +3,55 @@ namespace Home\Controller;
 use Home\Controller\CommonOneController;
 	class UserController extends CommonOneController{
 		public function index(){
-
-		}
-
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UserTB=D('User');
+			$data=$UserTB->field("umail,upw")->create();
+			if(!$data){
+				exit;
+			}
+			$lgselRst=$UserTB->field("uid,uname,upw,umail,status")->where("umail='%s'",$data['umail'])->find();
+			if(empty($lgselRst)){
+				$this->ajaxReturn(array('info'=>'err0'));	//用户不存在
+			}
+			$lgLogTb=M();
+			$lgLog['uid']=$lgselRst['uid'];
+			$lgLog['loginIp']=get_client_ip();
+			$lgLog['loginTime']=time();
+			if($lgselRst['upw']==$data['upw']&&$lgselRst['status']==0){
+				$lgLog['status']=0;
+				$lgLogTb->table('uloginlog')->add($lgLog);
+				session('uname',$lgselRst['uname']);
+				session('uid',$lgselRst['uid']);
+				$this->ajaxReturn(array('info'=>"right"));
+			}elseif($lgselRst['upw']!=$data['upw']&&$lgselRst['status']==0){
+				$lgLog['status']=1;
+				$lgLogTb->table('uloginlog')->add($lgLog);
+				$this->ajaxReturn(array('info'=>'err1'));	//密码错误
+			}elseif($lgselRst['status']==1){
+				$lgLogSel=$lgLogTb->table('uloginlog')->where("uid='%s' AND status=1",$lgselRst['uid'])->order('loginTime desc')->limit("1")->select();
+				$timeLen=$lgLogSel[0]['loginTime']-time();
+				if($timeLen>=600&&$lgselRst['upw']==$data['upw']){
+					session('uname',$lgselRst['uname']);
+					session('uid',$lgselRst['uid']);
+					$lgLog['status']=0;
+					$lgLogTb->table('uloginlog')->add($lgLog);
+					$UserTB->where("uid='%s'",$lgselRst['uid'])->save(array("status"=>0));
+					$this->ajaxReturn(array('info'=>"right"));
+				}elseif($timeLen<=600&&$lgselRst['upw']==$data['upw']){
+					$timeLenM=ceil(date('i',$timeLenM));
+					$this->ajaxReturn(array('info'=>'err2',"errorInfo"=>$timeLenM));	//账户被临时冻结
+				}else{
+					$lgLog['status']=1;
+					$lgLogTb->table('uloginlog')->add($lgLog);
+					$this->ajaxReturn(array('info'=>'err3'));	//密码错误
+				}
+			}elseif($lgselRst['status']==2){
+				$this->ajaxReturn(array('info'=>'err4')); //账户被冻结
+			}
+		}	
+			
 		public function authorInfo(){
 			$uid=I("get.uid",'',"trim");
 			if(empty($uid)){
@@ -48,5 +94,10 @@ use Home\Controller\CommonOneController;
 			$this->ajaxReturn($getHisShare);
 		}
 
+		public function ss(){
+			$UserTB=M();
+			$qq=$UserTB->query("select count(*) as a from uloginlog where uid='u789123456' group by status");
+			print_r($qq);
+		}
 	}
 ?>

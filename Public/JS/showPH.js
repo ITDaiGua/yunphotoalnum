@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	var explain="";
 	$(".tipoff,.collection,.swPHTop").hover(function(){

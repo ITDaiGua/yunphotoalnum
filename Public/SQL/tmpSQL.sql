@@ -25,10 +25,11 @@ values('u789123','1571190643@qq.com','莫白柏','asadce15xscvbn2er','男','1234
 #==============================================
 use YunPhotoAlbum;
 create table if not exists `uloginlog`(
-	`uid` varchar(16) not null,
+	`uid` varchar(30) not null,
 	`loginIp` varchar(128) not null,
 	`loginTime` varchar(11) not null,
 	`status` int not null #0：正常、1：密码错误
+	index `lgerr`(`uname`,`loginTime`)
 )DEFAULT CHARSET=UTF8;
 #==============================================
 use YunPhotoAlbum;

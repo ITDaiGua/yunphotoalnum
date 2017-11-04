@@ -20,6 +20,52 @@
 		<script charset="utf-8" src="/YunPhotoAlbum/Public/kindeditor/lang/zh_CN.js"></script>
 	</head>
 	<body>
+		<div class="login">
+			<div class="login_head" onselectstart="return false;">
+				&nbsp;登陆
+				<span id="lgclose" title="取消登陆">&#xe601;</span>
+			</div>
+			<form name="login" id="login" method="post">
+				<span class="lgbox">
+					<div class="lgImg">&#xe75a;</div>
+					<input type="text" name="lgEmail" class="lgInput email" id="lgEmail" placeholder="登陆的邮箱" maxlength="100" autocomplete="off">
+				</span>
+				<div id="lgEmailErr" class="lgErrDiv"></div>
+				<span class="lgbox">
+					<div class="lgImg">&#xe6cb;</div>
+					<input type="password" name="lgPw" class="lgInput pw" id="userPw" placeholder="登陆的密码" maxlength="18">
+				</span>
+				<div id="userPwErr" class="lgErrDiv"></div>
+				<button class="lgBtt">登陆</button>
+			</form>
+			<div class="lgbottom">
+				<a href="" id="forgetLgPw">忘记密码</a>&nbsp;&nbsp;&nbsp;
+				<a href="" id="wannaRgt">还没有账号？点击注册</a>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$("#lgclose").click(function(){
+				$(".login").hide();
+			});
+			$("#login").on("submit",function(event){
+				event.preventDefault();
+				var isTrueRst;
+				if($("#authCode").length<=0){
+					isTrueRst=isTrue("#lgEmail",'email')&isTrue("#userPw",'pw');
+				}else{
+					isTrueRst=isTrue("#lgEmail",'email')&isTrue("#userPw",'pw')&isNotBlank('#authCode');
+				}
+				if(isTrueRst){
+					var url="/YunPhotoAlbum/User/index";
+					var lgdata=$(this).serialize();
+					$.post(url,lgdata,function(data){
+						//if(data.info!=null){
+							alert(data.info);
+						//}
+					});
+				}
+			});
+		</script>
 		<div class="enlarge" onselectstart="return false">
 			<div class="noMore"></div>
 			<div class="enlargeOpt">
@@ -82,23 +128,23 @@
 			<?php if(empty($selSPRst[0]['uid'])): ?><div class="nothing"></div>
 			<?php else: ?>
 				<?php if(is_array($selSPRst)): foreach($selSPRst as $key=>$value): ?><div class="showPhHead">
-					<div class="shareUInfo">
-						<a href="/YunPhotoAlbum/User/authorInfo/uid/<?php echo ($selSPRst[0]['uid']); ?>">
-							<img src="<?php echo ($selSPRst[0]['userImg']); ?>/w/100/h/100" class="swPHUImg">
-							<span class="authorName"><?php echo ($value['authorName']); ?></span>
-						</a>
-					</div>
-					<div class="PATitle">
-						<div class="titleDIV">
-							<?php echo ($value['sName']); ?>
+						<div class="shareUInfo">
+							<a href="/YunPhotoAlbum/User/authorInfo/uid/<?php echo ($selSPRst[0]['uid']); ?>">
+								<img src="<?php echo ($selSPRst[0]['userImg']); ?>/w/100/h/100" class="swPHUImg">
+								<span class="authorName"><?php echo ($value['authorName']); ?></span>
+							</a>
 						</div>
-						<div class="SPinfo">
-							<span class="iconfont">&#xe60b; <?php echo ($value['lookSum']); ?></span>
-							<span class="iconfont">&#xe61f; <?php echo ($value['likeSum']); ?></span>
-							<span class="iconfont"><span style="font-size:18px;">&#xe617;</span> <?php echo ($value['cltSum']); ?></span>
-							<span class="iconfont">&#xe63a; <?php echo ($value['shareTime']); ?></span>
+						<div class="PATitle">
+							<div class="titleDIV">
+								<?php echo ($value['sName']); ?>
+							</div>
+							<div class="SPinfo">
+								<span class="iconfont">&#xe60b; <?php echo ($value['lookSum']); ?></span>
+								<span class="iconfont">&#xe61f; <?php echo ($value['likeSum']); ?></span>
+								<span class="iconfont"><span style="font-size:18px;">&#xe617;</span> <?php echo ($value['cltSum']); ?></span>
+								<span class="iconfont">&#xe63a; <?php echo ($value['shareTime']); ?></span>
+							</div>
 						</div>
-					</div>
 					</div>
 					<div class="hr"></div>
 					<div class="shwProfile">
@@ -217,6 +263,7 @@
 				</div><?php endif; ?>
 		</div>
 	</body>
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
 	<script type="text/javascript">
 		var sid=$(".allContent").attr("id");
 		var lookSumURL="/YunPhotoAlbum/Index/lookSum";
