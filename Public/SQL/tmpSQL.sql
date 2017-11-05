@@ -33,6 +33,22 @@ create table if not exists `uloginlog`(
 )DEFAULT CHARSET=UTF8;
 #==============================================
 use YunPhotoAlbum;
+delimiter //
+CREATE TRIGGER `lgErr_count`
+BEFORE INSERT ON `uloginlog` FOR EACH ROW
+BEGIN
+	IF new.status=1 THEN
+		set @maxTime=(select unix_timestamp(now()));
+		set @minTime=@maxTime-900;
+		set @errcount=(select count(*) from uloginlog where uid=new.uid and (loginTime between @minTime and @maxTime));
+		IF @errcount>=4 THEN
+			update user set status=1 where uid=new.uid;
+		END IF;
+	END IF;
+END//
+delimiter ;
+#==============================================
+use YunPhotoAlbum;
 create table if not exists `photoAlbum`(
 	`uid` varchar(16) not null,
 	`PAId` varchar(17) not null, #相册id

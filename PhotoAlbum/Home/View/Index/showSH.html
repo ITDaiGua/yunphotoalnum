@@ -20,52 +20,6 @@
 		<script charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
 	</head>
 	<body>
-		<div class="login">
-			<div class="login_head" onselectstart="return false;">
-				&nbsp;登陆
-				<span id="lgclose" title="取消登陆">&#xe601;</span>
-			</div>
-			<form name="login" id="login" method="post">
-				<span class="lgbox">
-					<div class="lgImg">&#xe75a;</div>
-					<input type="text" name="lgEmail" class="lgInput email" id="lgEmail" placeholder="登陆的邮箱" maxlength="100" autocomplete="off">
-				</span>
-				<div id="lgEmailErr" class="lgErrDiv"></div>
-				<span class="lgbox">
-					<div class="lgImg">&#xe6cb;</div>
-					<input type="password" name="lgPw" class="lgInput pw" id="userPw" placeholder="登陆的密码" maxlength="18">
-				</span>
-				<div id="userPwErr" class="lgErrDiv"></div>
-				<button class="lgBtt">登陆</button>
-			</form>
-			<div class="lgbottom">
-				<a href="" id="forgetLgPw">忘记密码</a>&nbsp;&nbsp;&nbsp;
-				<a href="" id="wannaRgt">还没有账号？点击注册</a>
-			</div>
-		</div>
-		<script type="text/javascript">
-			$("#lgclose").click(function(){
-				$(".login").hide();
-			});
-			$("#login").on("submit",function(event){
-				event.preventDefault();
-				var isTrueRst;
-				if($("#authCode").length<=0){
-					isTrueRst=isTrue("#lgEmail",'email')&isTrue("#userPw",'pw');
-				}else{
-					isTrueRst=isTrue("#lgEmail",'email')&isTrue("#userPw",'pw')&isNotBlank('#authCode');
-				}
-				if(isTrueRst){
-					var url="/YunPhotoAlbum/User/index";
-					var lgdata=$(this).serialize();
-					$.post(url,lgdata,function(data){
-						//if(data.info!=null){
-							alert(data.info);
-						//}
-					});
-				}
-			});
-		</script>
 		<div class="enlarge" onselectstart="return false">
 			<div class="noMore"></div>
 			<div class="enlargeOpt">
@@ -221,13 +175,13 @@
 								});
 							});
 						});
-						function fail(img,info){
+						/*function fail(img,info){
 							var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
 							$('body').prepend(_fail);
 							setTimeout(function(){
 								$(".errorORwarn").hide().remove();
 							},1500);
-						}
+						}*/
 					</script>
 				</div>
 				<div id="photosArea">

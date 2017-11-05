@@ -88,13 +88,13 @@
 		ajaxUpload(filesObj,id,imgType,idloadingDiv,idloading);
 		$(this).val("");
 	});
-	function fail(img,info){
+	/*function fail(img,info){
 		var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
 		$('body').prepend(_fail);
 		setTimeout(function(){
 			$(".errorORwarn").hide().remove();
 		},1500);
-	}
+	}*/
 	function ajaxUpload(filesObj,id,imgType,idloadingDiv,idloading){
 		var sid=$(".allContent").attr('id');
 		var url="/YunPhotoAlbum/AjaxOpt/ajaxUpload1/t/"+$.now()+"/sid/"+sid;
@@ -112,7 +112,7 @@
 					//alert(rpTxt.info);
 					switch(rpTxt.info){
 						case 'success':tpImgSuccess(rpTxt.filename,id,imgType,idloadingDiv,idloading,rpTxt.subdir);break;
-						//case 'noLogin': 保留的未登录处理方式，以后修改,同时返回error
+						case 'noLogin':$(".tipoffHtml").hide();login();tpImgSuccess('error',id,imgType,idloadingDiv,idloading);break;
 						case 'exists':fail("&#xe613;","举报过啦~");tpImgSuccess('error',id,imgType,idloadingDiv,idloading);exists();break;
 						case 'error':
 						default:fail("&#xe613;","上传失败");tpImgSuccess('error',id,imgType,idloadingDiv,idloading);break;
@@ -185,7 +185,8 @@
 			}));
 			$.post(url,{tipoffType:tipoffType,tpContactWay:tpContactWay,tptextarea:tptextarea,imgsSrc:imgsSrc,sid:sid},function(data){
 				if(data.info=="noLogin"){
-					/*补充操作*/
+					$(".tipoffHtml").hide();
+					login();
 					isCanTipoff=true;
 				}else if(data.info=="exists"){
 					exists();

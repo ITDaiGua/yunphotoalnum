@@ -26,7 +26,7 @@ use Home\Controller\CommonTwoController;
 			}
 		}
 
-		public function getComment(){
+		/*public function getComment(){
 			if(!IS_AJAX){
 				PHPerr();
 			}
@@ -40,17 +40,17 @@ use Home\Controller\CommonTwoController;
 			$selRst=$commentTB->field("cid,sid,uname,content,time,status")->table("comments")->where("sid='%s' AND status=0",$sid)->order("time desc")->page("$page,30")->select();
 			$selRst=$this->timeFmtCge($selRst);
 			$this->ajaxReturn($selRst);
-		}
+		}*/
 
-		private function timeFmtCge($selRst){
+		/*private function timeFmtCge($selRst){
 	        $timeNow=time();
 	        $yesterday=date("Ymd",strtotime('-1 day'));
 	        $justNow=60; //如果$shareTime-$timeNow<=60,则改为“刚刚”
-	        $dividend=60; 
+	        $dividend=60; */
 	        /*
 	        *如果($shareTime-$timeNow)/$dividend>1,则改为“xx分钟前”,大于等于60小于120一个小时前,以此类推，大于等于1440即第二天直接记录时间;
 	        */
-	        foreach ($selRst as $key => $value) {
+	       /* foreach ($selRst as $key => $value) {
 	          $selRst[$key]['content']=htmlspecialchars_decode($value['content']);
 	          $time=$value['time'];
 	          if(date("Ymd",$time)==$yesterday){
@@ -72,7 +72,7 @@ use Home\Controller\CommonTwoController;
 	          }
 	        }
 	        return $selRst;
-	    }
+	    }*/
 		
 		public function cmtTipoff(){
 			if(!IS_AJAX){

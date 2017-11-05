@@ -24,6 +24,7 @@ use Home\Controller\CommonOneController;
 				$lgLogTb->table('uloginlog')->add($lgLog);
 				session('uname',$lgselRst['uname']);
 				session('uid',$lgselRst['uid']);
+				session("isLogin","isLogin");
 				$this->ajaxReturn(array('info'=>"right"));
 			}elseif($lgselRst['upw']!=$data['upw']&&$lgselRst['status']==0){
 				$lgLog['status']=1;
@@ -31,10 +32,11 @@ use Home\Controller\CommonOneController;
 				$this->ajaxReturn(array('info'=>'err1'));	//密码错误
 			}elseif($lgselRst['status']==1){
 				$lgLogSel=$lgLogTb->table('uloginlog')->where("uid='%s' AND status=1",$lgselRst['uid'])->order('loginTime desc')->limit("1")->select();
-				$timeLen=$lgLogSel[0]['loginTime']-time();
+				$timeLen=time()-$lgLogSel[0]['loginTime'];
 				if($timeLen>=600&&$lgselRst['upw']==$data['upw']){
 					session('uname',$lgselRst['uname']);
 					session('uid',$lgselRst['uid']);
+					session("isLogin","isLogin");
 					$lgLog['status']=0;
 					$lgLogTb->table('uloginlog')->add($lgLog);
 					$UserTB->where("uid='%s'",$lgselRst['uid'])->save(array("status"=>0));

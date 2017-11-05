@@ -20,52 +20,6 @@
 		<script charset="utf-8" src="/YunPhotoAlbum/Public/kindeditor/lang/zh_CN.js"></script>
 	</head>
 	<body>
-		<div class="login">
-			<div class="login_head" onselectstart="return false;">
-				&nbsp;登陆
-				<span id="lgclose" title="取消登陆">&#xe601;</span>
-			</div>
-			<form name="login" id="login" method="post">
-				<span class="lgbox">
-					<div class="lgImg">&#xe75a;</div>
-					<input type="text" name="lgEmail" class="lgInput email" id="lgEmail" placeholder="登陆的邮箱" maxlength="100" autocomplete="off">
-				</span>
-				<div id="lgEmailErr" class="lgErrDiv"></div>
-				<span class="lgbox">
-					<div class="lgImg">&#xe6cb;</div>
-					<input type="password" name="lgPw" class="lgInput pw" id="userPw" placeholder="登陆的密码" maxlength="18">
-				</span>
-				<div id="userPwErr" class="lgErrDiv"></div>
-				<button class="lgBtt">登陆</button>
-			</form>
-			<div class="lgbottom">
-				<a href="" id="forgetLgPw">忘记密码</a>&nbsp;&nbsp;&nbsp;
-				<a href="" id="wannaRgt">还没有账号？点击注册</a>
-			</div>
-		</div>
-		<script type="text/javascript">
-			$("#lgclose").click(function(){
-				$(".login").hide();
-			});
-			$("#login").on("submit",function(event){
-				event.preventDefault();
-				var isTrueRst;
-				if($("#authCode").length<=0){
-					isTrueRst=isTrue("#lgEmail",'email')&isTrue("#userPw",'pw');
-				}else{
-					isTrueRst=isTrue("#lgEmail",'email')&isTrue("#userPw",'pw')&isNotBlank('#authCode');
-				}
-				if(isTrueRst){
-					var url="/YunPhotoAlbum/User/index";
-					var lgdata=$(this).serialize();
-					$.post(url,lgdata,function(data){
-						//if(data.info!=null){
-							alert(data.info);
-						//}
-					});
-				}
-			});
-		</script>
 		<div class="enlarge" onselectstart="return false">
 			<div class="noMore"></div>
 			<div class="enlargeOpt">
@@ -87,19 +41,24 @@
 			<img src="<?php echo ($ifwnImgURL); ?>" id="infowarn">
 		</a>
 		<a href="">退出</a>
-		<span>|</span>
+		<span style="color:#ff0000;vertical-align:middle;">|</span>
 		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
 		<a href="">
-			<?php echo ($userName); ?>
+			<span style="vertical-align:middle;"><?php echo ($userName); ?></span>
 			<img src="<?php echo ($uImg); ?>" class="uImg">
 		</a>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
-		<a href="">登陆</a>
+		<a href="javascript:void(0);" id="wannaLg">登陆</a>
 		<span style="vertical-align:middle;">|</span>
 		<a href="">注册</a>
 		<img src="/YunPhotoAlbum/Public/SysImg/uimg.jpg" class="uImg"><?php endif; ?>
 </div>
+<script type="text/javascript">
+	$("#wannaLg").click(function(){
+		login();
+	});
+</script>
 		<?php if(!empty($selSPRst[0]['uid'])): ?><div class="iconfont rightOpt">
 				<div class="tipoff">
 					<div class="explain">
@@ -232,13 +191,13 @@
 								});
 							});
 						});
-						function fail(img,info){
+						/*function fail(img,info){
 							var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
 							$('body').prepend(_fail);
 							setTimeout(function(){
 								$(".errorORwarn").hide().remove();
 							},1500);
-						}
+						}*/
 					</script>
 				</div>
 				<div id="photosArea">

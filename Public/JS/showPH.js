@@ -152,7 +152,7 @@ $(document).ready(function(){
 		var likeURL="/YunPhotoAlbum/AjaxOpt/like";
 		$.post(likeURL,{sid:sid},function(data){
 			if(data.info=="noLogin"){
-
+				login();
 			}else if(data.info=="success"){
 				fail("&#xe687;","点赞成功");
 			}else if(data.info=="exists"){
@@ -200,7 +200,7 @@ $(document).ready(function(){
 		}
 	});
 
-	var url2="/YunPhotoAlbum/AjaxOpt/getComment/sid/"+sid;
+	var url2="/YunPhotoAlbum/Index/getComment/sid/"+sid;
 	var page2=0;
 	var canGetMore2=true; //节流
 	var isCanGetMore2=true;	//判断有没有更多的数据
@@ -238,7 +238,7 @@ $(document).ready(function(){
 							var cid=$(this).parents(".cmtDiv").attr('id');
 							$.post(cmtTipoffURL,{cid:cid},function(data){
 								if(data.info=="noLogin"){
-
+									login();
 								}else if(data.info=="exists"){
 									fail("&#xe613;","举报过啦~");
 								}else{
@@ -257,13 +257,13 @@ $(document).ready(function(){
 		}
 	});
 
-	function fail(img,info){
+	/*function fail(img,info){
 		var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
 		$('body').prepend(_fail);
 		setTimeout(function(){
 			$(".errorORwarn").hide().remove();
 		},1500);
-	}
+	}*/
 
 	var cmtTipoff="";
 	_commentsArea.on("mouseenter",".cmtDiv",function(){
@@ -278,10 +278,10 @@ $(document).ready(function(){
 	$(".collection").one('click',function(){
 		var cltURL="/YunPhotoAlbum/AjaxOpt/collection";
 		$.post(cltURL,{sid:sid},function(data){
-			if(data.info='success'){
+			if(data.info=='success'){
 				fail("&#xe687;","收藏成功");
 			}else if(data.info=="noLogin"){
-
+				login();
 			}else{
 				fail("&#xe613;","出错啦~");
 			}
@@ -299,6 +299,15 @@ $(document).ready(function(){
 			return false;
 		}
 		canTipoff=false;
+		var Tpfld3="Tpfld3"+$.now();
+		var loading=$("<img src='/YunPhotoAlbum/Public/SysImg/loading3.gif' id="+Tpfld3+" >").css({
+			"position":"fixed",
+			"z-index":"100",
+			"left":"50%",
+			"top":"30%",
+			"margin-left":"-40px"
+		});
+		$("body").prepend(loading);
 		$("<link>").attr({
 			rel:"stylesheet",
 			type:"text/css",
@@ -306,6 +315,7 @@ $(document).ready(function(){
 		}).appendTo('head');
 		$("body").prepend($('<div class="tipoffHtml"></div>'));
 		$('.tipoffHtml').load("/YunPhotoAlbum/Public/TPL/spatipoff.html",function(){
+			$("#"+Tpfld3).remove();
 			$(".taslctLayer").show();
 		});
 	});

@@ -62,3 +62,31 @@ $("body").on("input propertychange",".pw",function(){
 	var tmpVal=val.replace(/[^0-9a-zA-Z\_]/gi,"");
 	$(this).val(tmpVal);
 });
+
+function login(){
+	if($(".login").length>0){
+		$(".taslctLayer").show();
+		$(".login").show();
+		return false;
+	}
+	var id="ld3"+$.now();
+	var loading=$("<img src='/YunPhotoAlbum/Public/SysImg/loading3.gif' id="+id+" >").css({
+		"position":"fixed",
+		"z-index":"102",
+		"left":"50%",
+		"top":"30%",
+		"margin-left":"-40px"
+	});
+	$("body").prepend(loading);
+	$("<link>").attr({
+		"rel":"stylesheet",
+		"type":"text/css",
+		"href":"/YunPhotoAlbum/Public/CSS/login.css"
+	}).appendTo('head');
+	$('body').prepend("<div class='login'></div>");
+	$(".login").load("/YunPhotoAlbum/Public/TPL/login.html",function(){
+		$("#"+id).remove();
+		$(".taslctLayer").show();
+		$(this).show();
+	});
+}
