@@ -84,6 +84,12 @@ body{
 	box-shadow:0 0 3px #ccc;
 	background-color:#e5e5e5;
 }
+.PsnlCtr{
+	display:inline-block;
+	height:30px;
+	line-height:30px;
+	margin-bottom:4px;
+}
 .errorORwarnImg{
 	font-size:50px;
 	color:#FFD700;

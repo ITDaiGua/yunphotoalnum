@@ -37,22 +37,23 @@
 		</div>
 		<div class="taslctLayer"></div>
 <div id="headMenu">
-	<?php if($isLogin === 'isLogin'): ?><a href="">
-			<img src="<?php echo ($ifwnImgURL); ?>" id="infowarn">
+	<a href="/YunPhotoAlbum/" style="float:left;margin-left:200px;">首页</a>
+	<?php if($isLogin === 'isLogin'): ?><a href="" title="查看消息">
+			<img src="/YunPhotoAlbum/Public/SysImg/infowarn.png" id="infowarn">
 		</a>
-		<a href="">退出</a>
-		<span style="color:#ff0000;vertical-align:middle;">|</span>
+		<a href="/YunPhotoAlbum/User/logout">退出</a>
+		<span style="vertical-align:middle;">|</span>
 		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
-		<a href="">
+		<a href="" class="PsnlCtr" title="个人中心">
 			<span style="vertical-align:middle;"><?php echo ($userName); ?></span>
-			<img src="<?php echo ($uImg); ?>" class="uImg">
+			<img src="<?php echo ($uImg); ?>/w/35/h/35" class="uImg">
 		</a>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
 		<a href="javascript:void(0);" id="wannaLg">登陆</a>
 		<span style="vertical-align:middle;">|</span>
 		<a href="">注册</a>
-		<img src="/YunPhotoAlbum/Public/SysImg/uimg.jpg" class="uImg"><?php endif; ?>
+		<img src="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg" class="uImg"><?php endif; ?>
 </div>
 <script type="text/javascript">
 	$("#wannaLg").click(function(){

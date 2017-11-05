@@ -11,7 +11,7 @@ use Home\Controller\CommonOneController;
 			if(!$data){
 				exit;
 			}
-			$lgselRst=$UserTB->field("uid,uname,upw,umail,status")->where("umail='%s'",$data['umail'])->find();
+			$lgselRst=$UserTB->field("uid,uname,upw,umail,userImg,status")->where("umail='%s'",$data['umail'])->find();
 			if(empty($lgselRst)){
 				$this->ajaxReturn(array('info'=>'err0'));	//用户不存在
 			}
@@ -25,6 +25,8 @@ use Home\Controller\CommonOneController;
 				session('uname',$lgselRst['uname']);
 				session('uid',$lgselRst['uid']);
 				session("isLogin","isLogin");
+				session("lastLogin",time());
+				session("userImg",$lgselRst['userImg']);
 				$this->ajaxReturn(array('info'=>"right"));
 			}elseif($lgselRst['upw']!=$data['upw']&&$lgselRst['status']==0){
 				$lgLog['status']=1;
@@ -37,6 +39,8 @@ use Home\Controller\CommonOneController;
 					session('uname',$lgselRst['uname']);
 					session('uid',$lgselRst['uid']);
 					session("isLogin","isLogin");
+					session("lastLogin",time());
+					session("userImg",$lgselRst['userImg']);
 					$lgLog['status']=0;
 					$lgLogTb->table('uloginlog')->add($lgLog);
 					$UserTB->where("uid='%s'",$lgselRst['uid'])->save(array("status"=>0));
@@ -96,10 +100,10 @@ use Home\Controller\CommonOneController;
 			$this->ajaxReturn($getHisShare);
 		}
 
-		public function ss(){
-			$UserTB=M();
-			$qq=$UserTB->query("select count(*) as a from uloginlog where uid='u789123456' group by status");
-			print_r($qq);
+		public function logout(){
+			session(null);
+			header("Location:".$_SERVER['HTTP_REFERER']);
 		}
+
 	}
 ?>

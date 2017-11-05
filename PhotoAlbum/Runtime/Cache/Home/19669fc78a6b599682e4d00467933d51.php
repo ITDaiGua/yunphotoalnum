@@ -23,25 +23,30 @@
 		</div>
 	<![endif]-->
 	<div class="taslctLayer"></div>
-	<div class="taslctLayer"></div>
 <div id="headMenu">
-	<?php if($isLogin === 'isLogin'): ?><a href="">
-			<img src="<?php echo ($ifwnImgURL); ?>" id="infowarn">
+	<a href="/YunPhotoAlbum/" style="float:left;margin-left:200px;">首页</a>
+	<?php if($isLogin === 'isLogin'): ?><a href="" title="查看消息">
+			<img src="/YunPhotoAlbum/Public/SysImg/infowarn.png" id="infowarn">
 		</a>
-		<a href="">退出</a>
-		<span>|</span>
+		<a href="/YunPhotoAlbum/User/logout">退出</a>
+		<span style="vertical-align:middle;">|</span>
 		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
-		<a href="">
-			<?php echo ($userName); ?>
-			<img src="<?php echo ($uImg); ?>" class="uImg">
+		<a href="" class="PsnlCtr" title="个人中心">
+			<span style="vertical-align:middle;"><?php echo ($userName); ?></span>
+			<img src="<?php echo ($uImg); ?>/w/35/h/35" class="uImg">
 		</a>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
-		<a href="">登陆</a>
+		<a href="javascript:void(0);" id="wannaLg">登陆</a>
 		<span style="vertical-align:middle;">|</span>
 		<a href="">注册</a>
-		<img src="/YunPhotoAlbum/Public/SysImg/uimg.jpg" class="uImg"><?php endif; ?>
+		<img src="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg" class="uImg"><?php endif; ?>
 </div>
+<script type="text/javascript">
+	$("#wannaLg").click(function(){
+		login();
+	});
+</script>
 	<div id="menuDiv">
 		<div id="logo">
 			<a href="/YunPhotoAlbum/">
@@ -138,13 +143,13 @@
 <?php if($init['totalPage'] >= 2): ?><div class="pageNum">
 		<?php if($init['totalPage'] > 5): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a><?php endif; ?>
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_3492__=$init['page']+1;$__FOR_END_3492__=$init['totalPage']+1;for($i=$__FOR_START_3492__;$i < $__FOR_END_3492__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_7212__=$init['page']+1;$__FOR_END_7212__=$init['totalPage']+1;for($i=$__FOR_START_7212__;$i < $__FOR_END_7212__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_30477__=$init['page']+1;$__FOR_END_30477__=$init['page']+5;for($i=$__FOR_START_30477__;$i < $__FOR_END_30477__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_5877__=$init['page']+1;$__FOR_END_5877__=$init['page']+5;for($i=$__FOR_START_5877__;$i < $__FOR_END_5877__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_22210__=1;$__FOR_END_22210__=$init['page'];for($i=$__FOR_START_22210__;$i < $__FOR_END_22210__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_7306__=1;$__FOR_END_7306__=$init['page'];for($i=$__FOR_START_7306__;$i < $__FOR_END_7306__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_15571__=$init['page']-4;$__FOR_END_15571__=$init['page'];for($i=$__FOR_START_15571__;$i < $__FOR_END_15571__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_25339__=$init['page']-4;$__FOR_END_25339__=$init['page'];for($i=$__FOR_START_25339__;$i < $__FOR_END_25339__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		<?php if($init['totalPage'] > 5): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a><?php endif; ?>
 		<?php if($init['totalPage'] > 2): ?><span id="showTotalPage">共<?php echo ($init['totalPage']); ?>页</span><?php endif; ?>
