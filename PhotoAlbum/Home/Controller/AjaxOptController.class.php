@@ -204,6 +204,7 @@ use Home\Controller\CommonTwoController;
 			}
 			$cookieKey=md5($data['sid'].$data['uid']."rst");
 			$data['stfId']='stf'.time().mt_rand(0,9).mt_rand(0,9);
+			$data['TipOffTime']=time();
 			$spatipoffTB=M();
 			if(cookie("$cookieKey")){
 				cookie($likeCkKey,1,time()+31536000);

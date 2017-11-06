@@ -42,6 +42,7 @@
 		login();
 	});
 </script>
+<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
 	<div class="goTop" onselectstart="return false;" title="回到顶部">&#xe64a;</div>
 	<script type="text/javascript">
 		$(".goTop").click(function(){

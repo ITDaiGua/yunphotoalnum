@@ -60,6 +60,7 @@
 		login();
 	});
 </script>
+<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
 		<?php if(!empty($selSPRst[0]['uid'])): ?><div class="iconfont rightOpt">
 				<div class="tipoff">
 					<div class="explain">
@@ -180,11 +181,10 @@
 								commentCont=commentCont.replace(/[\s]+/g," ");
 								var url="/YunPhotoAlbum/AjaxOpt/comment/";
 								$.post(url,{"sid":sid,"comment":commentCont},function(data){
-									if(data.info=="success"){
-										fail("&#xe687;","感谢评论");
-										location.reload();
-									}else{
-										fail("&#xe613;","出错啦~");
+									switch(data.info){
+										case 'success':fail("&#xe687;","感谢评论");location.reload();break;
+										case 'noLogin':login();break;
+										default:fail("&#xe613;","出错啦~");
 									}
 								}).fail(function(){
 										fail("&#xe613;","评论失败");
@@ -223,7 +223,6 @@
 				</div><?php endif; ?>
 		</div>
 	</body>
-	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
 	<script type="text/javascript">
 		var sid=$(".allContent").attr("id");
 		var lookSumURL="/YunPhotoAlbum/Index/lookSum";

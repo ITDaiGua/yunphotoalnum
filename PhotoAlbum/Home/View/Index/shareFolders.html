@@ -76,9 +76,9 @@
 </div>
 <if condition="$init['totalPage'] egt 2">
 	<div class="pageNum">
-		<if condition="$init['totalPage'] gt 5">
+		<{/*<if condition="$init['totalPage'] gt 5">*/}>
 			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']-1}>/" id="lastPage">上一页</a>
-		</if>
+		<{/*</if>*/}>
 		<if condition="$init['page'] egt $init['lastpg']">
 			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']}>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
 			<if condition="$init['page']+5 gt $init['totalPage']">
@@ -102,9 +102,9 @@
 			</if>
 			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']}>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
 		</if>
-		<if condition="$init['totalPage'] gt 5">
+		<{/*<if condition="$init['totalPage'] gt 5">*/}>
 			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']+1}>/" id="nextPage">下一页</a>
-		</if>
+		<{/*</if>*/}>
 		<if condition="$init['totalPage'] gt 2">
 			<span id="showTotalPage">共<{$init['totalPage']}>页</span>
 		</if>

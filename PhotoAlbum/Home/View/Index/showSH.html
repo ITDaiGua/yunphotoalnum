@@ -163,11 +163,10 @@
 								commentCont=commentCont.replace(/[\s]+/g," ");
 								var url="/YunPhotoAlbum/AjaxOpt/comment/";
 								$.post(url,{"sid":sid,"comment":commentCont},function(data){
-									if(data.info=="success"){
-										fail("&#xe687;","感谢评论");
-										location.reload();
-									}else{
-										fail("&#xe613;","出错啦~");
+									switch(data.info){
+										case 'success':fail("&#xe687;","感谢评论");location.reload();break;
+										case 'noLogin':login();break;
+										default:fail("&#xe613;","出错啦~");
 									}
 								}).fail(function(){
 										fail("&#xe613;","评论失败");
@@ -213,7 +212,6 @@
 			</empty>
 		</div>
 	</body>
-	<script type="text/javascript" src="__PUBLIC__/JS/commonJs.js"></script>
 	<script type="text/javascript">
 		var sid=$(".allContent").attr("id");
 		var lookSumURL="/YunPhotoAlbum/Index/lookSum";

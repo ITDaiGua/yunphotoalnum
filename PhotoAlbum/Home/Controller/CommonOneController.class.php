@@ -6,7 +6,7 @@ use Think\Controller;
 			ini_set("session.gc_maxlifetime",21600);
 			if(session("isLogin")=="isLogin"){
 				$lastLogin=session("lastLogin");
-				if($lastLogin!=""&&$lastLogin<(time()-21600)){
+				if($lastLogin!=""&&$lastLogin>(time()-21600)){
 					session("lastLogin",time());
 					$userImg=session("userImg");
 					if(empty($userImg)){
