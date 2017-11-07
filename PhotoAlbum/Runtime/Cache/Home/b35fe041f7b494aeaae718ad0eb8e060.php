@@ -52,7 +52,7 @@
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
 		<a href="javascript:void(0);" id="wannaLg">登陆</a>
 		<span style="vertical-align:middle;">|</span>
-		<a href="">注册</a>
+		<a href="/YunPhotoAlbum/User/rgtHtml">注册</a>
 		<img src="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg" class="uImg"><?php endif; ?>
 </div>
 <script type="text/javascript">

@@ -105,5 +105,31 @@ use Home\Controller\CommonOneController;
 			header("Location:".$_SERVER['HTTP_REFERER']);
 		}
 
+		public function rgtHtml(){
+			if(session("isLogin")=="isLogin"&&(session("lastLogin")>(time()-21600))){
+				header("Location:/YunPhotoAlbum/");
+				exit;
+			}
+			$this->display("registration");
+		}
+
+		public function sendMail(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$mailAddr=I('post.mailAddr',"","trim");
+			if(empty($mailAddr)){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$authcore=mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9);
+			session("authcore",$authcore);
+			session("authcoreTime",time());
+			$content="【验证码】{$authcore},15分钟内有效";
+			$rst=send_mail($mailAddr,"云相册验证码",$content);
+			if(!$rst){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+		}
+
 	}
 ?>

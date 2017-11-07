@@ -53,8 +53,9 @@ function formatCk(style,arg){
 
 $("body").on("input propertychange",".email",function(){
 	var val=$(this).val();
-	var tmpVal=val.replace(/[^0-9a-zA-Z\.@\_]/gi,"");
-	$(this).val(tmpVal);
+	val=val.replace(/[^0-9a-zA-Z\.@\_\。]/gi,"");
+	val=val.replace(/\。/gi,".");
+	$(this).val(val);
 });
 
 $("body").on("input propertychange",".pw",function(){
