@@ -46,7 +46,7 @@
 		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
 		<a href="" class="PsnlCtr" title="个人中心">
 			<span style="vertical-align:middle;"><?php echo ($userName); ?></span>
-			<img src="<?php echo ($uImg); ?>/w/35/h/35" class="uImg">
+			<img src="<?php echo ($uImg); ?>" class="uImg">
 		</a>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>

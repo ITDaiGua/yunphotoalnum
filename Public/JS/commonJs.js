@@ -9,28 +9,29 @@ function fail(img,info){
 function isNotBlank(selector){
 	var val=$.trim($(selector).val());
 	if(val==""){
-		$(selector+"Err").text("不能为空").css("display","inline-block");
+		$(selector+"Err").html("&#xe601;不能为空").css("display","inline-block");
 		return false;
 	}
-	$(selector+"Err").text("").css("display","none");
+	$(selector+"Err").html("").css("display","none");
 	return true;
 }
 
 function isTrue(selector,style){
 	var val=$.trim($(selector).val());
 	if(val==""){
-		$(selector+"Err").text("不能为空").css("display","inline-block");
+		$(selector+"Err").html("&#xe601;不能为空").css("display","inline-block");
 		return false;
 	}else if(!formatCk(style,val)){
 		var err="格式错误";
 		switch(style){
-			case 'email':err="邮箱格式错误";break;
-			case 'pw':err="仅支持6-18位的数字、字母、下划线";break;
+			case 'email':err="&#xe601;邮箱格式错误";break;
+			case 'pw':err="&#xe601;仅支持6-18位的数字、字母、下划线";break;
+			case 'uname':err="&#xe601;必须是2-8位中文或英文或数字或下划线组成";break;
 		}
-		$(selector+"Err").text(err).css("display","inline-block");
+		$(selector+"Err").html(err).css("display","inline-block");
 		return false;
 	}
-	$(selector+"Err").text("").css("display","none");
+	$(selector+"Err").html("").css("display","none");
 	return true;
 }
 
@@ -48,6 +49,12 @@ function formatCk(style,arg){
 				return false;
 			}
 			return true;
+		case 'uname':
+			var unameFam=/^[\u4E00-\u9FA5A-Za-z0-9_]{2,6}$/g;
+			if(arg.match(unameFam)){
+				return true;
+			}
+			return false;
 	}
 }
 
@@ -62,6 +69,12 @@ $("body").on("input propertychange",".pw",function(){
 	var val=$(this).val();
 	var tmpVal=val.replace(/[^0-9a-zA-Z\_]/gi,"");
 	$(this).val(tmpVal);
+});
+
+$('body').on("input propertychange",".authcore",function(){
+	var val=$(this).val();
+	val=val.replace(/[^0-9]/g,"");
+	$(this).val(val);
 });
 
 function login(){

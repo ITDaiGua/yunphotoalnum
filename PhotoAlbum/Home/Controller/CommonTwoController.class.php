@@ -11,6 +11,8 @@ use Think\Controller;
 					$userImg=session("userImg");
 					if(empty($userImg)){
 						$userImg="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg";
+					}else{
+						$userImg=$userImg+"/w/35/h/35";
 					}
 					$this->assign("userName",session("uname"));
 					$this->assign("uImg",$userImg);

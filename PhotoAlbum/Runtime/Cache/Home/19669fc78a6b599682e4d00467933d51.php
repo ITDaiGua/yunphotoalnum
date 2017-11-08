@@ -33,7 +33,7 @@
 		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
 		<a href="" class="PsnlCtr" title="个人中心">
 			<span style="vertical-align:middle;"><?php echo ($userName); ?></span>
-			<img src="<?php echo ($uImg); ?>/w/35/h/35" class="uImg">
+			<img src="<?php echo ($uImg); ?>" class="uImg">
 		</a>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
@@ -146,13 +146,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_12357__=$init['page']+1;$__FOR_END_12357__=$init['totalPage']+1;for($i=$__FOR_START_12357__;$i < $__FOR_END_12357__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_8004__=$init['page']+1;$__FOR_END_8004__=$init['totalPage']+1;for($i=$__FOR_START_8004__;$i < $__FOR_END_8004__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_17306__=$init['page']+1;$__FOR_END_17306__=$init['page']+5;for($i=$__FOR_START_17306__;$i < $__FOR_END_17306__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_14381__=$init['page']+1;$__FOR_END_14381__=$init['page']+5;for($i=$__FOR_START_14381__;$i < $__FOR_END_14381__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_25803__=1;$__FOR_END_25803__=$init['page'];for($i=$__FOR_START_25803__;$i < $__FOR_END_25803__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_20834__=1;$__FOR_END_20834__=$init['page'];for($i=$__FOR_START_20834__;$i < $__FOR_END_20834__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_29864__=$init['page']-4;$__FOR_END_29864__=$init['page'];for($i=$__FOR_START_29864__;$i < $__FOR_END_29864__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_13043__=$init['page']-4;$__FOR_END_13043__=$init['page'];for($i=$__FOR_START_13043__;$i < $__FOR_END_13043__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>

@@ -2,6 +2,10 @@
 namespace Home\Controller;
 use Home\Controller\CommonOneController;
 	class UserController extends CommonOneController{
+		protected $rules=array(
+			array('uname','','用户名已存在',0,'unique',1),
+			array('umail','','邮箱已被注册',0,'unique',1)
+		);
 		public function index(){
 			if(!IS_AJAX){
 				PHPerr();
@@ -9,7 +13,7 @@ use Home\Controller\CommonOneController;
 			$UserTB=D('User');
 			$data=$UserTB->field("umail,upw")->create();
 			if(!$data){
-				exit;
+				$this->ajaxReturn($UserTB->getError());	//用户不存在
 			}
 			$lgselRst=$UserTB->field("uid,uname,upw,umail,userImg,status")->where("umail='%s'",$data['umail'])->find();
 			if(empty($lgselRst)){
@@ -117,18 +121,67 @@ use Home\Controller\CommonOneController;
 			if(!IS_AJAX){
 				PHPerr();
 			}
-			$mailAddr=I('post.mailAddr',"","trim");
-			if(empty($mailAddr)){
-				$this->ajaxReturn(array("info"=>"error"));
+			$UTB=D('User');
+			$data=$UTB->validate($this->rules)->field('umail')->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
 			}
 			$authcore=mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9);
-			session("authcore",$authcore);
-			session("authcoreTime",time());
 			$content="【验证码】{$authcore},15分钟内有效";
-			$rst=send_mail($mailAddr,"云相册验证码",$content);
-			if(!$rst){
+			$rst=send_mail($data['umail'],"云相册验证码",$content);
+			if($rst){
+				$authcoreTmp=md5($data['umail'].$authcore);
+				session("authcore",$authcoreTmp);
+				session("authcoreTime",time());
+				$this->ajaxReturn(array("info"=>"success"));
+			}else{
 				$this->ajaxReturn(array("info"=>"error"));
 			}
+		}
+
+		public function testUname(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D('User');
+			$data=$UTB->validate($this->rules)->field('uname')->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+			$this->ajaxReturn(array("info"=>"noExists"));
+		}
+
+		public function registration(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D('User');
+			$data=$UTB->validate($this->rules)->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+			$authcore=md5($data['umail'].I('post.authcore','','trim'));
+			$maxTime=time()-900;
+			if($authcore!=session("authcore")||empty(session("authcore"))||session("authcoreTime")>$maxTime){
+				$this->ajaxReturn(array("authcore"=>"验证码错误"));
+			}
+			if(I("post.agreePro",'','trim')!="agree"){
+				$this->ajaxReturn(array("agreePro"=>"error"));
+			}
+			$timeTmp=time();
+			$data['uid']="u".$timeTmp.mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9);
+			$data['rgstTime']=date("Y-m-d",$timeTmp);
+			$data['status']=0;
+			$rst=$UTB->field("uid,umail,uname,upw,rgstTime,status")->add($data);
+			if($rst){
+					session('uname',$data['uname']);
+					session('uid',$data['uid']);
+					session("isLogin","isLogin");
+					session("lastLogin",$timeTmp);
+					//session("userImg",$data['userImg']);
+					$this->ajaxReturn(array("success"=>"success"));
+			}
+			$this->ajaxReturn(array("rgtAllErr"=>"注册失败"));
 		}
 
 	}
