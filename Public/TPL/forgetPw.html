@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">    
+	<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache">    
+	<meta HTTP-EQUIV="Expires" CONTENT="0"> 
+	<title>忘记密码</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/YunPhotoAlbum/Public/SysImg/cloud.ico">
+	<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/commonCss.css">
+	<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/forgetPw.css">
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/jquery-3.1.1.min.js"></script>
+	<!--[if lte IE 8]>
+		<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/jquery.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/forgetPw.js"></script>
+</head>
+<body>
+	<div class="allContent">
+		<div class="fgtPwMenu" onselectstart="return false;">
+			<ul>
+				<li class="choseOnOpt" id="byMail">通过邮箱更改</li>
+				<li id="byQuestion">通过密保更改</li>
+			</ul>
+		</div>
+		<div class="newPwDiv">
+			<form id="fgtForm1" name="fgtForm1" method="post">
+				<span class="fgtSpan">
+					<div class="fgtImg">&#xe6cb;</div>
+					<input type="password" name="newPw" placeholder="新密码" maxlength="18" id="newPw" class="pw">
+				</span>
+				<span id="newPwErr" class="fgtErr"></span><br/>
+				<span class="fgtSpan">
+					<div class="fgtImg">&#xe714;</div>
+					<input type="password" name="cmfNewPw" placeholder="确认新密码"  maxlength="18" id="cmfNewPw" class="pw">
+				</span>
+				<span id="cmfNewPwErr" class="fgtErr"></span><br/>
+				<span class="fgtSpan">
+					<div class="fgtImg">&#xe6e6;</div>
+					<input type="text" name="umail" placeholder="注册的邮箱" autocomplete="off" maxlength="40" id="umail" class="email">
+				</span>
+				<span id="umailErr" class="fgtErr"></span><br/>
+				<span class="fgtSpan">
+					<input type="text" name="authcore" placeholder="验证码" autocomplete="off" maxlength="10" id="authcore" style="width:80px;">
+					<div id="getFgtAc" onselectstart="return false;">点击获取验证码</div>
+				</span>
+				<span id="newPwErr" class="fgtErr"></span><br/>
+				<button id="cgePwBtt" class="cgePwBtt">立即修改</button><br/>
+				<span id="newPwAllErr" class="fgtErr"></span>
+			</form>
+			<form id="fgtForm2" name="fgtForm2" method="post">
+
+				<div  id="uamil2Div">
+					<span class="fgtSpan" style="margin-top:0;">
+						<div class="fgtImg">&#xe6e6;</div>
+						<input type="text" name="umail2" placeholder="注册的邮箱" autocomplete="off" maxlength="40"  id="umail2" class="email">
+					</span>
+					<button id="nextStep">下一步</button><br/>
+					<input type="hidden" name="umail2Hidd"  id="umail2Hidd">
+					<span id="umail2Err"  class="fgtErr"></span>
+				</div>
+
+				<div id="answerDiv">
+					<div id="quest"></div><br/>
+					<textarea id="answer" maxlength="32" placeholder="密保答案"></textarea>
+					<span id="answerErr" class="fgtErr"></span><br/>
+					<span class="fgtSpan">
+						<div class="fgtImg">&#xe6cb;</div>
+						<input type="password" name="newPw2" placeholder="新密码" maxlength="18" id="newPw2" class="pw">
+					</span>
+					<span id="newPw2Err" class="fgtErr"></span><br/>
+					<span class="fgtSpan">
+						<div class="fgtImg">&#xe714;</div>
+						<input type="password" name="cmfNewPw2" placeholder="确认新密码" maxlength="18" id="cmfNewPw2" class="pw">
+					</span>
+					<span id="newPw2Err" class="fgtErr"></span><br/>
+					<button id="cgePwBtt2" class="cgePwBtt">立即修改</button><br/>
+					<span id="newPw2AllErr" class="fgtErr"></span>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

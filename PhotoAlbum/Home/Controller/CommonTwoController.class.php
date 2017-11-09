@@ -8,21 +8,21 @@ use Think\Controller;
 				$lastLogin=session("lastLogin");
 				if($lastLogin!=""&&$lastLogin>(time()-21600)){
 					session("lastLogin",time());
-					$userImg=session("userImg");
-					if(empty($userImg)){
-						$userImg="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg";
+					$myImg=session("myImg");
+					if(empty($myImg)){
+						$myImg="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg";
 					}else{
-						$userImg=$userImg+"/w/35/h/35";
+						$myImg=$userImg."/w/35/h/35";
 					}
 					$this->assign("userName",session("uname"));
-					$this->assign("uImg",$userImg);
+					$this->assign("uImg",$myImg);
 					$this->assign("isLogin","isLogin");
 				}else{
 					session(null);
 					$this->assign("isLogin","noLogin");
 				}
 			}else{
-				session(null);
+				//session(null);
 				$this->assign("isLogin","noLogin");
 			}
 			if(IS_AJAX){

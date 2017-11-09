@@ -42,6 +42,7 @@ $(document).ready(function(){
 				_this.text("重新获取");
 				return false;
 			}
+			//document.write(data.s+"||"+data.f);
 		}).fail(function(){
 			fail("&#xe691;","发生错误");
 			canGetAc=true;

@@ -26,11 +26,12 @@ use Home\Controller\CommonOneController;
 			if($lgselRst['upw']==$data['upw']&&$lgselRst['status']==0){
 				$lgLog['status']=0;
 				$lgLogTb->table('uloginlog')->add($lgLog);
+				session(null);
 				session('uname',$lgselRst['uname']);
 				session('uid',$lgselRst['uid']);
 				session("isLogin","isLogin");
 				session("lastLogin",time());
-				session("userImg",$lgselRst['userImg']);
+				session("myImg",$lgselRst['userImg']);
 				$this->ajaxReturn(array('info'=>"right"));
 			}elseif($lgselRst['upw']!=$data['upw']&&$lgselRst['status']==0){
 				$lgLog['status']=1;
@@ -40,11 +41,12 @@ use Home\Controller\CommonOneController;
 				$lgLogSel=$lgLogTb->table('uloginlog')->where("uid='%s' AND status=1",$lgselRst['uid'])->order('loginTime desc')->limit("1")->select();
 				$timeLen=time()-$lgLogSel[0]['loginTime'];
 				if($timeLen>=600&&$lgselRst['upw']==$data['upw']){
+					session(null);
 					session('uname',$lgselRst['uname']);
 					session('uid',$lgselRst['uid']);
 					session("isLogin","isLogin");
 					session("lastLogin",time());
-					session("userImg",$lgselRst['userImg']);
+					session("myImg",$lgselRst['userImg']);
 					$lgLog['status']=0;
 					$lgLogTb->table('uloginlog')->add($lgLog);
 					$UserTB->where("uid='%s'",$lgselRst['uid'])->save(array("status"=>0));
@@ -76,7 +78,7 @@ use Home\Controller\CommonOneController;
 				$selRst['profile']="作者没有填写简介哦~";
 			}
 			if(empty($selRst['userImg'])){
-				$selRst['userImg']='./Public/SysImg/noAuth.png';
+				$selRst['userImg']='./Public/SysImg/uimg.jpg';
 			}
 			$getHisShareTb=M();
 			$getHisShare=$getHisShareTb->table('sharepa')->field("sid,uid,sName,status")->where("uid='%s' AND status=0",$uid)->page("1,28")->select();
@@ -127,6 +129,7 @@ use Home\Controller\CommonOneController;
 				$this->ajaxReturn($UTB->getError());
 			}
 			$authcore=mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9);
+
 			$content="【验证码】{$authcore},15分钟内有效";
 			$rst=send_mail($data['umail'],"云相册验证码",$content);
 			if($rst){
@@ -161,8 +164,8 @@ use Home\Controller\CommonOneController;
 				$this->ajaxReturn($UTB->getError());
 			}
 			$authcore=md5($data['umail'].I('post.authcore','','trim'));
-			$maxTime=time()-900;
-			if($authcore!=session("authcore")||empty(session("authcore"))||session("authcoreTime")>$maxTime){
+			$maxTimeLen=time()-session("authcoreTime");
+			if($authcore!=session("authcore")||empty(session("authcore"))||$maxTimeLen>900){
 				$this->ajaxReturn(array("authcore"=>"验证码错误"));
 			}
 			if(I("post.agreePro",'','trim')!="agree"){
@@ -174,6 +177,7 @@ use Home\Controller\CommonOneController;
 			$data['status']=0;
 			$rst=$UTB->field("uid,umail,uname,upw,rgstTime,status")->add($data);
 			if($rst){
+					session(null);
 					session('uname',$data['uname']);
 					session('uid',$data['uid']);
 					session("isLogin","isLogin");
@@ -182,6 +186,10 @@ use Home\Controller\CommonOneController;
 					$this->ajaxReturn(array("success"=>"success"));
 			}
 			$this->ajaxReturn(array("rgtAllErr"=>"注册失败"));
+		}
+
+		public function forgetPW1(){
+			
 		}
 
 	}
