@@ -133,8 +133,8 @@ $(document).ready(function(){
 		 				case 'info':
 		 					switch(v){
 		 						case "success":$("#fgtForm2").get(0).reset();fail("&#xe687;","更改成功");break;
-		 						case "err1":$("#answerErr").html("&#xe601;密保错误").css("display","inline-block");break;
-		 						case 'err2':$("#newPw2AllErr").html("&#xe601;发生错误").css("display","inline-block");break;
+		 						case "err1":errObj=$("#answerErr");v="密保错误";break;
+		 						case 'err2':errObj=$("#newPw2AllErr");v="发生错误";break;
 		 					}
 		 			}
 		 			if(errObj!=""){
