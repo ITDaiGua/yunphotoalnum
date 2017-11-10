@@ -4,7 +4,8 @@ use Home\Controller\CommonOneController;
 	class UserController extends CommonOneController{
 		protected $rules=array(
 			array('uname','','用户名已存在',0,'unique',1),
-			array('umail','','邮箱已被注册',0,'unique',1)
+			array('umail','','邮箱已被注册',0,'unique',1),
+			array('umail','email','邮箱格式不合法',0)
 		);
 		public function index(){
 			if(!IS_AJAX){
@@ -124,7 +125,12 @@ use Home\Controller\CommonOneController;
 				PHPerr();
 			}
 			$UTB=D('User');
-			$data=$UTB->validate($this->rules)->field('umail')->create();
+			$onlySend=I('get.onlySend',"","trim");
+			if(empty($onlySend)||$onlySend!="os"){
+				$data=$UTB->validate($this->rules)->field('umail')->create();
+			}else{
+				$data=$UTB->field('umail')->create();
+			}
 			if(!$data){
 				$this->ajaxReturn($UTB->getError());
 			}
@@ -189,6 +195,68 @@ use Home\Controller\CommonOneController;
 		}
 
 		public function forgetPW1(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D('User');
+			$data=$UTB->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+			$authcore=md5($data['umail'].I('post.authcore','','trim'));
+			$maxTimeLen=time()-session("authcoreTime");
+			if($authcore!=session("authcore")||empty(session("authcore"))||$maxTimeLen>900){
+				$this->ajaxReturn(array("authcore"=>"验证码错误"));
+			}
+			session(null);
+			$rst=$UTB->where("umail='%s'",$data['umail'])->save(array('upw'=>$data['upw']));
+			if($rst!==FALSE){
+				$this->ajaxReturn(array("info"=>"success"));
+			}else{
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+		}
+
+		public function getQuestion(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D('User');
+			$data=$UTB->field('umail')->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+
+			$question=$UTB->field('uname,securityQst')->where("umail='%s'",$data['umail'])->find();
+
+			if($question){
+				$this->ajaxReturn($question);
+			}else{
+				$this->ajaxReturn(array("info"=>"该用户未注册"));
+			}
+		}
+
+		public function forgetPW2(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D('User');
+			$data=$UTB->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+			$isExists=$UTB->where("umail='%s' AND securityAsw='%s'",$data['umail'],$data['securityAsw'])->find();
+			if($isExists){
+				$rst=$UTB->where("umail='%s' AND securityAsw='%s'",$data['umail'],$data['securityAsw'])->save(array("upw"=>$data['upw']));
+				if($rst!==FALSE){
+					$this->ajaxReturn(array("info"=>"success"));
+				}else{
+					$this->ajaxReturn(array("info"=>"err2"));
+				}
+			}else{
+				$this->ajaxReturn(array("info"=>"err1"));
+			}
+			
 			
 		}
 

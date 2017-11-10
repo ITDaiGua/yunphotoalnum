@@ -7,7 +7,11 @@ use Think\Model;
 		protected $trueTableName='user';
 		protected $_map=array(
 			'lgEmail'=>'umail',
-			'lgPw'=>'upw'
+			'lgPw'=>'upw',
+			"newPw"=>"upw",
+			"newPw2"=>"upw",
+			"umail2"=>"umail",
+			"answer"=>"securityAsw"
 		);
 		protected $_validate=array(
 			array('umail','email','邮箱格式不合法',0),
@@ -16,14 +20,16 @@ use Think\Model;
 			array('uname','','用户名已存在',0,'unique',2),
 			array('umail','','邮箱已被注册',0,'unique',2),
 			//array('umail','','邮箱已被注册',0,'unique',1),
-			array('cmfupw','upw','必须与上一个密码相同',0,'confirm')
+			array('cmfupw','upw','必须与上一个密码相同',0,'confirm'),
+			array('cmfNewPw','upw','必须与上一个密码相同',0,'confirm'),
+			array('cmfNewPw2','upw','必须与上一个密码相同',0,'confirm')
 		);
 		protected $_auto=array(
-			array("upw",'myMD5',3,'callback')
+			array("upw",'myMD5',3,'callback'),
+			array("securityAsw","myMD5",3,'callback')
 		);
 
 		public function myMD5($upw){
-			//测试密码：qwer_vd1232
 			for($i=0;$i<5;$i++){
 				$upw=md5($upw);
 			}

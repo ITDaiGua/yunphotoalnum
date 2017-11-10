@@ -14,8 +14,6 @@
 	<!--[if lte IE 8]>
 		<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/jquery.min.js"></script>
 	<![endif]-->
-	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
-	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/forgetPw.js"></script>
 </head>
 <body>
 	<div class="allContent">
@@ -31,22 +29,22 @@
 					<div class="fgtImg">&#xe6cb;</div>
 					<input type="password" name="newPw" placeholder="新密码" maxlength="18" id="newPw" class="pw">
 				</span>
-				<span id="newPwErr" class="fgtErr"></span><br/>
+				<span id="newPwErr" class="fgtErr"></span><br/><br/>
 				<span class="fgtSpan">
 					<div class="fgtImg">&#xe714;</div>
 					<input type="password" name="cmfNewPw" placeholder="确认新密码"  maxlength="18" id="cmfNewPw" class="pw">
 				</span>
-				<span id="cmfNewPwErr" class="fgtErr"></span><br/>
+				<span id="cmfNewPwErr" class="fgtErr"></span><br/><br/>
 				<span class="fgtSpan">
 					<div class="fgtImg">&#xe6e6;</div>
 					<input type="text" name="umail" placeholder="注册的邮箱" autocomplete="off" maxlength="40" id="umail" class="email">
 				</span>
-				<span id="umailErr" class="fgtErr"></span><br/>
+				<span id="umailErr" class="fgtErr"></span><br/><br/>
 				<span class="fgtSpan">
-					<input type="text" name="authcore" placeholder="验证码" autocomplete="off" maxlength="10" id="authcore" style="width:80px;">
-					<div id="getFgtAc" onselectstart="return false;">点击获取验证码</div>
+					<input type="text" name="authcore" placeholder="验证码" autocomplete="off" maxlength="10" id="authcore" class="authcore" style="width:80px;">
+					<div id="getFgtAc" class="getAuthcore" onselectstart="return false;">点击获取验证码</div>
 				</span>
-				<span id="newPwErr" class="fgtErr"></span><br/>
+				<span id="authcoreErr" class="fgtErr"></span><br/><br/>
 				<button id="cgePwBtt" class="cgePwBtt">立即修改</button><br/>
 				<span id="newPwAllErr" class="fgtErr"></span>
 			</form>
@@ -58,29 +56,31 @@
 						<input type="text" name="umail2" placeholder="注册的邮箱" autocomplete="off" maxlength="40"  id="umail2" class="email">
 					</span>
 					<button id="nextStep">下一步</button><br/>
-					<input type="hidden" name="umail2Hidd"  id="umail2Hidd">
 					<span id="umail2Err"  class="fgtErr"></span>
 				</div>
 
 				<div id="answerDiv">
 					<div id="quest"></div><br/>
-					<textarea id="answer" maxlength="32" placeholder="密保答案"></textarea>
-					<span id="answerErr" class="fgtErr"></span><br/>
+					<textarea id="answer" name="answer" maxlength="32" placeholder="密保答案"></textarea>
+					<span id="answerErr" class="fgtErr"></span><br/><br/>
 					<span class="fgtSpan">
 						<div class="fgtImg">&#xe6cb;</div>
 						<input type="password" name="newPw2" placeholder="新密码" maxlength="18" id="newPw2" class="pw">
 					</span>
-					<span id="newPw2Err" class="fgtErr"></span><br/>
+					<span id="newPw2Err" class="fgtErr"></span><br/><br/>
 					<span class="fgtSpan">
 						<div class="fgtImg">&#xe714;</div>
 						<input type="password" name="cmfNewPw2" placeholder="确认新密码" maxlength="18" id="cmfNewPw2" class="pw">
 					</span>
-					<span id="newPw2Err" class="fgtErr"></span><br/>
+					<span id="cmfNewPw2Err" class="fgtErr"></span><br/><br/>
 					<button id="cgePwBtt2" class="cgePwBtt">立即修改</button><br/>
 					<span id="newPw2AllErr" class="fgtErr"></span>
 				</div>
 			</form>
 		</div>
 	</div>
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/forgetPw.js"></script>
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/sendmail.js"></script>
 </body>
 </html>

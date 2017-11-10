@@ -9,6 +9,7 @@ body{
 	height:43px;
 	margin-top:30px;
 	border-bottom:3px solid #00a2ff;
+	margin-bottom:15px;
 }
 .fgtPwMenu ul{
 	list-style:none;
@@ -28,7 +29,6 @@ body{
 	text-align:center;
 	line-height:40px;
 	cursor:pointer;
-	/*border-top:3px solid transparent;*/
 }
 .fgtPwMenu ul li:first-child{
 	border-right:1px solid #fff;
@@ -42,7 +42,7 @@ body{
 	width:250px;
 	height:40px;
 	border:1px solid #ccc;
-	margin-top:15px;
+	/*margin-top:15px;*/
 	white-space:nowrap;
 	font-size:0;
 	vertical-align:middle;
@@ -85,7 +85,6 @@ body{
 .fgtErr{
 	color:#ff0000;
 	font:15px iconfont;
-	margin-bottom:15px;
 	vertical-align:middle;
 }
 .cgePwBtt{

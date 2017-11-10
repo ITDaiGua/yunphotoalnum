@@ -23,7 +23,12 @@ $(document).ready(function(){
 			}
 			timeLen--;
 		},1000);
-		var sendMailURL="/YunPhotoAlbum/User/sendMail/t/"+$.now();
+		var thisId=_this.attr("id");
+		var sendMailURL="";
+		switch(thisId){
+			case 'getFgtAc':sendMailURL="/YunPhotoAlbum/User/sendMail/onlySend/os/t/"+$.now();break;
+			default:sendMailURL="/YunPhotoAlbum/User/sendMail/t/"+$.now();
+		}
 		$.post(sendMailURL,{"umail":email},function(data){
 			if(data.umail){
 				$("#umailErr").html("&#xe601;"+data.umail).css({"display":"inline-block"});
