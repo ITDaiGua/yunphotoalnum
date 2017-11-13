@@ -34,7 +34,9 @@
 				<a href="/YunPhotoAlbum/">
 					<li <{$init.styleLi1}>>图片广场</li>
 				</a>
-				<li <{$init.styleLi2}>>我的相册</li>
+				<a href="/YunPhotoAlbum/MyAlbum/index/">
+					<li <{$init.styleLi2}>>我的相册</li>
+				</a>
 				<li <{$init.styleLi3}>>我的分享</li>
 				<li <{$init.styleLi4}>>我的收藏</li>
 			</ul>
@@ -46,6 +48,8 @@
 	</div>
 	<if condition="$init['viewType'] eq 'shareFolders'">
 		<include file="Index/shareFolders"/>
+	<elseif  condition="$init['viewType'] eq 'myAlbum'"/>
+		<include file="MyAlbum/MyAlbum"/>
 	</if>
 	<div id="endInfo">
 		增值电信业务经营许可证:&nbsp;<a href="javascript:void(0)">粤B2-20110446</a>&nbsp;网络文化经营许可证:&nbsp;<a href="javascript:void(0)">粤网文[2015]0295-065号</a>&nbsp;<a href="javascript:void(0)">12318举报</a><br>互联网药品信息服务资质证书编号:&nbsp;<a href="javascript:void(0)">粤-（经营性）-2017-0005</a>&nbsp;&nbsp;<img src="__PUBLIC__/SysImg/beianbgs.png" width="20" height="20" id="beianbgs">粤公网安备&nbsp;<a href="javascript:void(0)">33010002000120号</a>

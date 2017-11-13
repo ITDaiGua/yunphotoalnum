@@ -1,0 +1,153 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/MyAlbum.css">
+<div id="cmfDelAlbum">
+	<div id="cmfDelAlbum_head">删除相册</div>
+	<form id="cmfDelAlbum_cnt" method="post">
+		<input type="radio" name="baoliuImg" value="1" checked id="baoliu">
+		<label for="baoliu">该相册中的图片移至默认相册</label><br/>
+		<input type="radio" name="baoliuImg" value="1" id="delAll">
+		<label for="delAll">同时删除相册中图片</label>
+	</form>
+	<div id="cmfDelAlbum_btt">
+		<button id="cmfDel">删除</button>&nbsp;&nbsp;
+		<button id="cmdCnl">取消</button>
+	</div>
+</div>
+<div class="allContent">
+	<div class="MyAlbum_menu">
+		<a href="javascript:void(0);" id="MyAlbum_menu_a">新建相册</a>
+		<a href="javascript:void(0);" id="MyAlbum_help">&#xe605;</a>
+		<div id="MyAlbum_help_txt">
+			1.点击相册可以查看具体图片;<br/>
+			2.右击鼠标:<br/>
+			&nbsp;&nbsp;a.删除相册;<br/>
+			&nbsp;&nbsp;b.共享相册;<br/>
+			&nbsp;&nbsp;c.更改相册名;
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#MyAlbum_help").hover(function(){
+			$("#MyAlbum_help_txt").css({"display":"inline-block"});
+		},function(){
+			$("#MyAlbum_help_txt").hide();
+		});
+	</script>
+	<a href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/pa001" id="pa001">
+		<img src="__PUBLIC__/SysImg/folderDefault.png" class="MyAlbum_img">
+		<div class="default">默认相册</div>
+	</a>
+	<foreach name="rest" item="v">
+		<a href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/<{$v.PAId}>" id="<{$v.PAId}>" class="MyAlbum_a">
+			<img src="__PUBLIC__/SysImg/folderImg2.png" class="MyAlbum_img">
+			<div class="MyAlbum_txt" onclick="return false"><{$v.PAName}></div>
+		</a>
+	</foreach>
+	<ul class="MyAlbumOpt" oncontextmenu="return false;">
+		<li id="share">共享</li>
+		<li id="rename">重命名</li>
+		<li id="delete">删除</li>
+	</ul>
+	<script type="text/javascript">
+		$(".MyAlbum_txt").each(function(){
+			var txt=$(this).text();
+			if(txt.length>8){
+				var txt2=txt.substring(0,7)+"...";
+				$(this).text(txt2);
+				$(this).parent().attr("title",txt);
+			}
+		});
+		var whichAlbum="";
+		$("body").on("contextmenu",".MyAlbum_a",function(event){
+			whichAlbum=this.id;
+			var mouseX=event.pageX;
+			var mouseY=event.pageY;
+			$(".MyAlbumOpt").show().offset({left:mouseX,top:mouseY});
+			$('body').bind('click',function(){
+				$(".MyAlbumOpt").hide();
+				$('body').unbind('click');
+			});
+			return false;
+		});
+		$("#rename").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			whichAlbum=$("#"+whichAlbum);
+			var whichAlbumCnt=whichAlbum.attr("title");
+			var whichAlbumTxt=whichAlbum.children(".MyAlbum_txt");
+			if(whichAlbumTxt){
+				whichAlbumTxt.text(whichAlbumCnt).prop("contenteditable",true);
+			}else{
+				whichAlbumTxt.prop("contenteditable",true);
+			}
+			selectAll(whichAlbumTxt);
+		});
+		$("#delete").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			$(".taslctLayer").show();
+			$("#cmfDelAlbum").show();
+		});
+		$("#cmdCnl").click(function(){
+			$("#cmfDelAlbum_cnt").get(0).reset();
+			$(".taslctLayer").hide();
+			$("#cmfDelAlbum").hide();
+		});
+		$("#cmfDel").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			var checkedId=$("input[type='radio']:checked").attr("id");
+			var myAlbumdel_obj=$("#"+whichAlbum);
+			var myAlbumId=myAlbumdel_obj.attr("id");
+			myAlbumdel_obj.hide();
+			var delURL="";
+			if(checkedId=="delAll"){
+				delURL="/YunPhotoAlbum/MyAlbum/delAll/t/"+$.now();
+			}else{
+				delURL="/YunPhotoAlbum/MyAlbum/baoliu/t/"+$.now();
+			}
+			$.post(delURL,{"myAlbumId":myAlbumId},function(data){
+				switch(data.info){
+					case 'noLogin':login();myAlbumdel_obj.show();break;
+					case 'success':fail("&#xe687;","删除成功");myAlbumdel_obj.remove();$(".taslctLayer").hide();$("#cmfDelAlbum").hide();break;
+					default:fail("&#xe613;","出错啦~");myAlbumdel_obj.show();
+				}
+			}).fail(function(){
+				myAlbumdel_obj.show();
+				fail("&#xe613;","出错啦~");
+			});
+		});
+		var album='<a class="MyAlbum_a"><img src="__PUBLIC__/SysImg/folderImg2.png" class="MyAlbum_img"><div class="MyAlbum_txt" onclick="return false">未命名</div></a>';
+		var canCreate=true;
+		$("#MyAlbum_menu_a").click(function(){
+			if(!canCreate){
+				fail("&#xe687;","等会儿才能再创建");
+				return false;
+			}
+			canCreate=false;
+			var paid="pat"+$.now();
+			$(".allContent").append($(album).attr("id",paid));
+			var createURL="/YunPhotoAlbum/MyAlbum/createAlbum/t/"+$.now();
+			var album_href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/";
+			$.post(createURL,null,function(data){
+				switch(data.info){
+					case "noLogin":login();canCreate=true;break;
+					case "success":$("#"+paid).attr({
+						"href":album_href+data.paid,
+						"id":data.paid
+					});break;
+					default:fail("&#xe613;","出错啦~");$("#"+paid).remove();canCreate=true;break;
+				}
+			}).fail(function(){
+				fail("&#xe613;","出错啦~");
+				$("#"+paid).remove();
+				canCreate=true;
+			});
+			setTimeout(function(){
+				canCreate=true;
+			},2000);
+		});
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/JS/textOpt.js"></script>
+</div>

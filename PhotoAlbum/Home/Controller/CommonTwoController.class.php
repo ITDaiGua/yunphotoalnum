@@ -12,7 +12,7 @@ use Think\Controller;
 					if(empty($myImg)){
 						$myImg="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg";
 					}else{
-						$myImg=$userImg."/w/35/h/35";
+						$myImg=$myImg."/w/35/h/35";
 					}
 					$this->assign("userName",session("uname"));
 					$this->assign("uImg",$myImg);
@@ -20,15 +20,19 @@ use Think\Controller;
 				}else{
 					session(null);
 					$this->assign("isLogin","noLogin");
+					if(IS_AJAX){
+						$this->ajaxReturn(array("info"=>"noLogin"));
+					}else{
+						header("Location:/YunPhotoAlbum/");
+					}
 				}
 			}else{
 				//session(null);
 				$this->assign("isLogin","noLogin");
-			}
-			if(IS_AJAX){
-				$isLogin=session("isLogin");
-				if(empty($isLogin)||$isLogin!="isLogin"){
+				if(IS_AJAX){
 					$this->ajaxReturn(array("info"=>"noLogin"));
+				}else{
+					header("Location:/YunPhotoAlbum/");
 				}
 			}
 		}

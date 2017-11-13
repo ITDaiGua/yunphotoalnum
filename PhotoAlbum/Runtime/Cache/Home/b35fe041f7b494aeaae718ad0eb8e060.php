@@ -222,12 +222,12 @@
 					<button id="getMoreCmt" class="getMore">获取更多&#xe6b9;</button>
 				</div><?php endif; ?>
 		</div>
+		<script type="text/javascript">
+			var sid=$(".allContent").attr("id");
+			var lookSumURL="/YunPhotoAlbum/Index/lookSum";
+			window.onload=function(){
+				$.post(lookSumURL,{sid:sid});
+			}
+		</script>
 	</body>
-	<script type="text/javascript">
-		var sid=$(".allContent").attr("id");
-		var lookSumURL="/YunPhotoAlbum/Index/lookSum";
-		window.onload=function(){
-			$.post(lookSumURL,{sid:sid});
-		}
-	</script>
 </html>

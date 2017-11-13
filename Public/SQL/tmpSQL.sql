@@ -52,7 +52,7 @@ use YunPhotoAlbum;
 create table if not exists `photoAlbum`(
 	`uid` varchar(16) not null,
 	`PAId` varchar(17) not null, #相册id
-	`PAIdPrt` varchar(17) not null default 'top', 
+	#`PAIdPrt` varchar(17) not null default 'top', 
 	#相册的父文件夹,top表示顶级文件夹,PAId为pa001则表示默认文件夹,不能被删除
 	`PAName` varchar(30) not null default '未命名', #文件夹名
 	`status` int not null default 0, #文件夹状态,0：正常、1：被删除

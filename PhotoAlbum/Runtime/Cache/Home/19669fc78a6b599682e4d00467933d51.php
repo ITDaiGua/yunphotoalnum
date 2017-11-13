@@ -59,7 +59,9 @@
 				<a href="/YunPhotoAlbum/">
 					<li <?php echo ($init["styleLi1"]); ?>>图片广场</li>
 				</a>
-				<li <?php echo ($init["styleLi2"]); ?>>我的相册</li>
+				<a href="/YunPhotoAlbum/MyAlbum/index/">
+					<li <?php echo ($init["styleLi2"]); ?>>我的相册</li>
+				</a>
 				<li <?php echo ($init["styleLi3"]); ?>>我的分享</li>
 				<li <?php echo ($init["styleLi4"]); ?>>我的收藏</li>
 			</ul>
@@ -146,13 +148,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_2130__=$init['page']+1;$__FOR_END_2130__=$init['totalPage']+1;for($i=$__FOR_START_2130__;$i < $__FOR_END_2130__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_22868__=$init['page']+1;$__FOR_END_22868__=$init['totalPage']+1;for($i=$__FOR_START_22868__;$i < $__FOR_END_22868__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_14115__=$init['page']+1;$__FOR_END_14115__=$init['page']+5;for($i=$__FOR_START_14115__;$i < $__FOR_END_14115__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_20733__=$init['page']+1;$__FOR_END_20733__=$init['page']+5;for($i=$__FOR_START_20733__;$i < $__FOR_END_20733__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_21536__=1;$__FOR_END_21536__=$init['page'];for($i=$__FOR_START_21536__;$i < $__FOR_END_21536__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_16882__=1;$__FOR_END_16882__=$init['page'];for($i=$__FOR_START_16882__;$i < $__FOR_END_16882__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_16857__=$init['page']-4;$__FOR_END_16857__=$init['page'];for($i=$__FOR_START_16857__;$i < $__FOR_END_16857__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_67__=$init['page']-4;$__FOR_END_67__=$init['page'];for($i=$__FOR_START_67__;$i < $__FOR_END_67__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>
@@ -202,7 +204,161 @@
 				return false;
 			}
 		});
-	</script><?php endif; endif; ?>
+	</script><?php endif; ?>
+
+
+	<?php elseif($init['viewType'] == 'myAlbum'): ?>
+		<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/MyAlbum.css">
+<div id="cmfDelAlbum">
+	<div id="cmfDelAlbum_head">删除相册</div>
+	<form id="cmfDelAlbum_cnt" method="post">
+		<input type="radio" name="baoliuImg" value="1" checked id="baoliu">
+		<label for="baoliu">该相册中的图片移至默认相册</label><br/>
+		<input type="radio" name="baoliuImg" value="1" id="delAll">
+		<label for="delAll">同时删除相册中图片</label>
+	</form>
+	<div id="cmfDelAlbum_btt">
+		<button id="cmfDel">删除</button>&nbsp;&nbsp;
+		<button id="cmdCnl">取消</button>
+	</div>
+</div>
+<div class="allContent">
+	<div class="MyAlbum_menu">
+		<a href="javascript:void(0);" id="MyAlbum_menu_a">新建相册</a>
+		<a href="javascript:void(0);" id="MyAlbum_help">&#xe605;</a>
+		<div id="MyAlbum_help_txt">
+			1.点击相册可以查看具体图片;<br/>
+			2.右击鼠标:<br/>
+			&nbsp;&nbsp;a.删除相册;<br/>
+			&nbsp;&nbsp;b.共享相册;<br/>
+			&nbsp;&nbsp;c.更改相册名;
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#MyAlbum_help").hover(function(){
+			$("#MyAlbum_help_txt").css({"display":"inline-block"});
+		},function(){
+			$("#MyAlbum_help_txt").hide();
+		});
+	</script>
+	<a href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/pa001" id="pa001">
+		<img src="/YunPhotoAlbum/Public/SysImg/folderDefault.png" class="MyAlbum_img">
+		<div class="default">默认相册</div>
+	</a>
+	<?php if(is_array($rest)): foreach($rest as $key=>$v): ?><a href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/<?php echo ($v["PAId"]); ?>" id="<?php echo ($v["PAId"]); ?>" class="MyAlbum_a">
+			<img src="/YunPhotoAlbum/Public/SysImg/folderImg2.png" class="MyAlbum_img">
+			<div class="MyAlbum_txt" onclick="return false"><?php echo ($v["PAName"]); ?></div>
+		</a><?php endforeach; endif; ?>
+	<ul class="MyAlbumOpt" oncontextmenu="return false;">
+		<li id="share">共享</li>
+		<li id="rename">重命名</li>
+		<li id="delete">删除</li>
+	</ul>
+	<script type="text/javascript">
+		$(".MyAlbum_txt").each(function(){
+			var txt=$(this).text();
+			if(txt.length>8){
+				var txt2=txt.substring(0,7)+"...";
+				$(this).text(txt2);
+				$(this).parent().attr("title",txt);
+			}
+		});
+		var whichAlbum="";
+		$("body").on("contextmenu",".MyAlbum_a",function(event){
+			whichAlbum=this.id;
+			var mouseX=event.pageX;
+			var mouseY=event.pageY;
+			$(".MyAlbumOpt").show().offset({left:mouseX,top:mouseY});
+			$('body').bind('click',function(){
+				$(".MyAlbumOpt").hide();
+				$('body').unbind('click');
+			});
+			return false;
+		});
+		$("#rename").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			whichAlbum=$("#"+whichAlbum);
+			var whichAlbumCnt=whichAlbum.attr("title");
+			var whichAlbumTxt=whichAlbum.children(".MyAlbum_txt");
+			if(whichAlbumTxt){
+				whichAlbumTxt.text(whichAlbumCnt).prop("contenteditable",true);
+			}else{
+				whichAlbumTxt.prop("contenteditable",true);
+			}
+			selectAll(whichAlbumTxt);
+		});
+		$("#delete").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			$(".taslctLayer").show();
+			$("#cmfDelAlbum").show();
+		});
+		$("#cmdCnl").click(function(){
+			$("#cmfDelAlbum_cnt").get(0).reset();
+			$(".taslctLayer").hide();
+			$("#cmfDelAlbum").hide();
+		});
+		$("#cmfDel").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			var checkedId=$("input[type='radio']:checked").attr("id");
+			var myAlbumdel_obj=$("#"+whichAlbum);
+			var myAlbumId=myAlbumdel_obj.attr("id");
+			myAlbumdel_obj.hide();
+			var delURL="";
+			if(checkedId=="delAll"){
+				delURL="/YunPhotoAlbum/MyAlbum/delAll/t/"+$.now();
+			}else{
+				delURL="/YunPhotoAlbum/MyAlbum/baoliu/t/"+$.now();
+			}
+			$.post(delURL,{"myAlbumId":myAlbumId},function(data){
+				switch(data.info){
+					case 'noLogin':login();myAlbumdel_obj.show();break;
+					case 'success':fail("&#xe687;","删除成功");myAlbumdel_obj.remove();$(".taslctLayer").hide();$("#cmfDelAlbum").hide();break;
+					default:fail("&#xe613;","出错啦~");myAlbumdel_obj.show();
+				}
+			}).fail(function(){
+				myAlbumdel_obj.show();
+				fail("&#xe613;","出错啦~");
+			});
+		});
+		var album='<a class="MyAlbum_a"><img src="/YunPhotoAlbum/Public/SysImg/folderImg2.png" class="MyAlbum_img"><div class="MyAlbum_txt" onclick="return false">未命名</div></a>';
+		var canCreate=true;
+		$("#MyAlbum_menu_a").click(function(){
+			if(!canCreate){
+				fail("&#xe687;","等会儿才能再创建");
+				return false;
+			}
+			canCreate=false;
+			var paid="pat"+$.now();
+			$(".allContent").append($(album).attr("id",paid));
+			var createURL="/YunPhotoAlbum/MyAlbum/createAlbum/t/"+$.now();
+			var album_href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/";
+			$.post(createURL,null,function(data){
+				switch(data.info){
+					case "noLogin":login();canCreate=true;break;
+					case "success":$("#"+paid).attr({
+						"href":album_href+data.paid,
+						"id":data.paid
+					});break;
+					default:fail("&#xe613;","出错啦~");$("#"+paid).remove();canCreate=true;break;
+				}
+			}).fail(function(){
+				fail("&#xe613;","出错啦~");
+				$("#"+paid).remove();
+				canCreate=true;
+			});
+			setTimeout(function(){
+				canCreate=true;
+			},2000);
+		});
+	</script>
+	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/textOpt.js"></script>
+</div><?php endif; ?>
 	<div id="endInfo">
 		增值电信业务经营许可证:&nbsp;<a href="javascript:void(0)">粤B2-20110446</a>&nbsp;网络文化经营许可证:&nbsp;<a href="javascript:void(0)">粤网文[2015]0295-065号</a>&nbsp;<a href="javascript:void(0)">12318举报</a><br>互联网药品信息服务资质证书编号:&nbsp;<a href="javascript:void(0)">粤-（经营性）-2017-0005</a>&nbsp;&nbsp;<img src="/YunPhotoAlbum/Public/SysImg/beianbgs.png" width="20" height="20" id="beianbgs">粤公网安备&nbsp;<a href="javascript:void(0)">33010002000120号</a>
 	</div>
