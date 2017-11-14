@@ -153,7 +153,7 @@ body{
 	line-height:30px;
 	margin-bottom:8px;
 }
-dl{
+/*dl{
 	width:135px;
 	font-size:0;
 	white-space:nowrap;
@@ -167,7 +167,7 @@ dl,dt,dt span{
 }
 dt,dt span{
 	font-size:15px;
-}
+}*/
 input[name=page]{
 	width:25px;
 	height:16px;

@@ -1,4 +1,105 @@
 @charset "utf-8";
+.shareDiv{
+	position:fixed;
+	z-index:101;
+	display:none;
+	width:600px;
+	height:auto;
+	min-height:400px;
+	left:50%;
+	top:5%;
+	margin-left:-300px;
+	border:1px solid #ccc;
+	border-radius:10px;
+	background-color:#fff;
+	box-shadow:0 0 5px #ccc;
+	overflow:hidden;
+}
+.shareDiv dl{
+	margin-left:10px;
+}
+.shareDiv dl dd{
+	margin-top:10px;
+}
+.shareDiv_head{
+	width:100%;
+	height:40px;
+	background-color:#00a2ff;
+	padding-left:10px;
+	font:25px "黑体","微软雅黑";
+	line-height:40px;
+	letter-spacing:4px;
+	color:#fff;
+}
+#shareDiv_close{
+	display:inline-block;
+	width:25px;
+	height:40px;
+	font:25px iconfont;
+	line-height:40px;
+	float:right;
+	margin-right:20px;
+	cursor:pointer;
+}
+#shareDiv_close:hover{
+	color:#ff0000;
+}
+.shareDiv_title{
+	display:inline-block;
+	width:100px;
+	height:30px;
+	font:18px "微软雅黑","黑体";
+	line-height:30px;
+	text-align:right;
+	vertical-align:middle;
+}
+#classSelect{
+	vertical-align:middle;
+}
+#classSelect option{
+	cursor:pointer;
+}
+.shareDiv_input{
+	width:200px;
+	height:30px;
+	font:16px "微软雅黑","黑体";
+	line-height:30px;
+	padding-left:5px;
+	outline:none;
+	vertical-align:middle;
+}
+#prfile{
+	width:300px;
+	height:110px;
+	padding:5px;
+	font:16px "微软雅黑","黑体";
+	line-height:20px;
+	vertical-align:middle;
+	margin-top:10px;
+	outline:none;
+	resize:none;
+}
+.shareDiv_error{
+	font:13px iconfont;
+	color:#ff0000;
+}
+#shareBtt{
+	width:220px;
+	height:30px;
+	font:18px "微软雅黑","黑体";
+	line-height:30px;
+	color:#fff;
+	letter-spacing:5px;
+	margin-left:150px;
+	border:0;
+	border-radius:5px;
+	outline:none;
+	background-color:#00a2ff;
+	cursor:pointer;
+}
+#shareBtt:hover{
+	background-color:#0793e3;
+}
 #cmfDelAlbum{
 	position:fixed;
 	z-index:101;

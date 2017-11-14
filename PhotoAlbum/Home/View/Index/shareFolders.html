@@ -18,8 +18,7 @@
 			});
 			$(".photoClass").append(classPan);
 		}).fail(function(){
-			var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>&#xe691;</span>发生错误</div>";
-			$('body').prepend(_fail);
+			fail("&#xe691;","出错啦~");
 			setTimeout(function(){
 				$(".errorORwarn").remove();
 			},1500);

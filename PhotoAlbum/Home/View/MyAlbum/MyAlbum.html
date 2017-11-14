@@ -1,4 +1,51 @@
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/MyAlbum.css">
+<div class="shareDiv">
+		<div class="shareDiv_head">共享相册<span id="shareDiv_close" title="关闭">&#xe601;</span></div>
+		<form name="shareAlbum" method="post" id="shareAlbum">
+			<dl>
+				<dd>
+					<span class="shareDiv_title"><font color="red">*</font>相册分类：</span>
+					<select id="classSelect" name="sclass">
+						<option>----请选择分类----</option>
+					</select>
+					<script type="text/javascript">
+						var getClassURL="__PUBLIC__/Json/photoClassJson.json";
+						var albumClass=$.getJSON(getClassURL,function(data){
+							var classOption="";
+							$.each(data,function(photoClass,childrenPC){
+								classOption+="<option>";
+								classOption+=photoClass;
+								classOption+="</option>";
+							});
+							$("#classSelect").append(classOption);
+						}).fail(function(){
+							fail("&#xe613;","出错啦~");
+						});
+					</script>
+					<span id="classSelectErr" class="shareDiv_error"></span>
+				</dd>
+				<dd>
+					<span class="shareDiv_title"><font color="red">*</font>相册名：</span>
+					<input type="text" name="sName" placeholder="共享相册名" maxlength="20" id="sName" class="shareDiv_input">
+					<span id="sNameErr" class="shareDiv_error"></span>
+				</dd>
+				<dd>
+					<span class="shareDiv_title">相册简介：</span>
+					<textarea maxlength="200" placeholder="相册简介" id="prfile"></textarea>
+					<span id="prfileErr" class="shareDiv_error"></span>
+				</dd>
+				<dd>
+					<span class="shareDiv_title"><font color="red">*</font>关键词：</span>
+					<input type="text" name="skey" placeholder="多个关键词用“;”隔开且不能有特殊字符" maxlength="20" id="skey" class="shareDiv_input" style="width:300px;">
+					<span id="skeyErr" class="shareDiv_error"></span>
+				</dd>
+				<dd style="margin-top:25px;">
+					<button id="shareBtt">立即共享</button><br/>
+					<span id="shareAllErr" class="shareDiv_error"></span>
+				</dd>
+			</dl>
+		</form>
+</div>
 <div id="cmfDelAlbum">
 	<div id="cmfDelAlbum_head">删除相册</div>
 	<form id="cmfDelAlbum_cnt" method="post">
@@ -58,6 +105,10 @@
 		var whichAlbum="";
 		$("body").on("contextmenu",".MyAlbum_a",function(event){
 			whichAlbum=this.id;
+			if(whichAlbum.match("/^pat/")){
+				whichAlbum="";
+				return false;
+			}
 			var mouseX=event.pageX;
 			var mouseY=event.pageY;
 			$(".MyAlbumOpt").show().offset({left:mouseX,top:mouseY});
@@ -147,6 +198,46 @@
 			setTimeout(function(){
 				canCreate=true;
 			},2000);
+		});
+		$("#share").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			whichAlbum=$("#"+whichAlbum);
+			var albumName=whichAlbum.attr("title");
+			if(!albumName){
+				albumName=whichAlbum.children(".MyAlbum_txt").text();
+			}
+			$("#sName").val(albumName);
+			$(".taslctLayer").show();
+			$(".shareDiv").show();
+		});
+		$("#shareDiv_close").click(function(){
+			$(".shareDiv").hide();
+			$(".taslctLayer").hide();
+			$("#shareAlbum").get(0).reset();
+			$(".shareDiv_error").html("");
+		});
+		var canShare=true;
+		$("#shareAlbum").on("submit",function(event){
+			event.preventDefault();
+			var isTrueTmp=true;
+			if(!canShare){
+				return false;
+			}
+			var className=$.trim($("#classSelect option:selected").text());
+			if(className=="----请选择分类----"){
+				$("#classSelectErr").html("&#xe601;必须选择分类");
+				isTrueTmp=isTrueTmp&false;
+			}else{
+				$("#classSelectErr").html("");
+				isTrueTmp=isTrueTmp&true;
+			}
+			isTrueTmp=isTrueTmp&isNotBlank("#sName")&isNotBlank("#skey");
+			if(!isTrueTmp){
+				return false;
+			}
+			isTrueTmp=false;
 		});
 	</script>
 	<script type="text/javascript" src="__PUBLIC__/JS/textOpt.js"></script>

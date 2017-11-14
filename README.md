@@ -8,3 +8,4 @@ MyAlbum视图的#MyAlbum_help_txt的z-index为10
 MyAlbum视图的.MyAlbumOpt的z-index为20
 MyAlbum视图的#cmfDelAlbum的z-index为101
 MyAlbum视图的.MyAlbum_txt的z-index为2
+MyAlbum视图的.shareDiv的z-index为101

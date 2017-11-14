@@ -46,6 +46,9 @@ use Home\Controller\CommonTwoController;
 				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$data['PAName']=I("post.paname","未命名","trim");
+			if(empty($data['PAName'])){
+				$data['PAName']="未命名";
+			}
 			$data['PAName'].preg_grep('/[\s]/g'," ");
 			$UTB=D("MyAlbum");
 			$rst=$UTB->where("uid='%s' AND PAId='%s'",$data['uid'],$data['PAId'])->save(array("PAName"=>$data['PAName']));
@@ -98,6 +101,10 @@ use Home\Controller\CommonTwoController;
 				$this->ajaxReturn(array("info"=>"error3"));
 			}
 			$this->ajaxReturn(array("info"=>"success"));
+		}
+
+		public function shareMyAlbum(){
+			
 		}
 
 		public function searchMyPhoto(){

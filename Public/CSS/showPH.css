@@ -129,6 +129,21 @@
 	padding:10px;
 	overflow:hidden;
 }
+dl{
+	width:135px;
+	font-size:0;
+	white-space:nowrap;
+	
+}
+dl,dt,dt span{
+	height:30px;
+	line-height:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+dt,dt span{
+	font-size:15px;
+}
 .shareUInfo{
 	width:100px;
 	height:130px;

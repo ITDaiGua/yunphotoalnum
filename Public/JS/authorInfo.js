@@ -52,10 +52,10 @@ $(document).ready(function(){
 		}
 	});
 });
-function fail(img,info){
+/*function fail(img,info){
 	var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
 	$('body').prepend(_fail);
 	setTimeout(function(){
 		$(".errorORwarn").hide().remove();
 	},1500);
-}
+}*/
