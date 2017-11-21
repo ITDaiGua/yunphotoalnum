@@ -26,23 +26,24 @@
 				</dd>
 				<dd>
 					<span class="shareDiv_title"><font color="red">*</font>相册名：</span>
-					<input type="text" name="sName" placeholder="共享相册名" maxlength="20" id="sName" class="shareDiv_input">
+					<input type="text" name="sName" placeholder="共享相册名" maxlength="20" id="sName" class="shareDiv_input" autocomplete="off">
 					<span id="sNameErr" class="shareDiv_error"></span>
 				</dd>
 				<dd>
-					<span class="shareDiv_title">相册简介：</span>
-					<textarea maxlength="200" placeholder="相册简介" id="prfile"></textarea>
-					<span id="prfileErr" class="shareDiv_error"></span>
+					<span class="shareDiv_title"><font color="red">*</font>相册简介：</span>
+					<textarea maxlength="200" placeholder="相册简介" id="profile" name="profile"></textarea>
+					<span id="profileErr" class="shareDiv_error"></span>
 				</dd>
 				<dd>
 					<span class="shareDiv_title"><font color="red">*</font>关键词：</span>
-					<input type="text" name="skey" placeholder="多个关键词用“;”隔开且不能有特殊字符" maxlength="20" id="skey" class="shareDiv_input" style="width:300px;">
+					<input type="text" name="skey" placeholder="多个关键词用“;”隔开且不能有特殊字符" maxlength="20" autocomplete="off" id="skey" class="shareDiv_input" style="width:300px;">
 					<span id="skeyErr" class="shareDiv_error"></span>
 				</dd>
 				<dd style="margin-top:25px;">
 					<button id="shareBtt">立即共享</button><br/>
 					<span id="shareAllErr" class="shareDiv_error"></span>
 				</dd>
+				<input type="hidden" name="PAId" id="PAId"  autocomplete="off">
 			</dl>
 		</form>
 </div>
@@ -109,6 +110,7 @@
 				whichAlbum="";
 				return false;
 			}
+			$("#PAId").val(whichAlbum);
 			var mouseX=event.pageX;
 			var mouseY=event.pageY;
 			$(".MyAlbumOpt").show().offset({left:mouseX,top:mouseY});
@@ -234,10 +236,35 @@
 				isTrueTmp=isTrueTmp&true;
 			}
 			isTrueTmp=isTrueTmp&isNotBlank("#sName")&isNotBlank("#skey");
+			var profileLen=$.trim($("#profile").val()).length;
+			if(profileLen<=0){
+				isTrueTmp=isTrueTmp&false;
+				$("#profileErr").html("&#xe601;不能为空");
+			}else if(profileLen<=20){
+				isTrueTmp=isTrueTmp&false;
+				$("#profileErr").html("&#xe601;不能少于20个字符");
+			}else{
+				isTrueTmp=isTrueTmp&true;
+				$("#profileErr").html("");
+			}
 			if(!isTrueTmp){
 				return false;
 			}
 			isTrueTmp=false;
+			var shareURL="/YunPhotoAlbum/Sharepa/index/t/"+$.now();
+			$.post(shareURL,$("#shareAlbum").serialize(),function(data){
+				switch(data.info){
+					case 'noLogin':$("#shareDiv_close").trigger('click');login();break;
+					case "success":fail("&#xe687;","共享成功");$("#shareDiv_close").trigger('click');isTrueTmp=true;break;
+					case "error1":fail("&#xe613;","相册中没有图片");isTrueTmp=true;break;
+					case "error2":$("#shareDiv_close").trigger('click');fail("&#xe613;","不能重复共享");isTrueTmp=true;break;
+					case "error":
+					default:fail("&#xe613;","出错啦~");isTrueTmp=true;
+				}
+			}).fail(function(){
+				fail("&#xe613;","出错啦~");
+				isTrueTmp=true;
+			});
 		});
 	</script>
 	<script type="text/javascript" src="__PUBLIC__/JS/textOpt.js"></script>

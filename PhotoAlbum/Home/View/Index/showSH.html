@@ -16,7 +16,7 @@
 			<script type="text/javascript" src="__PUBLIC__/JS/jquery.min.js"></script>
 		<![endif]-->
 		<script type="text/javascript" src="__PUBLIC__/JS/showPH.js"></script>
-		<script charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor.js"></script>
+		<script charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor-all-min.js"></script>
 		<script charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
 	</head>
 	<body>
@@ -124,7 +124,7 @@
 								pasteType:1,
 								allowImageRemote:false,
 								allowImageUpload:false,
-								items:["undo","|","redo","|","emoticons","|","link","|","unlink"],
+								items:["undo","|","redo","|","emoticons"],
 								afterChange:function(){
 									var strLen=this.count('text');
 									cmntStrLen.text(strLen);
@@ -174,13 +174,6 @@
 								});
 							});
 						});
-						/*function fail(img,info){
-							var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
-							$('body').prepend(_fail);
-							setTimeout(function(){
-								$(".errorORwarn").hide().remove();
-							},1500);
-						}*/
 					</script>
 				</div>
 				<div id="photosArea">
@@ -189,10 +182,7 @@
 					<else />
 						<foreach name="selRst" key="key" item="value">
 							<div class="spImg" id="<{$value['pid']}>">
-								<div class="imgDIV">
-									<img src="<{$value['spLink']}>">
-								</div>
-								<span><{$value['PName']}></span>
+								<img src="<{$value['spLink']}>">
 							</div>
 						</foreach>
 					 </empty>
@@ -205,7 +195,6 @@
 						<button id="getMorePh" class="getMore">获取更多&#xe6b9;</button>
 					</div>
 				</notempty>
-				
 				<div id="getMoreCmtDiv" class="getMoreDiv" style="display:none;">
 					<button id="getMoreCmt" class="getMore">获取更多&#xe6b9;</button>
 				</div>

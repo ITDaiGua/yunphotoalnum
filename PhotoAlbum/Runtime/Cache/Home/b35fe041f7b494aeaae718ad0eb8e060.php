@@ -16,7 +16,7 @@
 			<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/jquery.min.js"></script>
 		<![endif]-->
 		<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/showPH.js"></script>
-		<script charset="utf-8" src="/YunPhotoAlbum/Public/kindeditor/kindeditor.js"></script>
+		<script charset="utf-8" src="/YunPhotoAlbum/Public/kindeditor/kindeditor-all-min.js"></script>
 		<script charset="utf-8" src="/YunPhotoAlbum/Public/kindeditor/lang/zh_CN.js"></script>
 	</head>
 	<body>
@@ -142,7 +142,7 @@
 								pasteType:1,
 								allowImageRemote:false,
 								allowImageUpload:false,
-								items:["undo","|","redo","|","emoticons","|","link","|","unlink"],
+								items:["undo","|","redo","|","emoticons"],
 								afterChange:function(){
 									var strLen=this.count('text');
 									cmntStrLen.text(strLen);
@@ -192,23 +192,13 @@
 								});
 							});
 						});
-						/*function fail(img,info){
-							var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
-							$('body').prepend(_fail);
-							setTimeout(function(){
-								$(".errorORwarn").hide().remove();
-							},1500);
-						}*/
 					</script>
 				</div>
 				<div id="photosArea">
 					<?php if(empty($selRst)): ?><div class="nothing"></div>
 					<?php else: ?>
 						<?php if(is_array($selRst)): foreach($selRst as $key=>$value): ?><div class="spImg" id="<?php echo ($value['pid']); ?>">
-								<div class="imgDIV">
-									<img src="<?php echo ($value['spLink']); ?>">
-								</div>
-								<span><?php echo ($value['PName']); ?></span>
+								<img src="<?php echo ($value['spLink']); ?>">
 							</div><?php endforeach; endif; endif; ?>
 				</div>
 				<div class="gtMreLodg">
@@ -217,7 +207,6 @@
 				<?php if(!empty($selRst)): ?><div id="getMorePhDiv" class="getMoreDiv">
 						<button id="getMorePh" class="getMore">获取更多&#xe6b9;</button>
 					</div><?php endif; ?>
-				
 				<div id="getMoreCmtDiv" class="getMoreDiv" style="display:none;">
 					<button id="getMoreCmt" class="getMore">获取更多&#xe6b9;</button>
 				</div><?php endif; ?>

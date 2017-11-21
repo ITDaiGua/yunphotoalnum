@@ -9,11 +9,12 @@ $(document).ready(function(){
 	var _allContent=$(".allContent");
 	var _this="";
 	var _thisImg="";
-	_allContent.on("mouseenter",".imgDIV",function(){
+	//_allContent.on("mouseenter",".imgDIV",function(){
+	_allContent.on("mouseenter",".spImg",function(){
 		_this=$(this);
 		_thisImg=_this.find("img");
 		_thisImg.css({position:"absolute"}).stop(true,false).animate({width:"164px",height:"190px",margin:"-5px"});
-		_allContent.on("mouseleave",".imgDIV",function(){
+		_allContent.on("mouseleave",".spImg",function(){
 			_thisImg.stop(true,false).animate({width:"154px",height:"180px",margin:0}).queue(function(next){
 				_thisImg.css({position:"static"});
 				next();
@@ -184,9 +185,9 @@ $(document).ready(function(){
 					}else{
 						$.each(data,function(k,v){
 							morePH+='<div class="spImg" id="'+v.pid+'">';
-							morePH+='<div class="imgDIV">';
+							//morePH+='<div class="imgDIV">';
 							morePH+='<img src="'+v.spLink+'"></div>';
-							morePH+='<span>'+v.PName+'</span></div>';
+							//morePH+='<span>'+v.PName+'</span></div>';
 						});
 						$(".gtMreLodg").hide();
 						_photosArea.append(morePH);

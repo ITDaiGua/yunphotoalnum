@@ -1,0 +1,157 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/photo.css">
+<div id="myPhotoOptWarn">
+	<div id="optWarnTitle">
+		<span id="warnTitleImg">&#xe691;</span>提示
+	</div>
+	<div id="optWarnCont">操作不可逆!!</div>
+	<div id="optWarnBtt">
+		<button id="IKnow">我知道了!</button>
+		<button id="ICancle">取消</button>
+	</div>
+</div>
+<div class="allContent" id="<{$PAId}>" style="font-size:0">
+	<div id="myPhotoOpt">
+		<a href="javascript:void(0)" id="batchOpt">
+			<span style="margin-right:5px">&#xe60e;</span>批量操作
+		</a>
+		<ul id="batchOptUl" onselectstart="return false;">
+			<li id="batchSel" class="batchOptLi"><span style="margin-right:5px">&#xe670;</span>全选</li>
+			<li id="batchNotSel" class="batchOptLi"><span style="margin-right:5px">&#xe703;</span>全不选</li>
+			<li id="batchDel" class="batchOptLi"><span style="margin-right:5px">&#xe634;</span>批量删除</li>
+			<li id="batchMove" class="batchOptLi"><span style="margin-right:5px">&#xe660;</span>批量移动</li>
+			<li id="optCancle" class="batchOptLi"><span style="margin-right:5px">&#xe710;</span>取消</li>
+		</ul>
+		<img src="__PUBLIC__/SysImg/loading2.gif" ondragstart="return false;" id="btcOptLoading">
+		<span id="myPhotoOptErr"></span>
+	</div>
+	<div class="uploadDiv">
+		<input type="file" name="uploadPhoto" id="uploadPhoto" title="上传图片" accept="image/png,image/gif,image/jpeg,image/jpg,image/png">&#xe78c;
+	</div>
+	<foreach name="photos" item="v">
+		<div class="myPhoto" onselectstart="return false;">
+			<div class="checkboxDiv">
+				<input type="checkbox" id="<{$v.pid}>" class="checkbox">
+				<label for="<{$v.pid}>" class="checkboxLb" title="选择"></label>
+			</div>
+			<img src="<{$v.PLink}>/w/159/h/180/">
+			<ul class="phImg_opt" onselectstart="return false;">
+				<li class="delImg" title="删除">&#xe634;</li>
+				<li class="moveImg" title="移动到其他相册">&#xe660;</li>
+			</ul>
+		</div>
+	</foreach>
+</div>
+<script type="text/javascript">
+	$(".allContent").on("mouseenter",".myPhoto",function(event){
+		var del=$(this).find(".phImg_opt");
+		del.stop(true,false).animate({bottom:0},200,"linear");
+		$(this).on("mouseleave",function(){
+			del.stop(true,false).animate({bottom:"-30px"},200,"linear");
+		});
+	});
+	$(".allContent").on("mouseenter",".checkboxDiv",function(event){
+		return false;
+	});
+	$("#batchOpt").click(function(){
+		$(this).hide();
+		$("#batchOptUl").css({display:"inline-block"});
+		$(".checkboxDiv").show();
+	});
+	$("#batchSel").click(function(){
+		$(".checkbox").prop("checked",true);
+	});
+	$("#batchNotSel").click(function(){
+		$(".checkbox").prop("checked",false);
+	});
+	$("#optCancle").click(function(){
+		$("#batchOptUl").hide();
+		$("#batchOpt").show();
+		$(".checkboxDiv").hide();
+		$("#myPhotoOptErr").text("").hide();
+		$(".checkbox").prop("checked",false);
+	});
+	var canBatchDel=true;
+	$("#batchDel").click(function(){
+		if(!checkTest(".checkbox:checked")||!canBatchDel){
+			return false;
+		}
+		canBatchDel=false;
+		$(".taslctLayer").show();
+		$("#myPhotoOptWarn").show();
+	});
+	$("#ICancle").click(function(){
+		$("#myPhotoOptWarn").hide();
+		$(".taslctLayer").hide();
+		$("#optCancle").trigger("click");
+		canBatchDel=true;
+	});
+	var batchDelURL="/YunPhotoAlbum/MyAlbum/deletePh/t/"+$.now();
+	$("#IKnow").click(function(){
+		$("#myPhotoOptWarn").hide();
+		$(".taslctLayer").hide();
+		$("#btcOptLoading").show();
+		var pids=parsePid(".checkbox:checked");
+		if(!pids){
+			$("#ICancle").trigger("click");
+			$("#btcOptLoading").hide();
+			fail("&#xe613;","出错啦~");
+			return false;
+		}
+		var delImgs=$(".checkbox:checked").parents(".myPhoto");
+		delImgs.hide();
+		$.post(batchDelURL,{"pids":pids},function(data){
+			switch(data.info){
+				case "noLogin":
+					$("#ICancle").trigger("click");
+					login();break;
+				case "success":
+					$("#ICancle").trigger("click");
+					fail("&#xe687;","删除成功");break;
+				case "error":
+				default:$("#ICancle").trigger("click");
+			}
+			$("#btcOptLoading").hide();
+			delImgs.remove();
+		}).fail(function(){
+			$("#ICancle").trigger("click");
+			$("#btcOptLoading").hide();
+			delImgs.show();
+			fail("&#xe613;","出错啦~");
+		});
+	});
+	
+	$("#batchMove").click(function(){
+			if(!checkTest(".checkbox:checked")){
+				return false;
+			}
+	});
+
+	$(".allContent").on("click",".delImg",function(event){
+		$(this).parents(".myPhoto").find(".checkbox").prop("checked",true);
+		$("#IKnow").trigger('click');
+	});
+
+	function checkTest(selector){
+		var selLen=$(selector).length;
+		var myPhotoOptErr=$("#myPhotoOptErr");
+		if(selLen<=0){
+			myPhotoOptErr.text("没有选择的内容").show();
+			return false;
+		}
+		myPhotoOptErr.hide();
+		return true;
+	}
+
+	function parsePid(selector){		//解析图片的pid
+		var $selector=$(selector);
+		var pids="";
+		if($selector.length<=0){
+			return "";
+		}
+		$selector.each(function(){
+			pids+=this.id+",";
+		});
+		return pids;
+	}
+
+</script>

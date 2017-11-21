@@ -70,8 +70,8 @@ class IndexController extends CommonOneController{
         $selSPRst[0]['userImg']='/YunPhotoAlbum/Public/SysImg/uimg.jpg';
       }
       $selSPRst=timeFmtCge2($selSPRst);
-      $selRst=$getSH->field("spLink,pid,PName")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
-     $this->assign("selSPRst",$selSPRst);
+      $selRst=$getSH->field("spLink,pid")->table("sharePhoto")->where("sid='%s' AND status=0",$sid)->page("1,30")->select();
+      $this->assign("selSPRst",$selSPRst);
       $this->assign("selRst",$selRst);
       $this->display();
     }
@@ -178,7 +178,7 @@ class IndexController extends CommonOneController{
         }
       }
       if(stripos($subPath,"image")!==FALSE){
-        $subPath="";
+        $subPath="image/".session("uid")."/";
       }
       if(!in_array($type,$this->typeArr)){
         $type="";

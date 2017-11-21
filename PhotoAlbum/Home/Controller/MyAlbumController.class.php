@@ -66,17 +66,17 @@ use Home\Controller\CommonTwoController;
 			$data['uid']=session("uid");
 			$data['PAId']=I('post.myAlbumId',"");
 			if(empty($data['PAId'])){
-				$this->ajaxReturn(array("info"=>"error4"));
+				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$UTB=D("MyAlbum");
 			$rst=$UTB->where("uid='%s' AND PAId='%s'",$data)->save(array("status"=>1));
 			if($rst===FALSE){
-				$this->ajaxReturn(array("info"=>"error5"));
+				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$UTBPhoto=M();
 			$rst2=$UTBPhoto->table('photo')->where("uid='%s' AND PAId='%s'",$data)->save(array("status"=>1));
 			if($rst2===FALSE){
-				$this->ajaxReturn(array("info"=>"error6"));
+				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$this->ajaxReturn(array("info"=>"success"));
 		}
@@ -88,32 +88,74 @@ use Home\Controller\CommonTwoController;
 			$data['uid']=session("uid");
 			$data['PAId']=I('post.myAlbumId',"");
 			if(empty($data['PAId'])){
-				$this->ajaxReturn(array("info"=>"error1"));
+				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$UTB=D("MyAlbum");
 			$rst=$UTB->where("uid='%s' AND PAId='%s'",$data)->save(array("status"=>1));
 			if($rst===FALSE){
-				$this->ajaxReturn(array("info"=>"error2"));
+				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$UTBPhoto=M();
 			$rst2=$UTBPhoto->table('photo')->where("uid='%s' AND PAId='%s'",$data)->save(array("PAId"=>"pa001"));
 			if($rst2===FALSE){
-				$this->ajaxReturn(array("info"=>"error3"));
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$this->ajaxReturn(array("info"=>"success"));
+		}
+		
+		public function showMyPhoto(){
+			$PAId=trim(I("get.p",""));
+			$uid=session("uid");
+			if(empty($PAId)||!preg_match('/^pa[0-9]{1,15}$/',$PAId)||empty($uid)){
+				PHPerr();
+			}
+			$UTB=M("photo");
+			$rst=$UTB->where("uid='%s' AND PAId='%s' AND status=0",$uid,$PAId)->select();
+			$init=array(
+				"viewType"=>"photo",
+				"title"=>"查看相册",
+				"PAId"=>$PAId
+			);
+			$this->assign("init",$init);
+			$this->assign("photos",$rst);
+			$this->display("CommonView/index");
+		}
+
+		public function deletePh(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$pids=trim(I("post.pids",""));
+			$uid=session("uid");
+			if(empty($pids)||empty($uid)){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$pids=rtrim($pids,",");
+			$UTB2=M("sharephoto");
+			$data2['pid']=array("in",$pids);
+			$rst2=$UTB2->where($data2)->save(array("status"=>1));
+			if($rst2===FALSE){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$data["pid&uid"]=array(
+				array("in",$pids),
+				$uid,
+				'_multi'=>true
+			);
+			$UTB=M("photo");
+			$rst=$UTB->where($data)->save(array("status"=>1));
+			if($rst===FALSE){
+				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$this->ajaxReturn(array("info"=>"success"));
 		}
 
-		public function shareMyAlbum(){
-			
+		public function delPhoto(){
+
 		}
 
 		public function searchMyPhoto(){
 
 		}
-
-		public function showMyPhoto(){
-
-		}
-
 	}
 ?>

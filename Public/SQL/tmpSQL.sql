@@ -65,8 +65,8 @@ create table if not exists `photo`(
 	`uid` varchar(16) not null,
 	`pid` varchar(16) not null,	#图片id
 	`PAId` varchar(17) not null, #图片所属文件夹id
-	`PName` varchar(30) not null, #图片名
-	`PNameft` varchar(60) not null,#全文索引分词
+	#`PName` varchar(30) not null, #图片名
+	#`PNameft` varchar(60) not null,#全文索引分词
 	`PLink` varchar(100) not null, #图片链接
 	`status` int not null default 0, #0:正常、1：被删除
 	primary key `p`(`uid`,`pid`,`PAId`)
@@ -77,7 +77,7 @@ create table if not exists `sharePA`(
 	`sid` varchar(16) not null primary key, #共享文件夹id
 	`uid` varchar(16) not null, #所有者id
 	`authorName` varchar(30) not null,#共享作者的用户名
-	#`PAId` varchar(17) not null, #所属文件夹id
+	`PAId` varchar(17) not null, #所属文件夹id
 	`sName` varchar(30) not null, #共享文件夹名
 	`profile` varchar(200) not null, #共享文件夹简介
 	`sclass` varchar(10) not null, #共享文件夹所属分类
@@ -104,7 +104,7 @@ use YunPhotoAlbum;
 create table if not exists `sharePhoto`(
 	`sid` varchar(16) not null,	#共享文件夹的id
 	`pid` varchar(16) not null, #共享图片的id
-	`PName`  varchar(30) not null, #图片名
+	#`PName`  varchar(30) not null, #图片名
 	`spLink` varchar(100) not null, #共享图片的链接
 	`status` int default 0, #0：正常、1：被删除
 	primary key `sapt`(`sid`,`pid`)
