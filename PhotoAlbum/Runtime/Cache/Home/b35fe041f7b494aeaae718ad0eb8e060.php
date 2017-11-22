@@ -53,13 +53,13 @@
 		<a href="javascript:void(0);" id="wannaLg">登陆</a>
 		<span style="vertical-align:middle;">|</span>
 		<a href="/YunPhotoAlbum/User/rgtHtml">注册</a>
-		<img src="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg" class="uImg"><?php endif; ?>
+		<img src="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg" class="uImg">
+		<script type="text/javascript">
+			$("#wannaLg").click(function(){
+				login();
+			});
+		</script><?php endif; ?>
 </div>
-<script type="text/javascript">
-	$("#wannaLg").click(function(){
-		login();
-	});
-</script>
 <script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
 		<?php if(!empty($selSPRst[0]['uid'])): ?><div class="iconfont rightOpt">
 				<div class="tipoff">

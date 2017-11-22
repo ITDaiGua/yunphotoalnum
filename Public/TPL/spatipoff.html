@@ -88,13 +88,6 @@
 		ajaxUpload(filesObj,id,imgType,idloadingDiv,idloading);
 		$(this).val("");
 	});
-	/*function fail(img,info){
-		var _fail="<div class='errorORwarn'><span class='iconfont errorORwarnImg'>"+img+"</span>"+info+"</div>";
-		$('body').prepend(_fail);
-		setTimeout(function(){
-			$(".errorORwarn").hide().remove();
-		},1500);
-	}*/
 	function ajaxUpload(filesObj,id,imgType,idloadingDiv,idloading){
 		var sid=$(".allContent").attr('id');
 		var url="/YunPhotoAlbum/AjaxOpt/ajaxUpload1/t/"+$.now()+"/sid/"+sid;

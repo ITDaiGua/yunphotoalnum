@@ -150,8 +150,43 @@ use Home\Controller\CommonTwoController;
 			$this->ajaxReturn(array("info"=>"success"));
 		}
 
-		public function delPhoto(){
+		public function getMyAlbum(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D('MyAlbum');
+			$uid=session("uid");
+			$rst=$UTB->field("PAId,PAName,status")->where("uid='%s' AND status=0",$uid)->select();
+			if($rst===FALSE){
+				$this->ajaxReturn(array("info"=>"error"));
+			}else{
+				$this->ajaxReturn($rst);
+			}
+			//print_r($rst);
+		}
 
+		public function movePhoto(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$PAId=trim(I("post.paid",""));
+			$pids=trim(I("post.pids",""));
+			$pids=rtrim($pids,",");
+			$uid=session("uid");
+			if(empty($PAId)||empty($pids)||empty($uid)){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$data["uid&pid"]=array(
+				$uid,
+				array("in",$pids),
+				"_multi"=>true
+			);
+			$UTB=M('photo');
+			$rst=$UTB->where($data)->save(array("PAId"=>$PAId));
+			if($rst===FALSE){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$this->ajaxReturn(array("info"=>"success"));
 		}
 
 		public function searchMyPhoto(){

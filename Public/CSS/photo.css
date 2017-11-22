@@ -1,7 +1,139 @@
 @charset "utf-8";
+#selMoveAlbum{
+	position:fixed;
+	z-index:102;
+	display:none;
+	width:600px;
+	height:80%;
+	left:50%;
+	top:5%;
+	margin-left:-300px;
+	border:1px solid #ccc;
+	border-radius:10px;
+	box-shadow:0 0 5px #ccc;
+	background-color:#fff;
+	overflow:hidden;
+	text-align:center;
+}
+#selMovAlm-title{
+	padding-left:10px;
+	width:100%;
+	height:40px;
+	font:25px "黑体","微软雅黑";
+	line-height:40px;
+	letter-spacing:5px;
+	color:#fff;
+	background-color:#00a2ff;
+	white-space:nowrap;
+	text-align:left;
+}
+#selMovAlm-help{
+	font:16px iconfont;
+	color:#3117f6;
+	cursor:help;
+}
+#help-cont{
+	position:absolute;
+	display:none;
+	width:300px;
+	height:30px;
+	border:2px solid #f68017;
+	border-radius:5px;
+	background-color:rgba(246,128,23,0.5);
+	font:15px "微软雅黑","黑体";
+	line-height:30px;
+	color:#edeff0;
+	padding-left:10px;
+}
+#selMovAlm-close{
+	display:inline-block;
+	width:25px;
+	height:40px;
+	font:20px iconfont;
+	line-height:40px;
+	color:#ccc;
+	float:right;
+	margin-right:20px;
+	cursor:pointer;
+}
+#selMovAlm-close:hover{
+	color:#ff0000;
+}
+#albums{
+	padding:10px;
+	width:580px;
+	height:75%;
+	text-align:center;
+	margin-bottom:10px;
+	overflow:hidden;
+}
+.albumDiv{
+	position:relative;
+	width:580px;
+	height:40px;
+	border-bottom:1px solid #e5e5e5;
+	text-align:left;
+	vertical-align:middle;
+	font-size:0;
+	white-space:nowrap;
+	margin-bottom:5px;
+}
+.albumDiv:hover{
+	background-color:#99dbf6;
+}
+.albumImg{
+	display:inline-block;
+	width:40px;
+	height:40px;
+	margin-right:10px;
+	vertical-align:middle;
+}
+.albumRadio{
+	display:none;
+}
+.albumName{
+	display:inline-block;
+	width:640px;
+	height:40px;
+	font:17px "微软雅黑","黑体";
+	line-height:40px;
+	vertical-align:middle;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	cursor:pointer;
+}
+.selOn{
+	position:absolute;
+	width:40px;
+	height:40px;
+	right:0;
+	bottom:0;
+}
+.albumRadio:checked + .selOn{
+	background-image:url('/YunPhotoAlbum/Public/SysImg/selOn.png');
+	background-size:40px 40px;
+	background-repeat:no-repeat;
+	background-position:right bottom;
+}
+#moveNow{
+	width:130px;
+	height:25px;
+	border:0;
+	outline:none;
+	background-color:#00a2ff;
+	border-radius:3px;
+	font:18px "微软雅黑","黑体";
+	line-height:25px;
+	color:#fff;
+	letter-spacing:5px;
+	cursor:pointer;
+}
+#moveNow:hover{
+	background-color:#4F94CD;
+}
 #myPhotoOptWarn{
 	position:fixed;
-	z-index:101;
+	z-index:102;
 	display:none;
 	width:300px;
 	height:150px;
@@ -74,6 +206,22 @@
 	background-color:#00a2ff;
 	color:#fff;
 }
+#uploadAll{
+	position:absolute;
+	z-index:102;
+	width:800px;
+	height:auto;
+	min-height:80%;
+	left:50%;
+	top:5px;
+	margin-left:-400px;
+	text-align:left;
+	border:1px solid #ccc;
+	border-radius:10px;
+	box-shadow:0 0 5px #ccc;
+	padding:10px;
+	background-color:#fff;
+}
 #myPhotoOpt{
 	width:100%;
 	height:30px;
@@ -142,6 +290,8 @@
 	display:inline-block;
 	width:154px;
 	height:180px;
+	left:0;
+	top:0;
 	border:0;
 	outline:none;
 	opacity:0;
@@ -182,6 +332,7 @@
 	vertical-align:middle;
 	cursor:pointer;
 	margin-left:10px;
+	background-color:#5cf7ee;
 }
 .checkboxLb:hover{
 	border-color:#1741f6;

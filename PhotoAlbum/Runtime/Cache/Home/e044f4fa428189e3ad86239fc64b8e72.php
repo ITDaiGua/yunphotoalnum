@@ -40,13 +40,13 @@
 		<a href="javascript:void(0);" id="wannaLg">登陆</a>
 		<span style="vertical-align:middle;">|</span>
 		<a href="/YunPhotoAlbum/User/rgtHtml">注册</a>
-		<img src="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg" class="uImg"><?php endif; ?>
+		<img src="/YunPhotoAlbum/Public/SysImg/smalluimg.jpg" class="uImg">
+		<script type="text/javascript">
+			$("#wannaLg").click(function(){
+				login();
+			});
+		</script><?php endif; ?>
 </div>
-<script type="text/javascript">
-	$("#wannaLg").click(function(){
-		login();
-	});
-</script>
 <script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
 	<div id="menuDiv">
 		<div id="logo">
@@ -147,13 +147,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_16444__=$init['page']+1;$__FOR_END_16444__=$init['totalPage']+1;for($i=$__FOR_START_16444__;$i < $__FOR_END_16444__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_31127__=$init['page']+1;$__FOR_END_31127__=$init['totalPage']+1;for($i=$__FOR_START_31127__;$i < $__FOR_END_31127__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_20933__=$init['page']+1;$__FOR_END_20933__=$init['page']+5;for($i=$__FOR_START_20933__;$i < $__FOR_END_20933__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_30596__=$init['page']+1;$__FOR_END_30596__=$init['page']+5;for($i=$__FOR_START_30596__;$i < $__FOR_END_30596__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_1818__=1;$__FOR_END_1818__=$init['page'];for($i=$__FOR_START_1818__;$i < $__FOR_END_1818__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_19309__=1;$__FOR_END_19309__=$init['page'];for($i=$__FOR_START_19309__;$i < $__FOR_END_19309__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_8779__=$init['page']-4;$__FOR_END_8779__=$init['page'];for($i=$__FOR_START_8779__;$i < $__FOR_END_8779__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_930__=$init['page']-4;$__FOR_END_930__=$init['page'];for($i=$__FOR_START_930__;$i < $__FOR_END_930__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>
@@ -477,7 +477,44 @@
 	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/textOpt.js"></script>
 </div>
 	<?php elseif($init['viewType'] == 'photo'): ?>
-		<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/photo.css">
+		<script type="text/javascript">
+	var moveHtml="";
+	(function(){
+		var getMyAlbumURL="/YunPhotoAlbum/MyAlbum/getMyAlbum/t/"+$.now();
+		$.post(getMyAlbumURL,function(data){
+			$.each(data,function(k,v){
+				moveHtml+='<div class="albumDiv">';
+				moveHtml+='<img src="/YunPhotoAlbum/Public/SysImg/folderImg.png" class="albumImg">';
+				moveHtml+='<label class="albumName" for="'+v.PAId+'">';
+				moveHtml+=v.PAName+'</label>';
+				moveHtml+='<input type="radio" name="album" id="'+v.PAId+'" class="albumRadio">';
+				moveHtml+='<div class="selOn"></div></div>';
+			});
+			$(document).ready(function(){
+				$("#albums").append(moveHtml);
+			});
+		}).fail(function(){
+			fail("&#xe613;","出错啦~");
+		});
+	})();
+</script>
+<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/photo.css">
+<div id="selMoveAlbum">
+	<div id="selMovAlm-title">
+		选择相册<span id="selMovAlm-help">&#xe605;</span>
+		<span id="help-cont">滑动鼠标中间键可获取更多相册</span>
+		<span id="selMovAlm-close">&#xe601;</span>
+	</div>
+	<div id="albums">
+		<div class="albumDiv">
+			<img src="/YunPhotoAlbum/Public/SysImg/folderDefault.png" class="albumImg">
+			<label class="albumName" for="pa001"><b>默认相册</b></label> 
+			<input type="radio" name="album" id="pa001" class="albumRadio">
+			<div class="selOn"></div>
+		</div>
+	</div>
+	<button id="moveNow">确定移动</button>
+</div>
 <div id="myPhotoOptWarn">
 	<div id="optWarnTitle">
 		<span id="warnTitleImg">&#xe691;</span>提示
@@ -486,6 +523,11 @@
 	<div id="optWarnBtt">
 		<button id="IKnow">我知道了!</button>
 		<button id="ICancle">取消</button>
+	</div>
+</div>
+<div id="uploadAll">
+	<div class="uploadDiv">
+		<input type="file" name="uploadPhoto" id="uploadPhoto" title="上传图片" accept="image/png,image/gif,image/jpeg,image/jpg,image/png">&#xe78c;
 	</div>
 </div>
 <div class="allContent" id="<?php echo ($PAId); ?>" style="font-size:0">
@@ -501,10 +543,10 @@
 			<li id="optCancle" class="batchOptLi"><span style="margin-right:5px">&#xe710;</span>取消</li>
 		</ul>
 		<img src="/YunPhotoAlbum/Public/SysImg/loading2.gif" ondragstart="return false;" id="btcOptLoading">
+		<a href="javascript:void(0)" id="uploadImg">
+				<span style="margin-right:5px">&#xe66f;</span>上传图片
+		</a>
 		<span id="myPhotoOptErr"></span>
-	</div>
-	<div class="uploadDiv">
-		<input type="file" name="uploadPhoto" id="uploadPhoto" title="上传图片" accept="image/png,image/gif,image/jpeg,image/jpg,image/png">&#xe78c;
 	</div>
 	<?php if(is_array($photos)): foreach($photos as $key=>$v): ?><div class="myPhoto" onselectstart="return false;">
 			<div class="checkboxDiv">
@@ -513,8 +555,8 @@
 			</div>
 			<img src="<?php echo ($v["PLink"]); ?>/w/159/h/180/">
 			<ul class="phImg_opt" onselectstart="return false;">
-				<li class="delImg" title="删除">&#xe634;</li>
-				<li class="moveImg" title="移动到其他相册">&#xe660;</li>
+				<li class="delImg" title="删除" id="pid-<?php echo ($v["pid"]); ?>">&#xe634;</li>
+				<li class="moveImg" title="移动到其他相册" id="id-<?php echo ($v["pid"]); ?>">&#xe660;</li>
 			</ul>
 		</div><?php endforeach; endif; ?>
 </div>
@@ -531,6 +573,7 @@
 	});
 	$("#batchOpt").click(function(){
 		$(this).hide();
+		$("#uploadImg").hide();
 		$("#batchOptUl").css({display:"inline-block"});
 		$(".checkboxDiv").show();
 	});
@@ -543,15 +586,17 @@
 	$("#optCancle").click(function(){
 		$("#batchOptUl").hide();
 		$("#batchOpt").show();
+		$("#uploadImg").show();
 		$(".checkboxDiv").hide();
 		$("#myPhotoOptErr").text("").hide();
 		$(".checkbox").prop("checked",false);
 	});
-	var canBatchDel=true;
+	var canBatchDel=true;	//防止重复点击
+	var cmfDel=true;		//防止重复提交
 	$("#batchDel").click(function(){
-		if(!checkTest(".checkbox:checked")||!canBatchDel){
-			return false;
-		}
+		if(!canBatchDel){return false;}
+		var sel_checked=$(".checkbox:checked");
+		if(!checkTest(sel_checked)){return false;}
 		canBatchDel=false;
 		$(".taslctLayer").show();
 		$("#myPhotoOptWarn").show();
@@ -561,55 +606,158 @@
 		$(".taslctLayer").hide();
 		$("#optCancle").trigger("click");
 		canBatchDel=true;
+		cmfDel=true;
 	});
 	var batchDelURL="/YunPhotoAlbum/MyAlbum/deletePh/t/"+$.now();
 	$("#IKnow").click(function(){
 		$("#myPhotoOptWarn").hide();
 		$(".taslctLayer").hide();
 		$("#btcOptLoading").show();
-		var pids=parsePid(".checkbox:checked");
+		if(!cmfDel){
+			return false;
+		}
+		var selector=$(".checkbox:checked");
+		var pids=parsePid(selector);
 		if(!pids){
 			$("#ICancle").trigger("click");
 			$("#btcOptLoading").hide();
 			fail("&#xe613;","出错啦~");
 			return false;
 		}
-		var delImgs=$(".checkbox:checked").parents(".myPhoto");
+		cmfDel=false;
+		var delImgs=selector.parents(".myPhoto");
 		delImgs.hide();
 		$.post(batchDelURL,{"pids":pids},function(data){
 			switch(data.info){
 				case "noLogin":
-					$("#ICancle").trigger("click");
+					delImgs.show();
 					login();break;
 				case "success":
-					$("#ICancle").trigger("click");
-					fail("&#xe687;","删除成功");break;
+					fail("&#xe687;","删除成功");
+					delImgs.remove();break;
 				case "error":
-				default:$("#ICancle").trigger("click");
+				default:delImgs.show();
+				fail("&#xe613;","出错啦~");
 			}
+			cmfDel=true;
+			$("#ICancle").trigger("click");
 			$("#btcOptLoading").hide();
-			delImgs.remove();
 		}).fail(function(){
 			$("#ICancle").trigger("click");
 			$("#btcOptLoading").hide();
+			cmfDel=true;
 			delImgs.show();
 			fail("&#xe613;","出错啦~");
 		});
 	});
-	
+
+	var movePids="";
+	var movePhotoId="";
 	$("#batchMove").click(function(){
-			if(!checkTest(".checkbox:checked")){
-				return false;
-			}
+		var sel_checked=$(".checkbox:checked");
+		if(!checkTest(sel_checked)){return false;}
+		$(".taslctLayer").show();
+		$("#selMoveAlbum").show();
+		var selector=$(".checkbox:checked");
+		movePids=parsePid(selector);
+		movePhotoId=selector.parents(".myPhoto");
 	});
 
+	$(".allContent").on("click",".moveImg",function(){
+		movePids=(this.id).split("-")[1];
+		movePhotoId=$(this).parents(".myPhoto");
+		$(".taslctLayer").show();
+		$("#selMoveAlbum").show();
+	});
+	var canBatchMove=true;
+	var moveURL="/YunPhotoAlbum/MyAlbum/movePhoto/t/"+$.now();
+	$("#moveNow").click(function(){
+		if(!canBatchMove||movePids==""||movePhotoId==""){return false;}
+		var paid=$(".albumRadio:checked").attr("id");
+		if(!paid){
+			fail("&#xe691;","请选择相册");
+			return false;
+		}
+		canBatchMove=false;
+		var btcOptLoading=$("#btcOptLoading");
+		btcOptLoading.show();
+		movePhotoId.hide();
+		$.post(moveURL,{"paid":paid,"pids":movePids},function(data){
+			switch(data.info){
+				case "noLogin":movePhotoId.show();login();break;
+				case "success":movePhotoId.remove();fail("&#xe687;","移动成功");break;
+				case "error":
+				default:movePhotoId.show();fail("&#xe613;","出错啦~");break;
+			}
+			$("#selMovAlm-close").trigger("click");
+			btcOptLoading.hide();
+		}).fail(function(){
+			$("#selMovAlm-close").trigger("click");
+			btcOptLoading.hide();
+			movePhotoId.show();
+			fail("&#xe613;","出错啦~");
+		});
+	});
+
+	$("#selMovAlm-help").on("mouseenter",function(){
+		var helpCont=$("#help-cont");
+		helpCont.css("display","inline-block");
+		$(this).on("mouseleave",function(){
+			helpCont.hide();
+		});
+	});
+	$("#selMovAlm-close").click(function(){
+		$("#selMoveAlbum").hide();
+		$(".taslctLayer").hide();
+		$(".albumRadio").prop("checked",false);
+		$("#optCancle").trigger("click");
+		canBatchMove=true;
+	});
+
+	var canDel=true;
 	$(".allContent").on("click",".delImg",function(event){
-		$(this).parents(".myPhoto").find(".checkbox").prop("checked",true);
-		$("#IKnow").trigger('click');
+		if(!canDel){
+			return false;
+		}
+		canDel=false;
+		var pid=(this.id).split("-")[1];
+		var delImg=$(this).parents(".myPhoto");
+		delImg.hide();
+		$.post(batchDelURL,{"pids":pid},function(data){
+			switch(data.info){
+				case "noLogin":delImg.show();login();break;
+				case "success":delImg.remove();fail("&#xe687;","删除成功");break;
+				case "error":
+				default:delImg.show();fail("&#xe613;","出错啦~");
+			}
+			canDel=true;
+		}).fail(function(){
+			delImg.show();
+			canDel=true;
+			fail("&#xe613;","出错啦~");
+		});
+	});
+
+	var albumsObj=$("#albums");
+	var isCanScroll=true;
+	$("#selMoveAlbum").on("mousewheel DOMMouseScroll",function(event){
+		if(!isCanScroll){return false;}
+		event.preventDefault();
+		event=event.originalEvent;
+		var direction=(event.wheelDelta&&(event.wheelDelta>0?1:-1))||(event.detail&&(event.detail>0?-1:1));
+		if(direction>0){
+			albumsObj.stop(true,false).animate({"scrollTop":"-=80px"},100,"linear",function(){
+				isCanScroll=true;
+			});
+		}else{
+			albumsObj.stop(true,false).animate({"scrollTop":"+=80px"},100,"linear",function(){
+				isCanScroll=true;
+			});
+		}
 	});
 
 	function checkTest(selector){
-		var selLen=$(selector).length;
+		var selLen=selector.length;
 		var myPhotoOptErr=$("#myPhotoOptErr");
 		if(selLen<=0){
 			myPhotoOptErr.text("没有选择的内容").show();
@@ -620,17 +768,20 @@
 	}
 
 	function parsePid(selector){		//解析图片的pid
-		var $selector=$(selector);
 		var pids="";
-		if($selector.length<=0){
+		if(selector.length<=0){
 			return "";
 		}
-		$selector.each(function(){
+		selector.each(function(){
 			pids+=this.id+",";
 		});
 		return pids;
 	}
 
+	$("#uploadPhoto").change(function(){
+		var txt=$.trim($(this).val());
+		if(txt==""){return false}
+	});
 </script><?php endif; ?>
 	<div id="endInfo">
 		增值电信业务经营许可证:&nbsp;<a href="javascript:void(0)">粤B2-20110446</a>&nbsp;网络文化经营许可证:&nbsp;<a href="javascript:void(0)">粤网文[2015]0295-065号</a>&nbsp;<a href="javascript:void(0)">12318举报</a><br>互联网药品信息服务资质证书编号:&nbsp;<a href="javascript:void(0)">粤-（经营性）-2017-0005</a>&nbsp;&nbsp;<img src="/YunPhotoAlbum/Public/SysImg/beianbgs.png" width="20" height="20" id="beianbgs">粤公网安备&nbsp;<a href="javascript:void(0)">33010002000120号</a>
