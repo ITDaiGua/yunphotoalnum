@@ -141,8 +141,13 @@ use Home\Controller\CommonTwoController;
 			$data['cltId']="clt".time().mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9);
 			$data['cltTime']=time();
 			$data['status']=0;
-			$cltTB=M();
-			$selRst=$cltTB->table("collection")->where("sid='%s' AND uid='%s' AND status=0",$data['sid'],$data['uid'])->select();
+			$UTB=M('sharepa');
+			$isMyShare=$UTB->where("sid='%s' AND uid='%s'",$data['sid'],$data['uid'])->find();
+			if(!empty($isMyShare)){
+				$this->ajaxReturn(array("info"=>"error1"));
+			}
+			$cltTB=M("collection");
+			$selRst=$cltTB->where("sid='%s' AND uid='%s' AND status=0",$data['sid'],$data['uid'])->find();
 			$rst='';
 			if(empty($selRst)){
 				$rst=$cltTB->table("collection")->field('cltId,uid,sid,cltTime,status')->add($data,$options=array(),$replace=true);

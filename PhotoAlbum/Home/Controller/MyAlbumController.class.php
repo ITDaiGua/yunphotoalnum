@@ -107,7 +107,7 @@ use Home\Controller\CommonTwoController;
 			$PAId=trim(I("get.p",""));
 			$uid=session("uid");
 			if(empty($PAId)||!preg_match('/^pa[0-9]{1,15}$/',$PAId)||empty($uid)){
-				PHPerr();
+				exit("发生错误...");
 			}
 			$UTB=M("photo");
 			$rst=$UTB->where("uid='%s' AND PAId='%s' AND status=0",$uid,$PAId)->select();
@@ -116,6 +116,7 @@ use Home\Controller\CommonTwoController;
 				"title"=>"查看相册",
 				"PAId"=>$PAId
 			);
+			$this->assign("PAId",$PAId);
 			$this->assign("init",$init);
 			$this->assign("photos",$rst);
 			$this->display("CommonView/index");
@@ -187,6 +188,44 @@ use Home\Controller\CommonTwoController;
 				$this->ajaxReturn(array("info"=>"error"));
 			}
 			$this->ajaxReturn(array("info"=>"success"));
+		}
+
+		public function uploadPhoto(){
+			if(!IS_AJAX){
+				exit("发生错误...");
+			}
+			$PAId=trim(I("get.PAId",""));
+			if(empty($PAId)){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$uploadName=($_FILES['photo']['name']); 
+			$uploadName=strtolower($uploadName);
+			$uid=session("uid");
+			$upload = new \Think\Upload();
+			$upload->maxSize = 3145728 ;
+			$upload->exts = array('gif','png','jpg','jpeg');
+			$upload->rootPath="./";
+			$upload->savePath = 'Public/image/';
+			$upload->subName = $uid;
+			$filename="p".time().mt_rand(0,9).mt_rand(0,9).mt_rand(0,9).mt_rand(0,9);
+			$upload->saveName = $filename;
+			$info = $upload->upload();
+			if(!$info) { 
+				$this->ajaxReturn(array("info"=>"error","imgName"=>$uploadName));
+			}else{ 
+				$PLink="/YunPhotoAlbum/Index/thumb1/p/image-{$uid}/fn/{$filename}/t/{$info['photo']['ext']}";
+				$UTB=M('photo');
+				$data['uid']=$uid;
+				$data['pid']=$filename;		//pid即是图片保存的名字
+				$data['PAId']=$PAId;
+				$data['PLink']=$PLink;
+				$data['status']=0;
+				$rst=$UTB->add($data);
+				if($rst){
+					$this->ajaxReturn(array("info"=>"success","imgName"=>$uploadName,"saveName"=>$filename,"plink"=>$PLink));	
+				}
+				$this->ajaxReturn(array("info"=>"error","imgName"=>$uploadName));
+			}
 		}
 
 		public function searchMyPhoto(){

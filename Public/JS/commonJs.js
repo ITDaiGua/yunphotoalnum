@@ -78,7 +78,7 @@ $('body').on("input propertychange",".authcore",function(){
 });
 
 function login(){
-	if($(".login").length>0){
+	if($(".login").length>0){ //避免某些情况下重复引入登陆弹窗
 		$(".taslctLayer").show();
 		$(".login").show();
 		return false;

@@ -150,7 +150,7 @@ $(document).ready(function(){
 
 	var sid=$(".allContent").attr("id");
 	$("#likeBtt").one('click',function(){
-		var likeURL="/YunPhotoAlbum/AjaxOpt/like";
+		var likeURL="/YunPhotoAlbum/AjaxOpt/like/t/"+$.now();
 		$.post(likeURL,{sid:sid},function(data){
 			if(data.info=="noLogin"){
 				login();
@@ -166,19 +166,19 @@ $(document).ready(function(){
 		});
 	});
 
-	var url="/YunPhotoAlbum/Index/showMoreSH/sid/"+sid;
 	var page=1;
 	var canGetMore=true; //节流
 	var isCanGetMore=true;	//判断有没有更多的数据
 	var morePH="";
 	var _photosArea=$("#photosArea");
 	$("#getMorePh").on("click",function(){
+		var url="/YunPhotoAlbum/Index/showMoreSH/sid/"+sid+"/t/"+$.now();
 		if(canGetMore&&isCanGetMore){
 			$(".gtMreLodg").show();
 			canGetMore=false;
 				page++;
 				$.get(url,{page:page},function(data){
-					if(data==null){
+					if(!data){
 						isCanGetMore=false;
 						$("#getMorePh").prop("disabled",true).text("没有更多啦~");
 						$(".gtMreLodg").hide();
@@ -201,14 +201,13 @@ $(document).ready(function(){
 		}
 	});
 
-	var url2="/YunPhotoAlbum/Index/getComment/sid/"+sid;
 	var page2=0;
 	var canGetMore2=true; //节流
 	var isCanGetMore2=true;	//判断有没有更多的数据
 	var morePH2="";
 	var _commentsArea=$("#commentsArea");
-	var cmtTipoffURL="/YunPhotoAlbum/AjaxOpt/cmtTipoff";
 	$("#getMoreCmt").on("click",function(){
+		var url2="/YunPhotoAlbum/Index/getComment/sid/"+sid+"/t/"+$.now();
 		if(canGetMore2&&isCanGetMore2){
 			$(".gtMreLodg").show();
 			canGetMore2=false;
@@ -237,6 +236,7 @@ $(document).ready(function(){
 						morePH2="";
 						$(".cmtTxt").one('click',function(){
 							var cid=$(this).parents(".cmtDiv").attr('id');
+							var cmtTipoffURL="/YunPhotoAlbum/AjaxOpt/cmtTipoff/t/"+$.now();
 							$.post(cmtTipoffURL,{cid:cid},function(data){
 								if(data.info=="noLogin"){
 									login();
@@ -277,14 +277,21 @@ $(document).ready(function(){
 	});
 
 	$(".collection").one('click',function(){
-		var cltURL="/YunPhotoAlbum/AjaxOpt/collection";
+		var cltURL="/YunPhotoAlbum/AjaxOpt/collection/t/"+$.now();
 		$.post(cltURL,{sid:sid},function(data){
-			if(data.info=='success'){
+			/*if(data.info=='success'){
 				fail("&#xe687;","收藏成功");
 			}else if(data.info=="noLogin"){
 				login();
 			}else{
 				fail("&#xe613;","出错啦~");
+			}*/
+			switch(data.info){
+				case 'success':fail("&#xe687;","收藏成功");break;
+				case 'noLogin':login();break;
+				case 'error1':fail("&#xe687;","是自己的相册~");break;
+				case 'error':
+				default:fail("&#xe613;","出错啦~");
 			}
 		});
 	});

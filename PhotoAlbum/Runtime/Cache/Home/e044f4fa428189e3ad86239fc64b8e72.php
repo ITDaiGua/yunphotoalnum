@@ -147,13 +147,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_31127__=$init['page']+1;$__FOR_END_31127__=$init['totalPage']+1;for($i=$__FOR_START_31127__;$i < $__FOR_END_31127__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_23889__=$init['page']+1;$__FOR_END_23889__=$init['totalPage']+1;for($i=$__FOR_START_23889__;$i < $__FOR_END_23889__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_30596__=$init['page']+1;$__FOR_END_30596__=$init['page']+5;for($i=$__FOR_START_30596__;$i < $__FOR_END_30596__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_6582__=$init['page']+1;$__FOR_END_6582__=$init['page']+5;for($i=$__FOR_START_6582__;$i < $__FOR_END_6582__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_19309__=1;$__FOR_END_19309__=$init['page'];for($i=$__FOR_START_19309__;$i < $__FOR_END_19309__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_5815__=1;$__FOR_END_5815__=$init['page'];for($i=$__FOR_START_5815__;$i < $__FOR_END_5815__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_930__=$init['page']-4;$__FOR_END_930__=$init['page'];for($i=$__FOR_START_930__;$i < $__FOR_END_930__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_7716__=$init['page']-4;$__FOR_END_7716__=$init['page'];for($i=$__FOR_START_7716__;$i < $__FOR_END_7716__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>
@@ -526,11 +526,23 @@
 	</div>
 </div>
 <div id="uploadAll">
+	<span id="uploadCancel" onselectstart="return false;">&#xe6b2;</span>
+	<div id="uploadBttDiv">
+		<button id="uploadBtt">上传图片</button>
+		<span id="upload-help">&#xe605;</span>
+		<dl id="upload-help-cont">
+			<dd>1.仅支持图片格式gif、jpg、png</dd>
+			<dd>2.图片最大3M</dd>
+			<dd>3.一次最多上传20张图片</dd>
+			<dd>4.再次上传请先清空预览图</dd>
+		</dl>
+		<a id="delAllPrev" href="javascript:void(0)"><span style="margin-right:5px">&#xe618;</span>清空预览图</a>
+	</div>
 	<div class="uploadDiv">
-		<input type="file" name="uploadPhoto" id="uploadPhoto" title="上传图片" accept="image/png,image/gif,image/jpeg,image/jpg,image/png">&#xe78c;
+		<input type="file" name="uploadPhoto" id="uploadPhoto" title="上传图片" accept="image/png,image/gif,image/jpeg,image/jpg,image/png" multiple="multiple">&#xe78c;
 	</div>
 </div>
-<div class="allContent" id="<?php echo ($PAId); ?>" style="font-size:0">
+<div class="allContent" id="<?php echo ($PAId); ?>" style="font-size:0;padding-bottom:10px;">
 	<div id="myPhotoOpt">
 		<a href="javascript:void(0)" id="batchOpt">
 			<span style="margin-right:5px">&#xe60e;</span>批量操作
@@ -591,13 +603,13 @@
 		$("#myPhotoOptErr").text("").hide();
 		$(".checkbox").prop("checked",false);
 	});
-	var canBatchDel=true;	//防止重复点击
+	//var canBatchDel=true;	//防止重复点击
 	var cmfDel=true;		//防止重复提交
 	$("#batchDel").click(function(){
-		if(!canBatchDel){return false;}
+		//if(!canBatchDel){return false;}
 		var sel_checked=$(".checkbox:checked");
 		if(!checkTest(sel_checked)){return false;}
-		canBatchDel=false;
+		//canBatchDel=false;
 		$(".taslctLayer").show();
 		$("#myPhotoOptWarn").show();
 	});
@@ -605,7 +617,7 @@
 		$("#myPhotoOptWarn").hide();
 		$(".taslctLayer").hide();
 		$("#optCancle").trigger("click");
-		canBatchDel=true;
+		//canBatchDel=true;
 		cmfDel=true;
 	});
 	var batchDelURL="/YunPhotoAlbum/MyAlbum/deletePh/t/"+$.now();
@@ -778,9 +790,203 @@
 		return pids;
 	}
 
-	$("#uploadPhoto").change(function(){
+	$("#uploadImg").click(function(){
+		$(".taslctLayer").show();
+		$("#uploadAll").show();
+	});
+
+	$("#uploadPhoto").click(function(event){
+		var imgLen=$(".preview").length;
+		if(imgLen>=20){return false;}		//一次最多上传20张图片
+	});
+
+	var arrImgObj=[];	//收集图片的files对象,用于图片预览及ajax上传
+	var arrImgName=[];
+	var allowType=["image/jpeg","image/jpg","image/png","image/gif"];
+	var maxSize=3145728; //图片最大的大小3M；
+	var uploadDiv=$(".uploadDiv");  //上传框的jq对象
+	$("#uploadPhoto").change(function(){		//上传图片
 		var txt=$.trim($(this).val());
-		if(txt==""){return false}
+		if(txt==""){return false;}
+		var imgLen=$(".preview").length;
+		if(imgLen>=20){return false;}		//一次最多上传20张图片
+		if(!this.files){
+			$("#uploadBtt").prop("disabled",true);
+			fail("&#xe691;","浏览器不支持此功能");
+			return false;
+		}
+		var FilesArr=this.files;
+		var addSum=FilesArr['length'];
+		var canAddSum=0;
+		if((imgLen+addSum)>=20){
+			canAddSum=20-imgLen;
+		}else{
+			canAddSum=addSum;
+		}
+		var i=1;	//记录已添加的图片数量
+		$.each(FilesArr,function(k,v){
+			if(i>canAddSum){return false;}
+			var type=v['type'];
+			var size=v['size'];
+			var name=v['name'].toLowerCase();
+			if($.inArray(name,arrImgName)>=0){	//避免重复上传
+				return true;
+			}
+			if($.inArray(type,allowType)<0){
+				fail("&#xe691;","不支持类型"+type);
+				return true;
+			}
+			if(size>maxSize){
+				fail("&#xe691;","图片不能超过3M");
+				return true;
+			}
+			i++;
+			arrImgObj.push(v);
+			arrImgName.push(name);
+			imgPreview(v);
+		});
+	});
+
+	$("#uploadAll").on("mouseenter",".preview",function(event){
+		var _this=$(this);
+		if(_this.children(".preview_loading:visible").length>=1){return false;}
+		var previewDel=_this.find(".previewDel");
+		previewDel.stop(true,false).animate({"top":0},200);
+		_this.on("mouseleave",function(){
+			previewDel.stop(true,false).animate({"top":"-30px"},200);
+		});
+	});
+
+	$("#uploadAll").on("click",".previewDel",function(){ //删除预览图
+		var parentEle=$(this).parent();
+		var index=parentEle.index(".preview"); //获得相对于其他预览图的下标
+		arrImgObj.splice(index,1);
+		arrImgName.splice(index,1);
+		parentEle.remove();
+	});
+
+	function imgPreview(imgFiles){		//生成预览图
+		var imgSrc=window.URL.createObjectURL(imgFiles);
+		var imgHtml="<div class='preview'>";
+		imgHtml+="<div class='preview_loading'>";
+		imgHtml+="<img src='/YunPhotoAlbum/Public/SysImg/loading2.gif' class='upldLadg'></div>";
+		imgHtml+="<div class='previewDel' title='取消上传' onselectstart='return false;'>";
+		imgHtml+="&#xe634;</div>";
+		imgHtml+="<img src='"+imgSrc+"' width='154px' height='180px'>";
+		imgHtml+="</div>";
+		uploadDiv.before(imgHtml);
+	}
+
+	$("#uploadCancel").click(function(){
+		if($(".upldLadg:visible").length>0){
+			fail("&#xe691;","仍有图片在上传");
+			return false;
+		}
+		$("#delAllPrev").trigger('click');
+		$("#uploadAll").hide();
+		$(".taslctLayer").hide();
+	});
+
+	var canUpload=true; //防止重复上传
+	var arrImgObjLen=0;
+	var PAId=$.trim($(".allContent").attr("id"));
+	$("#uploadBtt").click(function(){
+		if(!canUpload){return false;}
+		arrImgObjLen=arrImgObj.length;
+		if(arrImgObjLen<=0){
+			fail("&#xe691;","请选择图片");
+			$("#delAllPrev").trigger("click");
+			return false;
+		}
+		$(".preview_loading").css({"display":"inline-block"});
+		canUpload=false;
+		for(var i=0;i<arrImgObjLen;i++){
+			uploadImg(arrImgObj[i],i);
+		}
+	});
+
+	var formData=new FormData();
+	var hasUploadSum=0; //统计已经上传的数量(无论是否成功)
+	function uploadImg(imgObj,index){
+		hasUploadSum++;
+		formData.append("photo",imgObj);
+		var xmlHttp=new XMLHttpRequest;
+		var uploadURL="/YunPhotoAlbum/MyAlbum/uploadPhoto/PAId/"+PAId+"/t/"+$.now();
+		xmlHttp.open("POST",uploadURL,true);
+		xmlHttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
+		xmlHttp.onerror=function(){
+			uploadError(xmlHttp,index);
+		}
+		xmlHttp.onreadystatechange=function(){
+			if(xmlHttp.readyState==4){
+				if(xmlHttp.status==200){
+					var rpTxt=xmlHttp.responseText;
+					rpTxt=JSON.parse(rpTxt);
+					 switch(rpTxt.info){
+					 	case "success":uploadSuccess(rpTxt.imgName,rpTxt.saveName,rpTxt.plink);break;
+						case 'noLogin':
+							$("#uploadCancel").trigger("click");
+							login();break;
+						case 'error':
+						default:uploadError(xmlHttp,index);
+					}
+				}else{
+					uploadError(xmlHttp,index);
+				}
+			}
+		}
+		xmlHttp.send(formData);
+	}
+
+	var upldLadgObj="";		//务必清空,作用：避免重复遍历获取$(".upldLadg");
+	function uploadError(xmlHttp,index){
+		xmlHttp.abort();
+		var errURL="/YunPhotoAlbum/Public/SysImg/fail.png";
+		if(upldLadgObj==""){
+			upldLadgObj=$(".upldLadg");
+		}
+		$(upldLadgObj.get(index)).addClass("upldWarn").attr("src",errURL).removeClass('upldLadg');
+	}
+
+	function uploadSuccess(imgName,saveName,plink){
+		var imgIndex=$.inArray(imgName,arrImgName);
+		if(imgIndex<0){
+			fail("&#xe691;","发生错误");
+			return false;
+		}
+		var successURL="/YunPhotoAlbum/Public/SysImg/success.png";
+		if(upldLadgObj==""){
+			upldLadgObj=$(".upldLadg");
+		}
+		$(upldLadgObj.get(imgIndex)).addClass("upldWarn").attr("src",successURL).removeClass('upldLadg');
+		insertNewImg(saveName,plink);
+	}
+
+	var myPhotoOpt=$("#myPhotoOpt");
+	function insertNewImg(pid,plink){	//在相册中插入新图片
+		var newImg='<div class="myPhoto" onselectstart="return false;">';
+		newImg+='<div class="checkboxDiv">';
+		newImg+='<input type="checkbox" id="'+pid+'" class="checkbox">';
+		newImg+='<label for="'+pid+'" class="checkboxLb" title="选择"></label></div>';
+		newImg+='<img src="'+plink+'/w/159/h/180/">';
+		newImg+='<ul class="phImg_opt" onselectstart="return false;">';
+		newImg+='<li class="delImg" title="删除" id="pid-'+pid+'">&#xe634;</li>';
+		newImg+='<li class="moveImg" title="移动到其他相册" id="id-'+pid+'">&#xe660;</li>';
+		newImg+='</ul></div>';
+		myPhotoOpt.after(newImg);
+	}
+
+	function restoryUpldVar(){		//还原用于上传的全局变量
+		arrImgObj=[];
+		arrImgName=[];
+		canUpload=true;
+		arrImgObjLen=0;
+		hasUploadSum=0;
+		upldLadgObj="";		//清空前面提到的：避免重复遍历获取$(".upldLadg");
+	}
+	$("#delAllPrev").click(function(){
+		restoryUpldVar();
+		$(".preview").remove();
 	});
 </script><?php endif; ?>
 	<div id="endInfo">
