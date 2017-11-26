@@ -147,13 +147,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_11639__=$init['page']+1;$__FOR_END_11639__=$init['totalPage']+1;for($i=$__FOR_START_11639__;$i < $__FOR_END_11639__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_353__=$init['page']+1;$__FOR_END_353__=$init['totalPage']+1;for($i=$__FOR_START_353__;$i < $__FOR_END_353__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_19940__=$init['page']+1;$__FOR_END_19940__=$init['page']+5;for($i=$__FOR_START_19940__;$i < $__FOR_END_19940__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_21638__=$init['page']+1;$__FOR_END_21638__=$init['page']+5;for($i=$__FOR_START_21638__;$i < $__FOR_END_21638__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_21069__=1;$__FOR_END_21069__=$init['page'];for($i=$__FOR_START_21069__;$i < $__FOR_END_21069__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_327__=1;$__FOR_END_327__=$init['page'];for($i=$__FOR_START_327__;$i < $__FOR_END_327__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_12546__=$init['page']-4;$__FOR_END_12546__=$init['page'];for($i=$__FOR_START_12546__;$i < $__FOR_END_12546__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_23924__=$init['page']-4;$__FOR_END_23924__=$init['page'];for($i=$__FOR_START_23924__;$i < $__FOR_END_23924__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>
@@ -499,6 +499,14 @@
 	})();
 </script>
 <link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/photo.css">
+<div id="showImg">
+	<div id="showImg-close" title="关闭">&#xe601;</div>
+	<div id="imgDiv">
+		<img src="" id="showBigImg">
+	</div>
+	<div id="smallImgDiv"><ul id="smallImgUl"></ul></div>
+	<img src="/YunPhotoAlbum/Public/SysImg/loading2.gif" id="showImgLoading">
+</div>
 <div id="selMoveAlbum">
 	<div id="selMovAlm-title">
 		选择相册<span id="selMovAlm-help">&#xe605;</span>
@@ -565,7 +573,7 @@
 				<input type="checkbox" id="<?php echo ($v["pid"]); ?>" class="checkbox">
 				<label for="<?php echo ($v["pid"]); ?>" class="checkboxLb" title="选择"></label>
 			</div>
-			<img src="<?php echo ($v["PLink"]); ?>/w/159/h/180/">
+			<img src="<?php echo ($v["PLink"]); ?>/w/159/h/180/" class="photoClass">
 			<ul class="phImg_opt" onselectstart="return false;">
 				<li class="delImg" title="删除" id="pid-<?php echo ($v["pid"]); ?>">&#xe634;</li>
 				<li class="moveImg" title="移动到其他相册" id="id-<?php echo ($v["pid"]); ?>">&#xe660;</li>
@@ -603,13 +611,11 @@
 		$("#myPhotoOptErr").text("").hide();
 		$(".checkbox").prop("checked",false);
 	});
-	//var canBatchDel=true;	//防止重复点击
+	
 	var cmfDel=true;		//防止重复提交
 	$("#batchDel").click(function(){
-		//if(!canBatchDel){return false;}
 		var sel_checked=$(".checkbox:checked");
 		if(!checkTest(sel_checked)){return false;}
-		//canBatchDel=false;
 		$(".taslctLayer").show();
 		$("#myPhotoOptWarn").show();
 	});
@@ -617,7 +623,6 @@
 		$("#myPhotoOptWarn").hide();
 		$(".taslctLayer").hide();
 		$("#optCancle").trigger("click");
-		//canBatchDel=true;
 		cmfDel=true;
 	});
 	var batchDelURL="/YunPhotoAlbum/MyAlbum/deletePh/t/"+$.now();
@@ -968,7 +973,7 @@
 		newImg+='<div class="checkboxDiv">';
 		newImg+='<input type="checkbox" id="'+pid+'" class="checkbox">';
 		newImg+='<label for="'+pid+'" class="checkboxLb" title="选择"></label></div>';
-		newImg+='<img src="'+plink+'/w/159/h/180/">';
+		newImg+='<img src="'+plink+'/w/159/h/180/" class="photoClass">';
 		newImg+='<ul class="phImg_opt" onselectstart="return false;">';
 		newImg+='<li class="delImg" title="删除" id="pid-'+pid+'">&#xe634;</li>';
 		newImg+='<li class="moveImg" title="移动到其他相册" id="id-'+pid+'">&#xe660;</li>';
@@ -987,6 +992,80 @@
 	$("#delAllPrev").click(function(){
 		restoryUpldVar();
 		$(".preview").remove();
+	});
+
+	var canShow=true;	//避免重复点击
+	var showImgLoading=$("#showImgLoading");
+	var smallImgUl=$("#smallImgUl");
+	$(".allContent").on("click",".myPhoto>.photoClass",function(){
+		if(!canShow){return false;}
+		canShow=false;
+		smallImgUl.empty();
+		showImgLoading.show();
+		var src=(this.src).replace("thumb1","thumb1org");
+		document.getElementById('showBigImg').src=src;
+		var photoClass=$(".myPhoto>.photoClass");
+		var imgObj=photoClass.clone().css({
+			"width":"56px",
+			"height":"56px"
+		}).wrapAll("<li></li>").addClass("smallImg");
+		smallImgUl.append(imgObj);
+		$(".smallImgSelOn").removeClass("smallImgSelOn");
+		var index=$(this).index(".myPhoto>.photoClass");
+		$(".smallImg").get(index).className+=" smallImgSelOn";
+		$(".taslctLayer").show();
+		$("#showImg").show();
+		canShow=true;
+	});
+
+	var imgDiv=$("#imgDiv");
+	var showImg=$("#showImg");
+	$("#showBigImg").on("load",function(){
+		showImgLoading.hide();
+		imgDiv.css({"margin":0});
+		var showImgHeight=showImg.height()-30-60;
+		var height=this.offsetHeight;
+		if(showImgHeight>=height){
+			//var marginTop=(100-(height/showImgHeight*100))/4;
+			var marginTop=(showImgHeight-height)/2;		//保持图片垂直居中
+			imgDiv.css("margin-top",marginTop+"px");
+		}
+	});
+
+	$("#showImg-close").click(function(){
+		$("#showImg").hide();
+		$(".taslctLayer").hide();
+	});
+	var isCanScroll2=true;
+	$("#smallImgDiv").on("mousewheel DOMMouseScroll",function(event){
+		event.preventDefault();
+		if(!isCanScroll2){
+			return false;
+		}
+		isCanScroll2=false;
+		event=event.originalEvent;
+		var direction=(event.wheelDelta&&(event.wheelDelta>0?1:-1))||(event.detail&&(event.detail>0?-1:1));
+		if(direction>0){
+			$(this).stop(true,false).animate({"scrollLeft":"-=240px"},200,function(){
+				isCanScroll2=true;
+			});
+		}else{
+			$(this).stop(true,false).animate({"scrollLeft":"+=240px"},200,function(){
+				isCanScroll2=true;
+			});
+		}
+	});
+	
+	//var clickAgain=""; 			//判断点击的是不是同一张图
+	var showBigImg=$("#showBigImg");
+	$("#smallImgDiv").on("click",".smallImg",function(){
+		$(".smallImgSelOn").removeClass("smallImgSelOn");
+		$(this).addClass("smallImgSelOn");
+		showImgLoading.show();
+		var src=this.src;
+		clickAgain=src;
+		src=src.replace("thumb1","thumb1org");
+		showBigImg.attr("src",src);
 	});
 </script><?php endif; ?>
 	<div id="endInfo">
