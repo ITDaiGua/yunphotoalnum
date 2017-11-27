@@ -1466,7 +1466,7 @@ function send_mail($to,$title,$content){
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
     $mail->CharSet = 'UTF-8';
-    $mail->FromName = 'YunPhotoAibum';
+    $mail->FromName = 'YunPhotoAlbum';
     $mail->Username ='1571190644@qq.com';
     $mail->Password = 'nniheojkxvxfjfea';
     $mail->From = '1571190644@qq.com';
@@ -1480,4 +1480,49 @@ function send_mail($to,$title,$content){
     }else{
         return false;
     }
+}
+
+function PHPerr(){
+    exit("发生错误,<span id='PHPerr'>3</span>秒后为你跳转...<script>
+        var PHPerr=document.getElementById('PHPerr');var time=3;
+        setInterval(function(){
+            if(time==0){location.reload();}
+            PHPerr.innerText=time;
+            time--;
+        },1000);</script>");
+}
+
+function numCheck2($num,$minNum){
+  if(is_numeric($num)){
+    if($num<=$minNum){
+      $num=$minNum;
+    }elseif(!is_int($num)){
+      $num=floor($num);
+    }
+  }else{
+    $num=$minNum;
+  }
+  return $num;
+}
+
+function timeFmtCge2($selRst){
+  foreach ($selRst as $key => $value) {
+    $selRst[$key]['shareTime']=date("Y-m-d",$value['shareTime']);
+  }
+  return $selRst;
+}
+
+function echoImg($path,$type,$w,$h,$t){
+  $image=new \Think\Image();
+  $image->open($path);
+  $image->thumb($w,$h, $t);
+  switch($type){
+    case 'jpeg':
+    case 'jpg':@header('Content-Type:image/jpg');break;
+    case 'gif':@header('Content-Type:image/gif');break;
+    case 'png':@header('Content-Type:image/png');break;
+    default:@header('Content-Type:image/jpg');
+  }
+  $image->save(NULL);
+  die();
 }

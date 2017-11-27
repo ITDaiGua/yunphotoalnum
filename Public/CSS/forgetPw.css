@@ -1,0 +1,150 @@
+@charset "utf-8";
+body{
+	background-image:url('/YunPhotoAlbum/Public/SysImg/registrationBg.jpg');
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.fgtPwMenu{
+	width:100%;
+	height:43px;
+	margin-top:30px;
+	border-bottom:3px solid #00a2ff;
+	margin-bottom:15px;
+}
+.fgtPwMenu ul{
+	list-style:none;
+	white-space:nowrap;
+	font-size:0;
+}
+.choseOnOpt{
+	border-top:3px solid #00a2ff;
+	background-color:#D1EEEE;
+}
+.fgtPwMenu ul li{
+	display:inline-block;
+	width:120px;
+	height:40px;
+	vertical-align:middle;
+	font:16px "微软雅黑","黑体";
+	text-align:center;
+	line-height:40px;
+	cursor:pointer;
+}
+.fgtPwMenu ul li:first-child{
+	border-right:1px solid #fff;
+}
+.fgtPwMenu ul li:hover{
+	border-top:3px solid #00a2ff;
+	background-color:#D1EEEE;
+}
+.fgtSpan{
+	display:inline-block;
+	width:250px;
+	height:40px;
+	border:1px solid #ccc;
+	/*margin-top:15px;*/
+	white-space:nowrap;
+	font-size:0;
+	vertical-align:middle;
+}
+.fgtImg{
+	display:inline-block;
+	width:40px;
+	height:40px;
+	font:25px iconfont;
+	text-align:center;
+	line-height:40px;
+	background-color:#00a2ff;
+	vertical-align:middle;
+}
+#fgtForm2 input,#fgtForm1 input{
+	display:inline-block;
+	width:205px;
+	height:40px;
+	border:0;
+	outline:none;
+	vertical-align:middle;
+	font:17px "微软雅黑","黑体";
+	padding-left:5px;
+}
+#getFgtAc{
+	display:inline-block;
+	width:165px;
+	height:40px;
+	background-color:#00a2ff;
+	vertical-align:middle;
+	font:16px "微软雅黑","黑体";
+	text-align:center;
+	line-height:40px;
+	color:#fff;
+	cursor:pointer;
+}
+#getFgtAc:hover{
+	background-color:#0793e3;
+}
+.fgtErr{
+	color:#ff0000;
+	font:15px iconfont;
+	vertical-align:middle;
+}
+.cgePwBtt{
+	width:250px;
+	height:30px;
+	margin-top:30px;
+	border:0;
+	outline:none;
+	font:20px "微软雅黑","黑体";
+	color:#fff;
+	background-color:#00a2ff;
+	cursor:pointer;
+	letter-spacing:5px;
+	border-radius:5px;
+}
+.cgePwBtt:hover{
+	background-color:#0793e3;
+}
+#fgtForm2,#answerDiv{
+	display:none;
+}
+#uamil2Div{
+	margin-top:15px;
+}
+#nextStep{
+	width:70px;
+	height:30px;
+	font:16px "微软雅黑","黑体";
+	color:#fff;
+	line-height:30px;
+	background-color:#00a2ff;
+	border-radius:3px;
+	border:0;
+	outline:none;
+	display:inline-block;
+	vertical-align:middle;
+	cursor:pointer;
+}
+#nextStep:hover{
+	background-color:#0793e3;
+}
+#quest{
+	width:250px;
+	height:auto;
+	min-height:40px;
+	border:1px solid #ccc;
+	border-radius:5px;
+	padding:10px;
+	background-color:#fff;
+	font:16px "微软雅黑","黑体";
+	margin-top:15px;
+}
+#answer{
+	width:250px;
+	height:40px;
+	padding:10px;
+	font:14px "微软雅黑","黑体";
+	resize:none;
+	border-radius:5px;
+	margin-bottom:0;
+	outline:none;
+	vertical-align:middle;
+}

@@ -1,0 +1,271 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/MyAlbum.css">
+<div class="shareDiv">
+		<div class="shareDiv_head">共享相册<span id="shareDiv_close" title="关闭">&#xe601;</span></div>
+		<form name="shareAlbum" method="post" id="shareAlbum">
+			<dl>
+				<dd>
+					<span class="shareDiv_title"><font color="red">*</font>相册分类：</span>
+					<select id="classSelect" name="sclass">
+						<option>----请选择分类----</option>
+					</select>
+					<script type="text/javascript">
+						var getClassURL="__PUBLIC__/Json/photoClassJson.json";
+						var albumClass=$.getJSON(getClassURL,function(data){
+							var classOption="";
+							$.each(data,function(photoClass,childrenPC){
+								classOption+="<option>";
+								classOption+=photoClass;
+								classOption+="</option>";
+							});
+							$("#classSelect").append(classOption);
+						}).fail(function(){
+							fail("&#xe613;","出错啦~");
+						});
+					</script>
+					<span id="classSelectErr" class="shareDiv_error"></span>
+				</dd>
+				<dd>
+					<span class="shareDiv_title"><font color="red">*</font>相册名：</span>
+					<input type="text" name="sName" placeholder="共享相册名" maxlength="20" id="sName" class="shareDiv_input" autocomplete="off">
+					<span id="sNameErr" class="shareDiv_error"></span>
+				</dd>
+				<dd>
+					<span class="shareDiv_title"><font color="red">*</font>相册简介：</span>
+					<textarea maxlength="200" placeholder="相册简介" id="profile" name="profile"></textarea>
+					<span id="profileErr" class="shareDiv_error"></span>
+				</dd>
+				<dd>
+					<span class="shareDiv_title"><font color="red">*</font>关键词：</span>
+					<input type="text" name="skey" placeholder="多个关键词用“;”隔开且不能有特殊字符" maxlength="20" autocomplete="off" id="skey" class="shareDiv_input" style="width:300px;">
+					<span id="skeyErr" class="shareDiv_error"></span>
+				</dd>
+				<dd style="margin-top:25px;">
+					<button id="shareBtt">立即共享</button><br/>
+					<span id="shareAllErr" class="shareDiv_error"></span>
+				</dd>
+				<input type="hidden" name="PAId" id="PAId"  autocomplete="off">
+			</dl>
+		</form>
+</div>
+<div id="cmfDelAlbum">
+	<div id="cmfDelAlbum_head">删除相册</div>
+	<form id="cmfDelAlbum_cnt" method="post">
+		<input type="radio" name="baoliuImg" value="1" checked id="baoliu">
+		<label for="baoliu">该相册中的图片移至默认相册</label><br/>
+		<input type="radio" name="baoliuImg" value="1" id="delAll">
+		<label for="delAll">同时删除相册中图片</label>
+	</form>
+	<div id="cmfDelAlbum_btt">
+		<button id="cmfDel">删除</button>&nbsp;&nbsp;
+		<button id="cmdCnl">取消</button>
+	</div>
+</div>
+<div class="allContent">
+	<div class="MyAlbum_menu">
+		<a href="javascript:void(0);" id="MyAlbum_menu_a">新建相册</a>
+		<a href="javascript:void(0);" id="MyAlbum_help">&#xe605;</a>
+		<div id="MyAlbum_help_txt">
+			1.点击相册可以查看具体图片;<br/>
+			2.右击鼠标:<br/>
+			&nbsp;&nbsp;a.删除相册;<br/>
+			&nbsp;&nbsp;b.共享相册;<br/>
+			&nbsp;&nbsp;c.更改相册名;
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#MyAlbum_help").hover(function(){
+			$("#MyAlbum_help_txt").css({"display":"inline-block"});
+		},function(){
+			$("#MyAlbum_help_txt").hide();
+		});
+	</script>
+	<a href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/pa001" id="pa001">
+		<img src="__PUBLIC__/SysImg/folderDefault.png" class="MyAlbum_img">
+		<div class="default">默认相册</div>
+	</a>
+	<foreach name="rest" item="v">
+		<a href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/<{$v.PAId}>" id="<{$v.PAId}>" class="MyAlbum_a">
+			<img src="__PUBLIC__/SysImg/folderImg2.png" class="MyAlbum_img">
+			<div class="MyAlbum_txt" onclick="return false"><{$v.PAName}></div>
+		</a>
+	</foreach>
+	<ul class="MyAlbumOpt" oncontextmenu="return false;">
+		<li id="share">共享</li>
+		<li id="rename">重命名</li>
+		<li id="delete">删除</li>
+	</ul>
+	<script type="text/javascript">
+		$(".MyAlbum_txt").each(function(){
+			var txt=$(this).text();
+			if(txt.length>8){
+				var txt2=txt.substring(0,7)+"...";
+				$(this).text(txt2);
+				$(this).parent().attr("title",txt);
+			}
+		});
+		var whichAlbum="";
+		$("body").on("contextmenu",".MyAlbum_a",function(event){
+			whichAlbum=this.id;
+			if(whichAlbum.match("/^pat/")){
+				whichAlbum="";
+				return false;
+			}
+			$("#PAId").val(whichAlbum);
+			var mouseX=event.pageX;
+			var mouseY=event.pageY;
+			$(".MyAlbumOpt").show().offset({left:mouseX,top:mouseY});
+			$('body').bind('click',function(){
+				$(".MyAlbumOpt").hide();
+				$('body').unbind('click');
+			});
+			return false;
+		});
+		$("#rename").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			whichAlbum=$("#"+whichAlbum);
+			var whichAlbumCnt=whichAlbum.attr("title");
+			var whichAlbumTxt=whichAlbum.children(".MyAlbum_txt");
+			if(whichAlbumTxt){
+				whichAlbumTxt.text(whichAlbumCnt).prop("contenteditable",true);
+			}else{
+				whichAlbumTxt.prop("contenteditable",true);
+			}
+			selectAll(whichAlbumTxt);
+		});
+		$("#delete").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			$(".taslctLayer").show();
+			$("#cmfDelAlbum").show();
+		});
+		$("#cmdCnl").click(function(){
+			$("#cmfDelAlbum_cnt").get(0).reset();
+			$(".taslctLayer").hide();
+			$("#cmfDelAlbum").hide();
+		});
+		$("#cmfDel").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			var checkedId=$("input[type='radio']:checked").attr("id");
+			var myAlbumdel_obj=$("#"+whichAlbum);
+			var myAlbumId=myAlbumdel_obj.attr("id");
+			myAlbumdel_obj.hide();
+			var delURL="";
+			if(checkedId=="delAll"){
+				delURL="/YunPhotoAlbum/MyAlbum/delAll/t/"+$.now();
+			}else{
+				delURL="/YunPhotoAlbum/MyAlbum/baoliu/t/"+$.now();
+			}
+			$.post(delURL,{"myAlbumId":myAlbumId},function(data){
+				switch(data.info){
+					case 'noLogin':login();myAlbumdel_obj.show();break;
+					case 'success':fail("&#xe687;","删除成功");myAlbumdel_obj.remove();$(".taslctLayer").hide();$("#cmfDelAlbum").hide();break;
+					default:fail("&#xe613;","出错啦~");myAlbumdel_obj.show();
+				}
+			}).fail(function(){
+				myAlbumdel_obj.show();
+				fail("&#xe613;","出错啦~");
+			});
+		});
+		var album='<a class="MyAlbum_a"><img src="__PUBLIC__/SysImg/folderImg2.png" class="MyAlbum_img"><div class="MyAlbum_txt" onclick="return false">未命名</div></a>';
+		var canCreate=true;
+		$("#MyAlbum_menu_a").click(function(){
+			if(!canCreate){
+				fail("&#xe687;","等会儿才能再创建");
+				return false;
+			}
+			canCreate=false;
+			var paid="pat"+$.now();
+			$(".allContent").append($(album).attr("id",paid));
+			var createURL="/YunPhotoAlbum/MyAlbum/createAlbum/t/"+$.now();
+			var album_href="/YunPhotoAlbum/MyAlbum/showMyPhoto/p/";
+			$.post(createURL,null,function(data){
+				switch(data.info){
+					case "noLogin":login();canCreate=true;break;
+					case "success":$("#"+paid).attr({
+						"href":album_href+data.paid,
+						"id":data.paid
+					});break;
+					default:fail("&#xe613;","出错啦~");$("#"+paid).remove();canCreate=true;break;
+				}
+			}).fail(function(){
+				fail("&#xe613;","出错啦~");
+				$("#"+paid).remove();
+				canCreate=true;
+			});
+			setTimeout(function(){
+				canCreate=true;
+			},2000);
+		});
+		$("#share").click(function(){
+			if(whichAlbum==""){
+				return false;
+			}
+			whichAlbum=$("#"+whichAlbum);
+			var albumName=whichAlbum.attr("title");
+			if(!albumName){
+				albumName=whichAlbum.children(".MyAlbum_txt").text();
+			}
+			$("#sName").val(albumName);
+			$(".taslctLayer").show();
+			$(".shareDiv").show();
+		});
+		$("#shareDiv_close").click(function(){
+			$(".shareDiv").hide();
+			$(".taslctLayer").hide();
+			$("#shareAlbum").get(0).reset();
+			$(".shareDiv_error").html("");
+		});
+		var canShare=true;
+		$("#shareAlbum").on("submit",function(event){
+			event.preventDefault();
+			var isTrueTmp=true;
+			if(!canShare){
+				return false;
+			}
+			var className=$.trim($("#classSelect option:selected").text());
+			if(className=="----请选择分类----"){
+				$("#classSelectErr").html("&#xe601;必须选择分类");
+				isTrueTmp=isTrueTmp&false;
+			}else{
+				$("#classSelectErr").html("");
+				isTrueTmp=isTrueTmp&true;
+			}
+			isTrueTmp=isTrueTmp&isNotBlank("#sName")&isNotBlank("#skey");
+			var profileLen=$.trim($("#profile").val()).length;
+			if(profileLen<=0){
+				isTrueTmp=isTrueTmp&false;
+				$("#profileErr").html("&#xe601;不能为空");
+			}else if(profileLen<=20){
+				isTrueTmp=isTrueTmp&false;
+				$("#profileErr").html("&#xe601;不能少于20个字符");
+			}else{
+				isTrueTmp=isTrueTmp&true;
+				$("#profileErr").html("");
+			}
+			if(!isTrueTmp){
+				return false;
+			}
+			isTrueTmp=false;
+			var shareURL="/YunPhotoAlbum/Sharepa/index/t/"+$.now();
+			$.post(shareURL,$("#shareAlbum").serialize(),function(data){
+				switch(data.info){
+					case 'noLogin':$("#shareDiv_close").trigger('click');login();break;
+					case "success":fail("&#xe687;","共享成功");$("#shareDiv_close").trigger('click');isTrueTmp=true;break;
+					case "error1":fail("&#xe613;","相册中没有图片");isTrueTmp=true;break;
+					case "error2":$("#shareDiv_close").trigger('click');fail("&#xe613;","不能重复共享");isTrueTmp=true;break;
+					case "error":
+					default:fail("&#xe613;","出错啦~");isTrueTmp=true;
+				}
+			}).fail(function(){
+				fail("&#xe613;","出错啦~");
+				isTrueTmp=true;
+			});
+		});
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/JS/textOpt.js"></script>
+</div>

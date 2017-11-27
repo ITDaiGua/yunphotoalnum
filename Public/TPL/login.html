@@ -1,0 +1,64 @@
+<!--<div class="login">-->
+	<div class="login_head" onselectstart="return false;">
+		&nbsp;登陆
+		<span id="lgclose" title="取消登陆">&#xe601;</span>
+	</div>
+	<form name="loginForm" id="loginForm" method="post">
+		<span class="lgbox">
+			<div class="lgImg">&#xe75a;</div>
+			<input type="text" name="lgEmail" class="lgInput email" id="lgEmail" placeholder="登陆的邮箱" maxlength="40" autocomplete="off">
+		</span>
+		<div id="lgEmailErr" class="lgErrDiv"></div>
+		<span class="lgbox">
+			<div class="lgImg">&#xe6cb;</div>
+			<input type="password" name="lgPw" class="lgInput pw" id="userPw" placeholder="登陆的密码" maxlength="18">
+		</span>
+		<div id="userPwErr" class="lgErrDiv"></div>
+		<button class="lgBtt">
+			<span style="vertical-align:middle;">登陆</span>
+		</button>
+		<div id="lgErr" class="lgErrDiv"></div>
+	</form>
+	<div class="lgbottom">
+		<a href="/YunPhotoAlbum/Public/TPL/forgetPw.html" target="_blank" id="forgetLgPw">忘记密码</a>&nbsp;&nbsp;&nbsp;
+		<a href="/YunPhotoAlbum/User/rgtHtml" id="wannaRgt">还没有账号？点击注册</a>
+	</div>
+<!--</div>-->
+<script type="text/javascript">
+	$("#lgclose").click(function(){
+		$(".login").hide();
+		$(".taslctLayer").hide();
+	});
+	var lgLoading2=$("<img src='/YunPhotoAlbum/Public/SysImg/loading2.gif' class='lgLoading2'>").css({
+				"width":"18px",
+				"height":"18px",
+				"vertical-align":"middle"
+	});
+	var lgBtt=$(".lgBtt");
+	var lgErr=$("#lgErr");
+	$("#loginForm").on("submit",function(event){
+		event.preventDefault();
+		var isTrueRst=isTrue("#lgEmail",'email')&isTrue("#userPw",'pw');
+		if(isTrueRst){
+			lgBtt.append(lgLoading2).prop("disabled",true);
+			var url="/YunPhotoAlbum/User/index";
+			var lgdata=$(this).serialize();
+			$.post(url,lgdata,function(data){
+				switch(data.info){
+					case 'right':location.reload();break;
+					case 'err0':lgErr.text('用户不存在');break;
+					case 'err1':lgErr.text('密码错误');break;
+					case 'err2':lgErr.text('账号冻结10分钟');break;
+					case 'err3':lgErr.text('密码错误,账号冻结10分钟');break;
+					case 'err4':lgErr.text('账户被冻结,请联系客服解冻');break;
+					default:lgErr.text('未知错误');
+				}
+				$(".lgLoading2").remove();
+				lgErr.css("display","inline-block");
+				//document.write(data.uimg);
+			}).always(function(){
+				lgBtt.prop("disabled",false);
+			});
+		}
+	});
+</script>

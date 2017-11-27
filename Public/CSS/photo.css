@@ -1,0 +1,572 @@
+@charset "utf-8";
+#showImg{
+	position:absolute;
+	display:none;
+	z-index:103;
+	width:900px;
+	height:auto;
+	min-height:100%;
+	left:50%;
+	top:0;
+	margin-left:-450px;
+	background-color:rgba(0,0,0,0.7);
+	border:0;
+}
+#showImg-close{
+	z-index:10;
+	float:right;
+	font:25px iconfont;
+	text-align:center;
+	line-height:30px;
+	color:#ccc;
+	cursor:pointer;
+	overflow:hidden;
+}
+#showImg-close:hover{
+	color:#ff0000;
+}
+#imgDiv{
+	position:relative;
+	width:100%;
+	height:auto;
+	min-height:100%;
+	text-align:center;
+	overflow:hidden;
+	line-height:0;
+	/*background-color:#fff;*/
+}
+#imgDiv img{
+	display:inline;
+	max-height:100%;
+	max-width:100%;
+}
+#smallImgDiv{
+	position:absolute;
+	width:900px;
+	height:60px;
+	bottom:0;
+	overflow:hidden;
+	background-color:#000;
+}
+#smallImgUl{
+	list-style:none;
+	font-size:0;
+	white-space:nowrap;
+}
+#smallImgUl li{
+	display:inline-block;
+	border:0;
+	width:60px;
+	height:60px;
+	vertical-align:middle;
+}
+.smallImg{
+	display:inline-block;
+	width:56px;
+	height:56px;
+	border:2px solid transparent;
+	cursor:pointer;
+}
+.smallImg:hover{
+	border-color:#00a2ff;
+}
+.smallImgSelOn{
+	border-color:#00a2ff;
+}
+#showImgLoading{
+	position:absolute;
+	z-index:-1;
+	width:30px;
+	height:30px;
+	top:50%;
+	left:50%;
+	margin:-15px auto auto -15px;
+}
+#selMoveAlbum{
+	position:fixed;
+	z-index:102;
+	display:none;
+	width:600px;
+	height:80%;
+	left:50%;
+	top:5%;
+	margin-left:-300px;
+	border:1px solid #ccc;
+	border-radius:10px;
+	box-shadow:0 0 5px #ccc;
+	background-color:#fff;
+	overflow:hidden;
+	text-align:center;
+}
+#selMovAlm-title{
+	padding-left:10px;
+	width:100%;
+	height:40px;
+	font:25px "黑体","微软雅黑";
+	line-height:40px;
+	letter-spacing:5px;
+	color:#fff;
+	background-color:#00a2ff;
+	white-space:nowrap;
+	text-align:left;
+}
+#selMovAlm-help{
+	font:16px iconfont;
+	color:#3117f6;
+	cursor:help;
+}
+#help-cont{
+	position:absolute;
+	display:none;
+	width:300px;
+	height:30px;
+	border:2px solid #f68017;
+	border-radius:5px;
+	background-color:rgba(246,128,23,0.5);
+	font:15px "微软雅黑","黑体";
+	line-height:30px;
+	color:#edeff0;
+	padding-left:10px;
+}
+#selMovAlm-close{
+	display:inline-block;
+	width:25px;
+	height:40px;
+	font:20px iconfont;
+	line-height:40px;
+	color:#ccc;
+	float:right;
+	margin-right:20px;
+	cursor:pointer;
+}
+#selMovAlm-close:hover{
+	color:#ff0000;
+}
+#albums{
+	padding:10px;
+	width:580px;
+	height:75%;
+	text-align:center;
+	margin-bottom:10px;
+	overflow:hidden;
+}
+.albumDiv{
+	position:relative;
+	width:580px;
+	height:40px;
+	border-bottom:1px solid #e5e5e5;
+	text-align:left;
+	vertical-align:middle;
+	font-size:0;
+	white-space:nowrap;
+	margin-bottom:5px;
+}
+.albumDiv:hover{
+	background-color:#99dbf6;
+}
+.albumImg{
+	display:inline-block;
+	width:40px;
+	height:40px;
+	margin-right:10px;
+	vertical-align:middle;
+}
+.albumRadio{
+	display:none;
+}
+.albumName{
+	display:inline-block;
+	width:640px;
+	height:40px;
+	font:17px "微软雅黑","黑体";
+	line-height:40px;
+	vertical-align:middle;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	cursor:pointer;
+}
+.selOn{
+	position:absolute;
+	width:40px;
+	height:40px;
+	right:0;
+	bottom:0;
+}
+.albumRadio:checked + .selOn{
+	background-image:url('/YunPhotoAlbum/Public/SysImg/selOn.png');
+	background-size:40px 40px;
+	background-repeat:no-repeat;
+	background-position:right bottom;
+}
+#moveNow{
+	width:130px;
+	height:25px;
+	border:0;
+	outline:none;
+	background-color:#00a2ff;
+	border-radius:3px;
+	font:18px "微软雅黑","黑体";
+	line-height:25px;
+	color:#fff;
+	letter-spacing:5px;
+	cursor:pointer;
+}
+#moveNow:hover{
+	background-color:#4F94CD;
+}
+#myPhotoOptWarn{
+	position:fixed;
+	z-index:102;
+	display:none;
+	width:300px;
+	height:150px;
+	left:50%;
+	top:15%;
+	margin:0 0 0 -150px;
+	border:1px solid #ccc;
+	border-radius:5px;
+	box-shadow:0 0 5px #ccc;
+	background-color:#fff;
+	overflow:hidden;
+	text-align:center;
+}
+#optWarnTitle{
+	width:100%;
+	height:30px;
+	padding-left:10px;
+	background-color:#00a2ff;
+	font:20px "黑体","微软雅黑";
+	line-height:30px;
+	letter-spacing:3px;
+	color:#fff;
+	text-align:left;
+}
+#warnTitleImg{
+	font-family:iconfont;
+	color:#fbf801;
+}
+#optWarnCont{
+	width:100%;
+	height:auto;
+	font-size:20px;
+	margin-top:20px;
+}
+#optWarnBtt{
+	width:100%;
+	height:40px;
+	margin-top:20px;
+}
+#IKnow{
+	width:100px;
+	height:25px;
+	border:0;
+	outline:none;
+	font:16px "微软雅黑","黑体";
+	color:#fff;
+	line-height:25px;
+	background-color:#00a2ff;
+	letter-spacing:2px;
+	border-radius:3px;
+	cursor:pointer;
+}
+#IKnow:hover{
+	background-color:#4F94CD;
+}
+#ICancle{
+	width:50px;
+	height:23px;
+	border:1px solid #00a2ff;
+	outline:none;
+	font:15px "微软雅黑","黑体";
+	line-height:23px;
+	background-color:#fff;
+	letter-spacing:2px;
+	border-radius:3px;
+	margin-left:10px;
+	cursor:pointer;
+}
+#ICancle:hover{
+	background-color:#00a2ff;
+	color:#fff;
+}
+#uploadAll{
+	position:absolute;
+	display:none;
+	z-index:102;
+	width:840px;
+	height:auto;
+	min-height:80%;
+	left:50%;
+	top:5%;
+	margin-left:-420px;
+	text-align:left;
+	border:1px solid #ccc;
+	border-radius:10px;
+	box-shadow:0 0 5px #ccc;
+	padding:10px;
+	background-color:#fff;
+}
+#uploadCancel{
+	position:absolute;
+	display:inline-block;
+	width:30px;
+	height:30px;
+	right:-18px;
+	top:-18px;
+	font:25px iconfont;
+	line-height:30px;
+	text-align:center;
+	color:#8B8B7A;
+	background-color:rgba(0,0,0,0.4);
+	border-radius:30px;
+	cursor:pointer;
+}
+#uploadCancel:hover{
+	color:#ff0000;
+}
+#uploadBttDiv{
+	width:100%;
+	height:40px;
+	border-bottom:3px solid #00a2ff;
+	text-align:left;
+}
+#uploadBtt{
+	display:inline-block;
+	width:120px;
+	height:30px;
+	margin-left:20px;
+	border:0;
+	outline:none;
+	background-color:#00a2ff;
+	color:#fff;
+	font:20px "黑体","微软雅黑";
+	line-height:30px;
+	letter-spacing:3px;
+	border-radius:5px;
+	cursor:pointer;
+}
+#uploadBtt:hover{
+	background-color:#088fde;
+}
+#upload-help{
+	font:16px iconfont;
+	color:#616161;
+	cursor:help;
+}
+#upload-help-cont{
+	position:absolute;
+	z-index:10;
+	display:none;
+	width:300px;
+	height:auto;
+	padding:10px;
+	border:2px solid #f68017;
+	border-radius:5px;
+	font:16px "微软雅黑","黑体";
+	color:#f68017;
+	line-height:20px;
+	letter-spacing:2px;
+}
+#upload-help:hover + #upload-help-cont{
+	display:inline-block;
+}
+#delAllPrev{
+	font:18px iconfont;
+	margin-left:20px;
+	cursor:pointer;
+	text-decoration:none;
+}
+#delAllPrev:hover{
+	color:#00a2ff;
+}
+.previewDel{
+	position:absolute;
+	display:inline-block;
+	z-index:1;
+	width:100%;
+	height:30px;
+	top:-30px;
+	font:20px iconfont;
+	text-align:center;
+	line-height:30px;
+	color:#fff;
+	background-color:rgba(0,0,0,0.4);
+	cursor:pointer;
+}
+.previewDel:hover{
+	color:#ccc;
+}
+.preview_loading{
+	position:absolute;
+	display:none;/*inline-block*/
+	z-index:2;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.4);
+	text-align:center;
+	line-height:180px;
+}
+.upldLadg,.upldWarn{
+	display:inline;
+	width:30px;
+	height:30px;
+}
+#myPhotoOpt{
+	width:100%;
+	height:30px;
+	font-size:18px;
+	line-height:30px;
+	border-bottom:3px solid #00a2ff;
+}
+#myPhotoOpt a{
+	font:18px iconfont;
+	text-decoration:none;
+	margin:0 20px 0 10px;
+}
+#myPhotoOpt a:hover{
+	color:#00a2ff;
+}
+#batchOptUl{
+	display:none;
+	list-style:none;
+	font-size:0;
+	white-space:normal;
+	margin-left:10px;
+	vertical-align:middle;
+}
+#batchDel,#batchMove,#batchSel,#batchNotSel{
+	margin-right:20px;
+}
+.batchOptLi{
+	display:inline-block;
+	font:16px iconfont;
+	cursor:pointer;
+	color:#06c9fa;
+	vertical-align:middle;
+}
+.batchOptLi:hover{
+	color:#1746f6;
+}
+.preview,.uploadDiv{
+	position:relative;
+	width:154px;
+	height:180px;
+	font:60px iconfont;
+	text-align:center;
+	line-height:180px;
+	border:1px dotted #595959;
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:3px;
+	overflow:hidden;
+	border-radius:5px;
+	margin:10px 0 0 10px;
+}
+.preview{
+	border-color:transparent;
+}
+#btcOptLoading{
+	display:none;
+	width:25px;
+	height:25px;
+	vertical-align:middle;
+}
+#myPhotoOptErr{
+	display:none;
+	font:16px "微软雅黑","黑体";
+	color:#ff0000;
+	vertical-align:middle;
+}
+#uploadPhoto{
+	position:absolute;
+	display:inline-block;
+	width:154px;
+	height:180px;
+	left:0;
+	top:0;
+	border:0;
+	outline:none;
+	opacity:0;
+	filter:Alpha(opacity=0);
+	cursor:pointer;
+}
+.myPhoto{
+	position:relative;
+	display:inline-block;
+	vertical-align:middle;
+	width:154px;
+	height:180px;
+	border-radius:5px;
+	margin:10px 0 0 10px;
+	overflow:hidden;
+	cursor:pointer;
+}
+.photoClass{
+	width:154px;
+	height:180px;
+}
+.checkboxDiv{
+	position:absolute;
+	width:100%;
+	height:100%;
+	display:none;
+	left:0;
+	top:0;
+	background-color:transparent;
+	line-height:30px;
+	text-align:left;
+}
+.checkbox{
+	display:none;
+}
+.checkboxLb{
+	display:inline-block;
+	width:20px;
+	height:20px;
+	border:1px solid #00a2ff;
+	border-radius:3px;
+	vertical-align:middle;
+	cursor:pointer;
+	margin-left:10px;
+	background-color:#5cf7ee;
+}
+.checkboxLb:hover{
+	border-color:#1741f6;
+}
+.checkbox:checked + .checkboxLb{
+	background-image:url('/YunPhotoAlbum/Public/SysImg/checked.png');
+	background-repeat:no-repeat;
+	background-size:25px 25px;
+	background-position:center center;
+}
+.phImg_opt{
+	position:absolute;
+	display:inline-block;
+	width:100%;
+	height:30px;
+	left:0;
+	bottom:-30px;
+	list-style:none;
+	background-color:rgba(0,0,0,0.4);
+	font-size:0;
+	white-space:nowrap;
+}
+.delImg,.moveImg{
+	display:inline-block;
+	font:20px iconfont;
+	color:#fff;
+	text-align:center;
+	line-height:30px;
+}
+.delImg{
+	width:76px;
+	height:30px;
+	border-right:1px solid #000;
+}
+.moveImg{
+	width:77px;
+	height:30px;
+}
+.delImg:hover,.moveImg:hover{
+	background-color:rgba(6,201,250,0.4);
+}

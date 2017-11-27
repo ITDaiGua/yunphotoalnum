@@ -1,0 +1,28 @@
+<div class="taslctLayer"></div>
+<div id="headMenu">
+	<a href="/YunPhotoAlbum/" style="float:left;margin-left:200px;">首页</a>
+	<if condition="$isLogin heq 'isLogin'">
+		<a href="" title="查看消息">
+			<img src="__PUBLIC__/SysImg/infowarn.png" id="infowarn">
+		</a>
+		<a href="/YunPhotoAlbum/User/logout">退出</a>
+		<span style="vertical-align:middle;">|</span>
+		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
+		<a href="" class="PsnlCtr" title="个人中心">
+			<span style="vertical-align:middle;"><{$userName}></span>
+			<img src="<{$uImg}>" class="uImg">
+		</a>
+	<else />
+		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
+		<a href="javascript:void(0);" id="wannaLg">登陆</a>
+		<span style="vertical-align:middle;">|</span>
+		<a href="/YunPhotoAlbum/User/rgtHtml">注册</a>
+		<img src="__PUBLIC__/SysImg/smalluimg.jpg" class="uImg">
+		<script type="text/javascript">
+			$("#wannaLg").click(function(){
+				login();
+			});
+		</script>
+	</if>
+</div>
+<script type="text/javascript" src="__PUBLIC__/JS/commonJs.js"></script>

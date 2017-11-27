@@ -1,0 +1,158 @@
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/CSS/shareFolders.css">
+<div class="allContent">
+	<div class="pcTittle">图片分类</div>
+	<div class="photoClass">
+		<span class="pcContent" style="font-weight:bold;">
+			<a href='/YunPhotoAlbum/'>综合</a>
+		</span>
+	</div>
+	<script type="text/javascript">
+		var photoClassJson;
+		var classPan="";
+		$.getJSON("__PUBLIC__/Json/photoClassJson.json",function(data){
+			photoClassJson=data;
+			$.each(data,function(photoClass,childrenPC){
+				classPan+="<span class='pcContent'>";
+				classPan+="<a href='/YunPhotoAlbum/Index/index/page/1/condition/"+photoClass+"'>";
+				classPan+=photoClass+"</a></span>";
+			});
+			$(".photoClass").append(classPan);
+		}).fail(function(){
+			fail("&#xe691;","出错啦~");
+			setTimeout(function(){
+				$(".errorORwarn").remove();
+			},1500);
+		});
+	</script>
+	<if condition="$selRst neq null">
+		<foreach name="selRst" key="selKey" item="selVal" >
+			<a href="/YunPhotoAlbum/Index/showSH/sid/<{$selVal['sid']}>/" target="_blank" class="theA">
+				<div class="shareAlbum" id="<{$selVal['sid']}>">
+					<div class="SAImg">
+						<img src="__PUBLIC__/SysImg/folderImg.png">
+					</div>
+					<div class="SPtxt">
+						<div class="SANmeAdTme">
+							<span class="sName"><{$selVal['sName']}></span>
+							<span class="titleCss1"><{$selVal['shareTime']}></span>
+						</div>
+						<div class="SAProfile">
+							<span class="titleCss2">简介：</span>
+							<span class="profile"><{$selVal['profile']}></span>
+						</div>
+						<div class="SAClsAndTme">
+							<span class="titleCss2">所属分类：</span>
+							<{$selVal['sclass']}>	
+						</div>
+					</div>
+				</div>
+			</a>
+		</foreach>
+		<script type="text/javascript">
+			$.each($(".sName"),function(){
+				var _this=$(this);
+				ellipsis(_this,9);
+			});
+			$.each($(".profile"),function(){
+				var _this=$(this);
+				ellipsis(_this,30);
+			});
+			function ellipsis(_this,maxLen){
+				var txt=$.trim(_this.text());
+				var len=txt.length;
+				var tmpTxt="";
+				if(len>maxLen){
+					tmpTxt+=txt.substring(0,maxLen);
+					tmpTxt+="...";
+					_this.text(tmpTxt);
+					_this.attr("title",txt);
+				}
+			}
+		</script>
+	<else />
+		<div class="nothing"></div>
+	</if>
+</div>
+<if condition="$init['totalPage'] egt 2">
+	<div class="pageNum">
+		<{/*<if condition="$init['totalPage'] gt 5">*/}>
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']-1}>/" id="lastPage">上一页</a>
+		<{/*</if>*/}>
+		<if condition="$init['page'] egt $init['lastpg']">
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']}>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
+			<if condition="$init['page']+5 gt $init['totalPage']">
+				<for start="$init['page']+1" end="$init['totalPage']+1">
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
+				</for>
+			<else/>
+				<for start="$init['page']+1" end="$init['page']+5">
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
+				</for>
+			</if>
+		<elseif condition="$init['page'] lt $init['lastpg']" />
+			<if condition="$init['page']-4 elt 0">
+				<for start="1" comparison="lt" step="1" end="$init['page']">
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
+				</for>
+			<else/>
+				<for start="$init['page']-4" comparison="lt" step="1" end="$init['page']">
+					<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$i}>/"><{$i}></a>
+				</for>
+			</if>
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']}>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><{$init['page']}></a>
+		</if>
+		<{/*<if condition="$init['totalPage'] gt 5">*/}>
+			<a href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/<{$init['page']+1}>/" id="nextPage">下一页</a>
+		<{/*</if>*/}>
+		<if condition="$init['totalPage'] gt 2">
+			<span id="showTotalPage">共<{$init['totalPage']}>页</span>
+		</if>
+		<if condition="$init['totalPage'] egt 6">
+			<form method="post" action="" id="pageFrom">
+				<dl>
+					<dt>
+						<span>到第</span>
+						<input type="text" name="page" autocomplete="off">
+						<span>页</span>
+						<input type="submit" name="gotoBtt" value="确定">
+					</dt>
+				</dl>
+			</form>
+		</if>
+	</div>
+	<script type="text/javascript">
+		var totalPage=<{$init['totalPage']}>;
+		$("input[name=page]").on("input propertychange",function(){
+			var gtpgval=$(this).val();
+			var gtpvaltmp1=gtpgval.replace(/[^0-9]+/g,"");
+			if(gtpvaltmp1>totalPage){
+				gtpvaltmp1=totalPage;
+			}
+			$(this).val(gtpvaltmp1);
+		});
+		$("input[name=page]").on("blur",function(){
+			var gtpgval=$(this).val();
+			if(gtpgval<=0){
+				$(this).val("1");
+			}
+		});
+		var canOpt=true;
+		$("#pageFrom").on("submit",function(event){
+			if(canOpt){
+				canOpt=false;
+				setTimeout(function(){
+					canOpt=true;
+				},1500);
+				var gtpvaltmp2=$.trim($("input[name=page]").val());
+				if(gtpvaltmp2==""||gtpvaltmp2<=0){
+					return false;
+				}
+				event.preventDefault();
+				window.location.href="/YunPhotoAlbum/Index/index/condition/<{$init['condition']}>/lastpg/<{$init['page']}>/page/"+gtpvaltmp2+"/";
+			}else{
+				return false;
+			}
+		});
+	</script>
+</if>
+

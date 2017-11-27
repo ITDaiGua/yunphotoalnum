@@ -1,0 +1,594 @@
+<script type="text/javascript">
+	var moveHtml="";
+	(function(){
+		var getMyAlbumURL="/YunPhotoAlbum/MyAlbum/getMyAlbum/t/"+$.now();
+		$.post(getMyAlbumURL,function(data){
+			$.each(data,function(k,v){
+				moveHtml+='<div class="albumDiv">';
+				moveHtml+='<img src="__PUBLIC__/SysImg/folderImg.png" class="albumImg">';
+				moveHtml+='<label class="albumName" for="'+v.PAId+'">';
+				moveHtml+=v.PAName+'</label>';
+				moveHtml+='<input type="radio" name="album" id="'+v.PAId+'" class="albumRadio">';
+				moveHtml+='<div class="selOn"></div></div>';
+			});
+			$(document).ready(function(){
+				$("#albums").append(moveHtml);
+			});
+		}).fail(function(){
+			fail("&#xe613;","出错啦~");
+		});
+	})();
+</script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/photo.css">
+<div id="showImg">
+	<div id="showImg-close" title="关闭">&#xe601;</div>
+	<div id="imgDiv">
+		<img src="javascript:void(0)" id="showBigImg">
+	</div>
+	<div id="smallImgDiv"><ul id="smallImgUl"></ul></div>
+	<img src="/YunPhotoAlbum/Public/SysImg/loading2.gif" id="showImgLoading">
+</div>
+<div id="selMoveAlbum">
+	<div id="selMovAlm-title">
+		选择相册<span id="selMovAlm-help">&#xe605;</span>
+		<span id="help-cont">滑动鼠标中间键可获取更多相册</span>
+		<span id="selMovAlm-close">&#xe601;</span>
+	</div>
+	<div id="albums">
+		<div class="albumDiv">
+			<img src="__PUBLIC__/SysImg/folderDefault.png" class="albumImg">
+			<label class="albumName" for="pa001"><b>默认相册</b></label> 
+			<input type="radio" name="album" id="pa001" class="albumRadio">
+			<div class="selOn"></div>
+		</div>
+	</div>
+	<button id="moveNow">确定移动</button>
+</div>
+<div id="myPhotoOptWarn">
+	<div id="optWarnTitle">
+		<span id="warnTitleImg">&#xe691;</span>提示
+	</div>
+	<div id="optWarnCont">操作不可逆!!</div>
+	<div id="optWarnBtt">
+		<button id="IKnow">我知道了!</button>
+		<button id="ICancle">取消</button>
+	</div>
+</div>
+<div id="uploadAll">
+	<span id="uploadCancel" onselectstart="return false;">&#xe6b2;</span>
+	<div id="uploadBttDiv">
+		<button id="uploadBtt">上传图片</button>
+		<span id="upload-help">&#xe605;</span>
+		<dl id="upload-help-cont">
+			<dd>1.仅支持图片格式gif、jpg、png</dd>
+			<dd>2.图片最大3M</dd>
+			<dd>3.一次最多上传20张图片</dd>
+			<dd>4.再次上传请先清空预览图</dd>
+		</dl>
+		<a id="delAllPrev" href="javascript:void(0)"><span style="margin-right:5px">&#xe618;</span>清空预览图</a>
+	</div>
+	<div class="uploadDiv">
+		<input type="file" name="uploadPhoto" id="uploadPhoto" title="上传图片" accept="image/png,image/gif,image/jpeg,image/jpg,image/png" multiple="multiple">&#xe78c;
+	</div>
+</div>
+<div class="allContent" id="<{$PAId}>" style="font-size:0;padding-bottom:10px;">
+	<div id="myPhotoOpt">
+		<a href="javascript:void(0)" id="batchOpt">
+			<span style="margin-right:5px">&#xe60e;</span>批量操作
+		</a>
+		<ul id="batchOptUl" onselectstart="return false;">
+			<li id="batchSel" class="batchOptLi"><span style="margin-right:5px">&#xe670;</span>全选</li>
+			<li id="batchNotSel" class="batchOptLi"><span style="margin-right:5px">&#xe703;</span>全不选</li>
+			<li id="batchDel" class="batchOptLi"><span style="margin-right:5px">&#xe634;</span>批量删除</li>
+			<li id="batchMove" class="batchOptLi"><span style="margin-right:5px">&#xe660;</span>批量移动</li>
+			<li id="optCancle" class="batchOptLi"><span style="margin-right:5px">&#xe710;</span>取消</li>
+		</ul>
+		<img src="__PUBLIC__/SysImg/loading2.gif" ondragstart="return false;" id="btcOptLoading">
+		<a href="javascript:void(0)" id="uploadImg">
+				<span style="margin-right:5px">&#xe66f;</span>上传图片
+		</a>
+		<span id="myPhotoOptErr"></span>
+	</div>
+	<foreach name="photos" item="v">
+		<div class="myPhoto" onselectstart="return false;">
+			<div class="checkboxDiv">
+				<input type="checkbox" id="<{$v.pid}>" class="checkbox">
+				<label for="<{$v.pid}>" class="checkboxLb" title="选择"></label>
+			</div>
+			<img src="<{$v.PLink}>/w/159/h/180/" class="photoClass">
+			<ul class="phImg_opt" onselectstart="return false;">
+				<li class="delImg" title="删除" id="pid-<{$v.pid}>">&#xe634;</li>
+				<li class="moveImg" title="移动到其他相册" id="id-<{$v.pid}>">&#xe660;</li>
+			</ul>
+		</div>
+	</foreach>
+</div>
+<script type="text/javascript">
+	$(".allContent").on("mouseenter",".myPhoto",function(event){
+		var del=$(this).find(".phImg_opt");
+		del.stop(true,false).animate({bottom:0},200,"linear");
+		$(this).on("mouseleave",function(){
+			del.stop(true,false).animate({bottom:"-30px"},200,"linear");
+		});
+	});
+	$(".allContent").on("mouseenter",".checkboxDiv",function(event){
+		return false;
+	});
+	$("#batchOpt").click(function(){
+		$(this).hide();
+		$("#uploadImg").hide();
+		$("#batchOptUl").css({display:"inline-block"});
+		$(".checkboxDiv").show();
+	});
+	$("#batchSel").click(function(){
+		$(".checkbox").prop("checked",true);
+	});
+	$("#batchNotSel").click(function(){
+		$(".checkbox").prop("checked",false);
+	});
+	$("#optCancle").click(function(){
+		$("#batchOptUl").hide();
+		$("#batchOpt").show();
+		$("#uploadImg").show();
+		$(".checkboxDiv").hide();
+		$("#myPhotoOptErr").text("").hide();
+		$(".checkbox").prop("checked",false);
+	});
+	
+	var cmfDel=true;		//防止重复提交
+	$("#batchDel").click(function(){
+		var sel_checked=$(".checkbox:checked");
+		if(!checkTest(sel_checked)){return false;}
+		$(".taslctLayer").show();
+		$("#myPhotoOptWarn").show();
+	});
+	$("#ICancle").click(function(){
+		$("#myPhotoOptWarn").hide();
+		$(".taslctLayer").hide();
+		$("#optCancle").trigger("click");
+		cmfDel=true;
+	});
+	var batchDelURL="/YunPhotoAlbum/MyAlbum/deletePh/t/"+$.now();
+	$("#IKnow").click(function(){
+		$("#myPhotoOptWarn").hide();
+		$(".taslctLayer").hide();
+		$("#btcOptLoading").show();
+		if(!cmfDel){
+			return false;
+		}
+		var selector=$(".checkbox:checked");
+		var pids=parsePid(selector);
+		if(!pids){
+			$("#ICancle").trigger("click");
+			$("#btcOptLoading").hide();
+			fail("&#xe613;","出错啦~");
+			return false;
+		}
+		cmfDel=false;
+		var delImgs=selector.parents(".myPhoto");
+		delImgs.hide();
+		$.post(batchDelURL,{"pids":pids},function(data){
+			switch(data.info){
+				case "noLogin":
+					delImgs.show();
+					login();break;
+				case "success":
+					fail("&#xe687;","删除成功");
+					delImgs.remove();break;
+				case "error":
+				default:delImgs.show();
+				fail("&#xe613;","出错啦~");
+			}
+			cmfDel=true;
+			$("#ICancle").trigger("click");
+			$("#btcOptLoading").hide();
+		}).fail(function(){
+			$("#ICancle").trigger("click");
+			$("#btcOptLoading").hide();
+			cmfDel=true;
+			delImgs.show();
+			fail("&#xe613;","出错啦~");
+		});
+	});
+
+	var movePids="";
+	var movePhotoId="";
+	$("#batchMove").click(function(){
+		var sel_checked=$(".checkbox:checked");
+		if(!checkTest(sel_checked)){return false;}
+		$(".taslctLayer").show();
+		$("#selMoveAlbum").show();
+		var selector=$(".checkbox:checked");
+		movePids=parsePid(selector);
+		movePhotoId=selector.parents(".myPhoto");
+	});
+
+	$(".allContent").on("click",".moveImg",function(){
+		movePids=(this.id).split("-")[1];
+		movePhotoId=$(this).parents(".myPhoto");
+		$(".taslctLayer").show();
+		$("#selMoveAlbum").show();
+	});
+	var canBatchMove=true;
+	var moveURL="/YunPhotoAlbum/MyAlbum/movePhoto/t/"+$.now();
+	$("#moveNow").click(function(){
+		if(!canBatchMove||movePids==""||movePhotoId==""){return false;}
+		var paid=$(".albumRadio:checked").attr("id");
+		if(!paid){
+			fail("&#xe691;","请选择相册");
+			return false;
+		}
+		canBatchMove=false;
+		var btcOptLoading=$("#btcOptLoading");
+		btcOptLoading.show();
+		movePhotoId.hide();
+		$.post(moveURL,{"paid":paid,"pids":movePids},function(data){
+			switch(data.info){
+				case "noLogin":movePhotoId.show();login();break;
+				case "success":movePhotoId.remove();fail("&#xe687;","移动成功");break;
+				case "error":
+				default:movePhotoId.show();fail("&#xe613;","出错啦~");break;
+			}
+			$("#selMovAlm-close").trigger("click");
+			btcOptLoading.hide();
+		}).fail(function(){
+			$("#selMovAlm-close").trigger("click");
+			btcOptLoading.hide();
+			movePhotoId.show();
+			fail("&#xe613;","出错啦~");
+		});
+	});
+
+	$("#selMovAlm-help").on("mouseenter",function(){
+		var helpCont=$("#help-cont");
+		helpCont.css("display","inline-block");
+		$(this).on("mouseleave",function(){
+			helpCont.hide();
+		});
+	});
+	$("#selMovAlm-close").click(function(){
+		$("#selMoveAlbum").hide();
+		$(".taslctLayer").hide();
+		$(".albumRadio").prop("checked",false);
+		$("#optCancle").trigger("click");
+		canBatchMove=true;
+	});
+
+	var canDel=true;
+	$(".allContent").on("click",".delImg",function(event){
+		if(!canDel){
+			return false;
+		}
+		canDel=false;
+		var pid=(this.id).split("-")[1];
+		var delImg=$(this).parents(".myPhoto");
+		delImg.hide();
+		$.post(batchDelURL,{"pids":pid},function(data){
+			switch(data.info){
+				case "noLogin":delImg.show();login();break;
+				case "success":delImg.remove();fail("&#xe687;","删除成功");break;
+				case "error":
+				default:delImg.show();fail("&#xe613;","出错啦~");
+			}
+			canDel=true;
+		}).fail(function(){
+			delImg.show();
+			canDel=true;
+			fail("&#xe613;","出错啦~");
+		});
+	});
+
+	var albumsObj=$("#albums");
+	var isCanScroll=true;
+	$("#selMoveAlbum").on("mousewheel DOMMouseScroll",function(event){
+		if(!isCanScroll){return false;}
+		event.preventDefault();
+		event=event.originalEvent;
+		var direction=(event.wheelDelta&&(event.wheelDelta>0?1:-1))||(event.detail&&(event.detail>0?-1:1));
+		if(direction>0){
+			albumsObj.stop(true,false).animate({"scrollTop":"-=80px"},100,"linear",function(){
+				isCanScroll=true;
+			});
+		}else{
+			albumsObj.stop(true,false).animate({"scrollTop":"+=80px"},100,"linear",function(){
+				isCanScroll=true;
+			});
+		}
+	});
+
+	function checkTest(selector){
+		var selLen=selector.length;
+		var myPhotoOptErr=$("#myPhotoOptErr");
+		if(selLen<=0){
+			myPhotoOptErr.text("没有选择的内容").show();
+			return false;
+		}
+		myPhotoOptErr.hide();
+		return true;
+	}
+
+	function parsePid(selector){		//解析图片的pid
+		var pids="";
+		if(selector.length<=0){
+			return "";
+		}
+		selector.each(function(){
+			pids+=this.id+",";
+		});
+		return pids;
+	}
+
+	$("#uploadImg").click(function(){
+		$(".taslctLayer").show();
+		$("#uploadAll").show();
+	});
+
+	$("#uploadPhoto").click(function(event){
+		var imgLen=$(".preview").length;
+		if(imgLen>=20){return false;}		//一次最多上传20张图片
+	});
+
+	var arrImgObj=[];	//收集图片的files对象,用于图片预览及ajax上传
+	var arrImgName=[];
+	var allowType=["image/jpeg","image/jpg","image/png","image/gif"];
+	var maxSize=3145728; //图片最大的大小3M；
+	var uploadDiv=$(".uploadDiv");  //上传框的jq对象
+	$("#uploadPhoto").change(function(){		//上传图片
+		var txt=$.trim($(this).val());
+		if(txt==""){return false;}
+		var imgLen=$(".preview").length;
+		if(imgLen>=20){return false;}		//一次最多上传20张图片
+		if(!this.files){
+			$("#uploadBtt").prop("disabled",true);
+			fail("&#xe691;","浏览器不支持此功能");
+			return false;
+		}
+		var FilesArr=this.files;
+		var addSum=FilesArr['length'];
+		var canAddSum=0;
+		if((imgLen+addSum)>=20){
+			canAddSum=20-imgLen;
+		}else{
+			canAddSum=addSum;
+		}
+		var i=1;	//记录已添加的图片数量
+		$.each(FilesArr,function(k,v){
+			if(i>canAddSum){return false;}
+			var type=v['type'];
+			var size=v['size'];
+			var name=v['name'].toLowerCase();
+			if($.inArray(name,arrImgName)>=0){	//避免重复上传
+				return true;
+			}
+			if($.inArray(type,allowType)<0){
+				fail("&#xe691;","不支持类型"+type);
+				return true;
+			}
+			if(size>maxSize){
+				fail("&#xe691;","图片不能超过3M");
+				return true;
+			}
+			i++;
+			arrImgObj.push(v);
+			arrImgName.push(name);
+			imgPreview(v);
+		});
+	});
+
+	$("#uploadAll").on("mouseenter",".preview",function(event){
+		var _this=$(this);
+		if(_this.children(".preview_loading:visible").length>=1){return false;}
+		var previewDel=_this.find(".previewDel");
+		previewDel.stop(true,false).animate({"top":0},200);
+		_this.on("mouseleave",function(){
+			previewDel.stop(true,false).animate({"top":"-30px"},200);
+		});
+	});
+
+	$("#uploadAll").on("click",".previewDel",function(){ //删除预览图
+		var parentEle=$(this).parent();
+		var index=parentEle.index(".preview"); //获得相对于其他预览图的下标
+		arrImgObj.splice(index,1);
+		arrImgName.splice(index,1);
+		parentEle.remove();
+	});
+
+	function imgPreview(imgFiles){		//生成预览图
+		var imgSrc=window.URL.createObjectURL(imgFiles);
+		var imgHtml="<div class='preview'>";
+		imgHtml+="<div class='preview_loading'>";
+		imgHtml+="<img src='/YunPhotoAlbum/Public/SysImg/loading2.gif' class='upldLadg'></div>";
+		imgHtml+="<div class='previewDel' title='取消上传' onselectstart='return false;'>";
+		imgHtml+="&#xe634;</div>";
+		imgHtml+="<img src='"+imgSrc+"' width='154px' height='180px'>";
+		imgHtml+="</div>";
+		uploadDiv.before(imgHtml);
+	}
+
+	$("#uploadCancel").click(function(){
+		if($(".upldLadg:visible").length>0){
+			fail("&#xe691;","仍有图片在上传");
+			return false;
+		}
+		$("#delAllPrev").trigger('click');
+		$("#uploadAll").hide();
+		$(".taslctLayer").hide();
+	});
+
+	var canUpload=true; //防止重复上传
+	var arrImgObjLen=0;
+	var PAId=$.trim($(".allContent").attr("id"));
+	$("#uploadBtt").click(function(){
+		if(!canUpload){return false;}
+		arrImgObjLen=arrImgObj.length;
+		if(arrImgObjLen<=0){
+			fail("&#xe691;","请选择图片");
+			$("#delAllPrev").trigger("click");
+			return false;
+		}
+		$(".preview_loading").css({"display":"inline-block"});
+		canUpload=false;
+		for(var i=0;i<arrImgObjLen;i++){
+			uploadImg(arrImgObj[i],i);
+		}
+	});
+
+	var formData=new FormData();
+	var hasUploadSum=0; //统计已经上传的数量(无论是否成功)
+	function uploadImg(imgObj,index){
+		hasUploadSum++;
+		formData.append("photo",imgObj);
+		var xmlHttp=new XMLHttpRequest;
+		var uploadURL="/YunPhotoAlbum/MyAlbum/uploadPhoto/PAId/"+PAId+"/t/"+$.now();
+		xmlHttp.open("POST",uploadURL,true);
+		xmlHttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
+		xmlHttp.onerror=function(){
+			uploadError(xmlHttp,index);
+		}
+		xmlHttp.onreadystatechange=function(){
+			if(xmlHttp.readyState==4){
+				if(xmlHttp.status==200){
+					var rpTxt=xmlHttp.responseText;
+					rpTxt=JSON.parse(rpTxt);
+					 switch(rpTxt.info){
+					 	case "success":uploadSuccess(rpTxt.imgName,rpTxt.saveName,rpTxt.plink);break;
+						case 'noLogin':
+							$("#uploadCancel").trigger("click");
+							login();break;
+						case 'error':
+						default:uploadError(xmlHttp,index);
+					}
+				}else{
+					uploadError(xmlHttp,index);
+				}
+			}
+		}
+		xmlHttp.send(formData);
+	}
+
+	var upldLadgObj="";		//务必清空,作用：避免重复遍历获取$(".upldLadg");
+	function uploadError(xmlHttp,index){
+		xmlHttp.abort();
+		var errURL="/YunPhotoAlbum/Public/SysImg/fail.png";
+		if(upldLadgObj==""){
+			upldLadgObj=$(".upldLadg");
+		}
+		$(upldLadgObj.get(index)).addClass("upldWarn").attr("src",errURL).removeClass('upldLadg');
+	}
+
+	function uploadSuccess(imgName,saveName,plink){
+		var imgIndex=$.inArray(imgName,arrImgName);
+		if(imgIndex<0){
+			fail("&#xe691;","发生错误");
+			return false;
+		}
+		var successURL="/YunPhotoAlbum/Public/SysImg/success.png";
+		if(upldLadgObj==""){
+			upldLadgObj=$(".upldLadg");
+		}
+		$(upldLadgObj.get(imgIndex)).addClass("upldWarn").attr("src",successURL).removeClass('upldLadg');
+		insertNewImg(saveName,plink);
+	}
+
+	var myPhotoOpt=$("#myPhotoOpt");
+	function insertNewImg(pid,plink){	//在相册中插入新图片
+		var newImg='<div class="myPhoto" onselectstart="return false;">';
+		newImg+='<div class="checkboxDiv">';
+		newImg+='<input type="checkbox" id="'+pid+'" class="checkbox">';
+		newImg+='<label for="'+pid+'" class="checkboxLb" title="选择"></label></div>';
+		newImg+='<img src="'+plink+'/w/159/h/180/" class="photoClass">';
+		newImg+='<ul class="phImg_opt" onselectstart="return false;">';
+		newImg+='<li class="delImg" title="删除" id="pid-'+pid+'">&#xe634;</li>';
+		newImg+='<li class="moveImg" title="移动到其他相册" id="id-'+pid+'">&#xe660;</li>';
+		newImg+='</ul></div>';
+		myPhotoOpt.after(newImg);
+	}
+
+	function restoryUpldVar(){		//还原用于上传的全局变量
+		arrImgObj=[];
+		arrImgName=[];
+		canUpload=true;
+		arrImgObjLen=0;
+		hasUploadSum=0;
+		upldLadgObj="";		//清空前面提到的：避免重复遍历获取$(".upldLadg");
+	}
+	$("#delAllPrev").click(function(){
+		restoryUpldVar();
+		$(".preview").remove();
+		$("#uploadPhoto").val("");
+	});
+
+	var canShow=true;	//避免重复点击
+	var showImgLoading=$("#showImgLoading");
+	var smallImgUl=$("#smallImgUl");
+	$(".allContent").on("click",".myPhoto>.photoClass",function(){
+		if(!canShow){return false;}
+		canShow=false;
+		smallImgUl.empty();
+		showImgLoading.show();
+		var src=(this.src).replace("thumb1","thumb1org");
+		document.getElementById('showBigImg').src=src;
+		var photoClass=$(".myPhoto>.photoClass");
+		var imgObj=photoClass.clone().css({
+			"width":"56px",
+			"height":"56px"
+		}).wrapAll("<li></li>").addClass("smallImg");
+		smallImgUl.append(imgObj);
+		$(".smallImgSelOn").removeClass("smallImgSelOn");
+		var index=$(this).index(".myPhoto>.photoClass");
+		$(".smallImg").get(index).className+=" smallImgSelOn";
+		$(".taslctLayer").show();
+		$("#showImg").show();
+		canShow=true;
+	});
+
+	var imgDiv=$("#imgDiv");
+	var showImg=$("#showImg");
+	$("#showBigImg").on("load",function(){
+		showImgLoading.hide();
+		imgDiv.css({"margin":0});
+		var showImgHeight=showImg.height()-30-60; //30是#showImg-close的高度,60是#smallImgDiv的高度
+		var height=this.offsetHeight;
+		if(showImgHeight>=height){
+			//var marginTop=(100-(height/showImgHeight*100))/4;
+			var marginTop=(showImgHeight-height)/2;		//保持图片垂直居中
+			imgDiv.css("margin-top",marginTop+"px");
+		}
+	});
+
+	$("#showImg-close").click(function(){
+		$("#showImg").hide();
+		$(".taslctLayer").hide();
+	});
+	var isCanScroll2=true;
+	$("#smallImgDiv").on("mousewheel DOMMouseScroll",function(event){
+		event.preventDefault();
+		if(!isCanScroll2){
+			return false;
+		}
+		isCanScroll2=false;
+		event=event.originalEvent;
+		var direction=(event.wheelDelta&&(event.wheelDelta>0?1:-1))||(event.detail&&(event.detail>0?-1:1));
+		if(direction>0){
+			$(this).stop(true,false).animate({"scrollLeft":"-=240px"},200,function(){
+				isCanScroll2=true;
+			});
+		}else{
+			$(this).stop(true,false).animate({"scrollLeft":"+=240px"},200,function(){
+				isCanScroll2=true;
+			});
+		}
+	});
+	
+	//var clickAgain=""; 			//判断点击的是不是同一张图
+	var showBigImg=$("#showBigImg");
+	$("#smallImgDiv").on("click",".smallImg",function(){
+		$(".smallImgSelOn").removeClass("smallImgSelOn");
+		$(this).addClass("smallImgSelOn");
+		showImgLoading.show();
+		var src=this.src;
+		clickAgain=src;
+		src=src.replace("thumb1","thumb1org");
+		showBigImg.attr("src",src);
+	});
+</script>

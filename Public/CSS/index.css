@@ -1,22 +1,12 @@
 @charset "utf-8";
-#headMenu{
-	width:100%;
-	height:30px;
-	background-color:#ccc;
-}
-#allContent{
-	position:relative;
-	width:1000px;
-	height:auto;
-	min-height:768px;
-	left:50%;
-	margin-left:-500px;
-	/*background-color:#ff0000;*/
-}
+
 #menuDiv{
+	position:relative;
 	white-space:nowrap;
 	width:1000px;
 	height:80px;
+	left:50%;
+	margin-left:-500px;
 	/*background-color:#ff0000;*/
 	font-size:0;
 	border-bottom:1px solid #ccc;
@@ -73,12 +63,30 @@
 	display:inline-block;
 	border:0;
 	outline:none;
+	vertical-align:middle;
 }
 #seachbtt{
 	background-color:transparent;
 	border:0;
 	outline:none;
 	cursor:pointer;
+	vertical-align:middle;
+}
+.folderDiv{
+	width:128px;
+	height:148px;
+	display:inline-block;
+}
+.folderImgDiv,.folderImg{
+	width:128px;
+	height:128px;
+}
+.folderTittle{
+	width:128px;
+	height:20px;
+	text-align:center;
+	font-size:13px;
+	line-height:20px;
 }
 #endInfo{
 	width:100%;

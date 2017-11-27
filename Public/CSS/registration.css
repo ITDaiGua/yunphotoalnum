@@ -1,0 +1,144 @@
+@charset "utf-8";
+body{
+	background-image:url('/YunPhotoAlbum/Public/SysImg/registrationBg.jpg');
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+#rgtAllCont{
+	position:absolute;
+	width:400px;
+	height:auto;
+	min-height:500px;
+	left:50%;
+	top:10%;
+	margin-left:-200px;
+	border:1px solid #e4e3e3;
+	box-shadow:0 0 5px #e4e3e3;
+	border-radius:10px;
+	background-color:rgba(228,227,227,0.5);
+	overflow:hidden;
+	text-align:center;
+}
+#rgtTitle{
+	width:100%;
+	height:40px;
+	background-color:#00a2ff;
+	font:28px "黑体","微软雅黑";
+	line-height:40px;
+	color:#fff;
+	letter-spacing:7px;
+	padding-left:10px;
+	text-align:left;
+}
+.rgtCont{
+	width:260px;
+	height:40px;
+	display:inline-block;
+	margin-top:10px;
+	/*background-color:#ff0000*/
+	white-space:nowrap;
+	font-size:0;
+}
+.rgtImg{
+	width:40px;
+	height:40px;
+	text-align:center;
+	font:25px iconfont;
+	line-height:40px;
+	display:inline-block;
+	vertical-align:middle;
+	background-color:#00a2ff;
+}
+.rgtCont input{
+	width:200px;
+	height:40px;
+	vertical-align:middle;
+	border:0;
+	outline:none;
+	padding-left:5px;
+	font:16px "微软雅黑","黑体";
+	line-height:40px;
+	vertical-align:middle;
+}
+.rgtErr{
+	display:none;
+	width:260px;
+	height:auto;
+	color:#ff0000;
+	font:13px iconfont;
+	text-align:left;
+	padding-left:10px;
+}
+#authcore{
+	width:90px;
+}
+#getAuthcore{
+	display:inline-block;
+	width:150px;
+	height:40;
+	font:16px "微软雅黑","黑体";
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+	background-color:#00a2ff;
+	vertical-align:middle;
+	cursor:pointer;
+}
+#getAuthcore:hover{
+	background-color:#0793e3;
+}
+#agreeProSpan{
+	display:inline-block;
+	margin-top:5px;
+	width:260px;
+	height:20px;
+	font-size:12px;
+	line-height:20px;
+	text-align:left;
+	padding-left:15px;
+}
+#agreeProSpan a{
+	color:#0793e3;
+	text-decoration:none;
+}
+#agreeProSpan a:hover{
+	color:#ff0000;
+}
+#agreePro{
+	display:none;
+}
+#agreeProLb{
+	position:relative;
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border:1px solid #00a2ff;
+	border-radius:5px;
+	vertical-align:middle;
+	cursor:pointer;
+}
+#agreePro:checked+#agreeProLb{
+	background-image:url('/YunPhotoAlbum/Public/SysImg/checked.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+#agreeProTxt{
+	vertical-align:middle;
+}
+#rgtBtt{
+	display:inline-block;
+	width:250px;
+	height:35px;
+	margin-top:20px;
+	font:20px "微软雅黑","黑体";
+	color:#fff;
+	background-color:#00a2ff;
+	border:0;
+	outline:none;
+	border-radius:5px;
+	letter-spacing:5px;
+	cursor:pointer;
+}
+#rgtBtt:hover{
+	background-color:#0793e3;
+}

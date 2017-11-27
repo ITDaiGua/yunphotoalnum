@@ -1,0 +1,237 @@
+<div class="tipoffTitie">
+	<span class="tpIconfont">&#xe691;</span>
+	举报
+	<span class="tpIconfont" id="tpfclose" title="关闭窗口">&#xe601;</span>
+</div>
+<form method="post" id="tpfform">
+	<dl>
+		<dt><span>*</span>举报类型：</dt>
+		<dd>
+			<select id="tpselect">
+				<option value="---请选择---">---请选择---</option>
+				<option value="图片无法查看">图片无法查看</option>
+				<option value="血腥恐怖">血腥恐怖</option>
+				<option value="反动色情">反动色情</option>
+				<option value="广告内容">广告内容</option>
+				<option value="侵犯版权">侵犯版权</option>
+				<option value="其他">其他</option>
+			</select>
+		</dd>
+		<dd id="tpselectInfo"  class="iconfont"></dd>
+	</dl>
+	<dl>
+		<dt><span>*</span>联系方式：</dt>
+		<dd>
+			<input type="text" maxlength="11" name="tpContactWay" id="tpContactWay" placeholder="手机号码" autocomplete="off">
+		</dd>
+		<dd id="tpContactWayInfo"  class="iconfont"></dd>
+	</dl>
+	<dl>
+		<dt><span>*</span>举报说明：</dt>
+		<dd>
+			<textarea id="tptextarea" maxlength="140" placeholder="说明详细原因,至少20字节、最多140字符"></textarea>
+		</dd>
+		<dd id="tptextareaInfo" class="iconfont"></dd>
+	</dl>
+	<dl>
+		<dt>上传图片:</dt>
+		<dd id="tpfImgDiv">
+			<div class="tfpUploadImg">
+				<input type="file" name="tpImgs" accept="image/gif,image/jpeg,image/png,image/jpg">&#xe78c;
+			</div>
+		</dd><br/>
+		<span style="font-size:13px;margin-left:100px;">最多3张小于1M的jpg、png、gif图片</span>
+	</dl>
+	<dl style="margin-top:10px;">
+		<dt></dt>
+		<dd>
+			<button  id="tpfSubmit">
+				<span style="display:inline-block;vertical-align:middle;">提交举报</span>
+			</button>
+		</dd>
+	</dl>
+</form>
+<script type="text/javascript">
+	$("#tpfclose").click(function(){
+		$(".tipoffHtml").hide();
+		$(".taslctLayer").hide();
+	});
+	$("#tpContactWay").on("propertychange input",function(){
+		var val=$(this).val();
+		val=val.replace(/[^0-9]/g,"");
+		$(this).val(val);
+	});
+	var tfpUploadImg=$(".tfpUploadImg");
+	$("input[name='tpImgs']").change(function(even){
+		var tpImgsLink=$.trim($(this).val());
+		if(tpImgsLink==null){
+			return false;
+		}
+		var id="tfp"+$.now();
+		var filesObj=$(this).get(0).files[0];
+		if(filesObj['size']>1048576){
+			fail("&#xe613;","图片太大啦");
+			return false;
+		}
+		var imgType=filesObj['type'].split("/")[1];
+		var isCorrect=(imgType=="gif"||imgType=="png"||imgType=="jpg"||imgType=="jpeg");
+		if(!isCorrect){
+			fail("&#xe613;","格式不支持");
+			return false;
+		}
+		var img=$("<img src='/YunPhotoAlbum/Public/SysImg/imgbg.png' width='80' height='80'>").attr({id:id});
+		tfpUploadImg.before(img);
+		idloadingDiv="ldD"+$.now();
+		img.wrap("<div class='tpfImg' id='"+idloadingDiv+"' ></div>");
+		idloading="ld"+$.now();
+		$("#"+idloadingDiv).prepend('<img src="/YunPhotoAlbum/Public/SysImg/loading2.gif" class="loading2" id="'+idloading+'" >');
+		ajaxUpload(filesObj,id,imgType,idloadingDiv,idloading);
+		$(this).val("");
+	});
+	function ajaxUpload(filesObj,id,imgType,idloadingDiv,idloading){
+		var sid=$(".allContent").attr('id');
+		var url="/YunPhotoAlbum/AjaxOpt/ajaxUpload1/t/"+$.now()+"/sid/"+sid;
+		var formData=new FormData();
+		formData.append("filesObj",filesObj);
+		var xmlhttp=new XMLHttpRequest();
+		xmlhttp.open('POST',url,true);
+		xmlhttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
+		xmlhttp.send(formData);
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState==4){
+				if(xmlhttp.status==200){
+					var rpTxt=xmlhttp.responseText;
+					rpTxt=JSON.parse(rpTxt);
+					//alert(rpTxt.info);
+					switch(rpTxt.info){
+						case 'success':tpImgSuccess(rpTxt.filename,id,imgType,idloadingDiv,idloading,rpTxt.subdir);break;
+						case 'noLogin':$(".tipoffHtml").hide();login();tpImgSuccess('error',id,imgType,idloadingDiv,idloading);break;
+						case 'exists':fail("&#xe613;","举报过啦~");tpImgSuccess('error',id,imgType,idloadingDiv,idloading);exists();break;
+						case 'error':
+						default:fail("&#xe613;","上传失败");tpImgSuccess('error',id,imgType,idloadingDiv,idloading);break;
+					}
+				}
+			}
+		}
+	}
+
+	function tpImgSuccess(fileName,id,imgType,idloadingDiv,idloading,subdir=""){
+		$("#"+idloading).remove();
+		var src="";
+		if(fileName=='error'){
+			src='/YunPhotoAlbum/Public/SysImg/loadFail.png';
+		}else{
+			if(imgType=="jpeg"){imgType='jpg';}
+			src='/YunPhotoAlbum/Index/thumb1/p/tipoffImg-'+subdir+'/fn/'+fileName+'/t/'+imgType+'/w/80/h/80';
+		}
+		$("#"+id).attr("src",src);
+		var delOpt=$("<div class='delOpt'>&#xe634;</div>");
+		$("#"+idloadingDiv).prepend(delOpt);
+	}
+
+	$("input[name='tpImgs']").click(function(){
+		if($(".tpfImg").length>=3){
+			return false;
+		}
+	});
+
+	$("#tpfform").on('mouseenter',".tpfImg",function(){
+		var delOpt_ms=$(this).children('.delOpt');
+		delOpt_ms.stop(true,false).animate({top:"0"},200);
+		$("#tpfform").on('mouseleave',".tpfImg",function(){
+			delOpt_ms=$(this).children('.delOpt');
+			delOpt_ms.animate({top:"-21px"},200);
+		});
+	});
+	
+	$("#tpfform").on('click',".delOpt",function(){
+		$(this).parent().remove();
+	});
+
+	var isCanTipoff=true;
+	$("#tpfform").on('submit',function(event){
+		event.preventDefault();
+		if(!isCanTipoff){
+			return false;
+		}
+		isCanTipoff=false;
+		var tipoffType=$("#tpselect option:selected").val();
+		var tpContactWay=$.trim($("#tpContactWay").val());
+		var tptextarea=$.trim($("#tptextarea").val());
+		var isTrue=stylecheck('tipoffType',tipoffType)&stylecheck('tpContactWay',tpContactWay)&stylecheck('tptextarea',tptextarea);
+		if(isTrue){
+			var imgsSrc="";
+			var imgs=$(".tpfImg").find("img:not('.loading2')");
+			if(imgs.length>0){
+				imgs.each(function(k,v){
+					imgsSrc+=v.src+"|";
+				});
+			}
+
+			var url="/YunPhotoAlbum/AjaxOpt/tipiff";
+			var loading3="<img src='/YunPhotoAlbum/Public/SysImg/loading2.gif' class='loading3'>";
+			$("#tpfSubmit").append($(loading3).css({
+				width:"20px",
+				height:"20px",
+				display:"inline-block",
+				verticalAlign:"middle"
+			}));
+			$.post(url,{tipoffType:tipoffType,tpContactWay:tpContactWay,tptextarea:tptextarea,imgsSrc:imgsSrc,sid:sid},function(data){
+				if(data.info=="noLogin"){
+					$(".tipoffHtml").hide();
+					login();
+					isCanTipoff=true;
+				}else if(data.info=="exists"){
+					exists();
+					fail("&#xe613;","举报过啦");
+				}else if(data.info=="success"){
+					exists();
+					fail("&#xe687;","提交成功");
+				}else{
+					isCanTipoff=true;
+					fail("&#xe613;","出错啦~");
+				}
+				$(".loading3").remove();
+			});
+		}else{
+			isCanTipoff=true;
+		}
+	});
+
+	function stylecheck(id,check){
+		var matchStr=/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/g;
+		switch(id){
+			case 'tipoffType':
+				if(check=="---请选择---"){
+					$("#tpselectInfo").html("&nbsp;&#xe601;必须选择举报类型");
+					return false;
+				}
+				$("#tpselectInfo").html("");
+				return true;
+			case 'tpContactWay':
+				if(check==""){
+					$("#tpContactWayInfo").html("&nbsp;&#xe601;不能为空");
+					return false;
+				}else if(!check.match(matchStr)){
+					$("#tpContactWayInfo").html("&nbsp;&#xe601;手机不合法");
+					return false;
+				}
+				$("#tpContactWayInfo").html("");
+				return true;
+			case 'tptextarea':
+				if(check.length<20){
+					$("#tptextareaInfo").html("&nbsp;&#xe601;不能少于20字符");
+					return false;
+				}
+				$("#tptextareaInfo").html("");
+				return true;
+		}
+	}
+	function exists(){
+		/*$("#tpContactWay").val("");
+		$("#tptextarea").val("");
+		$(".tipoffHtml").hide();
+		$(".taslctLayer").hide();*/
+		$("#tpfform").get(0).reset();
+	}
+</script>
