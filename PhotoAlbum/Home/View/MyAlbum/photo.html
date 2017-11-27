@@ -23,7 +23,7 @@
 <div id="showImg">
 	<div id="showImg-close" title="关闭">&#xe601;</div>
 	<div id="imgDiv">
-		<img src="" id="showBigImg">
+		<img src="javascript:void(0)" id="showBigImg">
 	</div>
 	<div id="smallImgDiv"><ul id="smallImgUl"></ul></div>
 	<img src="/YunPhotoAlbum/Public/SysImg/loading2.gif" id="showImgLoading">
@@ -515,6 +515,7 @@
 	$("#delAllPrev").click(function(){
 		restoryUpldVar();
 		$(".preview").remove();
+		$("#uploadPhoto").val("");
 	});
 
 	var canShow=true;	//避免重复点击
@@ -546,7 +547,7 @@
 	$("#showBigImg").on("load",function(){
 		showImgLoading.hide();
 		imgDiv.css({"margin":0});
-		var showImgHeight=showImg.height()-30-60;
+		var showImgHeight=showImg.height()-30-60; //30是#showImg-close的高度,60是#smallImgDiv的高度
 		var height=this.offsetHeight;
 		if(showImgHeight>=height){
 			//var marginTop=(100-(height/showImgHeight*100))/4;

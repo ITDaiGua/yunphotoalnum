@@ -37,8 +37,12 @@
 				<a href="/YunPhotoAlbum/MyAlbum/index/">
 					<li <{$init.styleLi2}>>我的相册</li>
 				</a>
-				<li <{$init.styleLi3}>>我的分享</li>
-				<li <{$init.styleLi4}>>我的收藏</li>
+				<a href="/YunPhotoAlbum/MyShare/index/">
+					<li <{$init.styleLi3}>>我的分享</li>
+				</a>
+				<a href="/YunPhotoAlbum/MyCollection/index/">
+					<li <{$init.styleLi4}>>我的收藏</li>
+				</a>
 			</ul>
 		</div>
 		<if condition="$init['viewType'] eq 'shareFolders'">
@@ -48,13 +52,14 @@
 			</form>
 		</if>
 	</div>
-	<if condition="$init['viewType'] eq 'shareFolders'">
-		<include file="Index/shareFolders"/>
-	<elseif  condition="$init['viewType'] eq 'myAlbum'"/>
-		<include file="MyAlbum/MyAlbum"/>
-	<elseif  condition="$init['viewType'] eq 'photo'"/>
-		<include file="MyAlbum/photo"/>
-	</if>
+	<switch name="init['viewType']">
+		<case value="shareFolders"><include file="Index/shareFolders"/></case>
+		<case value="myAlbum"><include file="MyAlbum/MyAlbum"/></case>
+		<case value="photo"><include file="MyAlbum/photo"/></case>
+		<case value="myShare"><include file="MyShare/index"/></case>
+		<case value="myCollection"><include file="MyCollection/index"/></case>
+		<default /><include file="Index/shareFolders"/>
+	</switch>
 	<div id="endInfo">
 		增值电信业务经营许可证:&nbsp;<a href="javascript:void(0)">粤B2-20110446</a>&nbsp;网络文化经营许可证:&nbsp;<a href="javascript:void(0)">粤网文[2015]0295-065号</a>&nbsp;<a href="javascript:void(0)">12318举报</a><br>互联网药品信息服务资质证书编号:&nbsp;<a href="javascript:void(0)">粤-（经营性）-2017-0005</a>&nbsp;&nbsp;<img src="__PUBLIC__/SysImg/beianbgs.png" width="20" height="20" id="beianbgs">粤公网安备&nbsp;<a href="javascript:void(0)">33010002000120号</a>
 	</div>

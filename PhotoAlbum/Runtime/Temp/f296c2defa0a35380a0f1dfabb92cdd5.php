@@ -1,3 +1,0 @@
-<?php
-//000000000120a:12:{s:5:"stfId";s:15:"stf150998858803";s:3:"uid";s:10:"u789123456";s:3:"sid";s:7:"s123456";s:5:"style";s:12:"血腥恐怖";s:12:"tpContactWay";s:11:"18813757931";s:9:"tpexplain";s:120:"血腥恐怖血腥恐怖血腥恐怖血腥恐怖血腥恐怖血腥恐怖血腥恐怖血腥恐怖血腥恐怖血腥恐怖";s:6:"tpImgs";s:324:"http://localhost:8080/YunPhotoAlbum/Index/thumbAuth/p/tipoffImg-u789123456/fn/tpi1509988578/t/jpg/w/80/h/80|http://localhost:8080/YunPhotoAlbum/Index/thumbAuth/p/tipoffImg-u789123456/fn/tpi1509988581/t/jpg/w/80/h/80|http://localhost:8080/YunPhotoAlbum/Index/thumbAuth/p/tipoffImg-u789123456/fn/tpi1509988584/t/jpg/w/80/h/80|";s:10:"TipOffTime";s:10:"1509988588";s:8:"handleAd";N;s:6:"result";N;s:10:"handleTime";N;s:6:"status";s:1:"0";}
-?>

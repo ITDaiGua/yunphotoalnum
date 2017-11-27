@@ -90,6 +90,7 @@ create table if not exists `sharePA`(
 	/*unique key `s`(`uid`,`PAId`),*/
 	#FULLTEXT(`class`,`skey`)
 )ENGINE=MyISAM DEFAULT CHARSET=UTF8;
+#==============================================
 ALTER TABLE `sharePA` ADD FULLTEXT `sft`(`sclass`,`skey`);
 select * from sharePA where match(class,skey) against('风景' IN BOOLEAN MODE);
 mysql -uroot -p
@@ -100,6 +101,18 @@ insert into sharePA values('s123456','u789123',
 insert into sharePA values('s123487','u7871123',
 	'刘焕子','2017.8.9北京','北京旅游纪念相册，图修得不好，请见谅','旅游','旅游、自然',0,0,'1508847812',0)
 #=================================================
+use YunPhotoAlbum;
+delimiter //
+CREATE TRIGGER `cancleShare` #取消共享的触发器，用于更改共享图片库的图片状态
+AFTER UPDATE ON `sharepa`
+FOR EACH ROW
+BEGIN
+      IF new.status=1 THEN
+      	update `sharephoto` set status=1 where sid=new.sid;
+      END IF;
+END//
+delimiter ;
+#==============================================
 use YunPhotoAlbum;
 create table if not exists `sharePhoto`(
 	`sid` varchar(16) not null,	#共享文件夹的id
@@ -149,6 +162,7 @@ create table if not exists `collection`(
 	`cltId` varchar(18) not null primary key, #收藏的id
 	`uid` varchar(16) not null, #收藏的用户id
 	`sid` varchar(30) not null, #收藏的共享文件夹的id
+	#`sName` varchar(30) not null,	#收藏的共享文件夹的名字
 	`cltTime` varchar(11) not null,#收藏的时间
 	`status` int not null default 0,#0：正常、1：取消收藏
 	unique key `clt`(`uid`,`sid`)
@@ -161,6 +175,18 @@ AFTER INSERT ON `collection`
 FOR EACH ROW
 BEGIN
       update `sharePA` set cltSum=cltSum+1 where sid=new.sid;
+END//
+delimiter ;
+#===============================================
+use YunPhotoAlbum;
+delimiter //
+CREATE TRIGGER `cancleClt`
+AFTER UPDATE ON `collection`
+FOR EACH ROW
+BEGIN
+	IF new.status=1 THEN
+      update `sharepa` set cltSum=cltSum-1 where sid=old.sid;
+    END IF;
 END//
 delimiter ;
 #===============================================

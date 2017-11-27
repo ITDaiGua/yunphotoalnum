@@ -62,8 +62,12 @@
 				<a href="/YunPhotoAlbum/MyAlbum/index/">
 					<li <?php echo ($init["styleLi2"]); ?>>我的相册</li>
 				</a>
-				<li <?php echo ($init["styleLi3"]); ?>>我的分享</li>
-				<li <?php echo ($init["styleLi4"]); ?>>我的收藏</li>
+				<a href="/YunPhotoAlbum/MyShare/index/">
+					<li <?php echo ($init["styleLi3"]); ?>>我的分享</li>
+				</a>
+				<a href="/YunPhotoAlbum/MyCollection/index/">
+					<li <?php echo ($init["styleLi4"]); ?>>我的收藏</li>
+				</a>
 			</ul>
 		</div>
 		<?php if($init['viewType'] == 'shareFolders'): ?><form name="seachForm" action="<?php echo ($init["searchURL"]); ?>" method="post" id="seachForm">
@@ -71,7 +75,7 @@
 				<input type="submit" class="iconfont" value="&#xe61e;" id="seachbtt">
 			</form><?php endif; ?>
 	</div>
-	<?php if($init['viewType'] == 'shareFolders'): ?><link type="text/css" rel="stylesheet" href="/YunPhotoAlbum/Public/CSS/shareFolders.css">
+	<?php switch($init['viewType']): case "shareFolders": ?><link type="text/css" rel="stylesheet" href="/YunPhotoAlbum/Public/CSS/shareFolders.css">
 <div class="allContent">
 	<div class="pcTittle">图片分类</div>
 	<div class="photoClass">
@@ -147,13 +151,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_2036__=$init['page']+1;$__FOR_END_2036__=$init['totalPage']+1;for($i=$__FOR_START_2036__;$i < $__FOR_END_2036__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_24541__=$init['page']+1;$__FOR_END_24541__=$init['totalPage']+1;for($i=$__FOR_START_24541__;$i < $__FOR_END_24541__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_27421__=$init['page']+1;$__FOR_END_27421__=$init['page']+5;for($i=$__FOR_START_27421__;$i < $__FOR_END_27421__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_22354__=$init['page']+1;$__FOR_END_22354__=$init['page']+5;for($i=$__FOR_START_22354__;$i < $__FOR_END_22354__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_8594__=1;$__FOR_END_8594__=$init['page'];for($i=$__FOR_START_8594__;$i < $__FOR_END_8594__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_23075__=1;$__FOR_END_23075__=$init['page'];for($i=$__FOR_START_23075__;$i < $__FOR_END_23075__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_30563__=$init['page']-4;$__FOR_END_30563__=$init['page'];for($i=$__FOR_START_30563__;$i < $__FOR_END_30563__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_15136__=$init['page']-4;$__FOR_END_15136__=$init['page'];for($i=$__FOR_START_15136__;$i < $__FOR_END_15136__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>
@@ -203,11 +207,8 @@
 				return false;
 			}
 		});
-	</script><?php endif; ?>
-
-
-	<?php elseif($init['viewType'] == 'myAlbum'): ?>
-		<link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/MyAlbum.css">
+	</script><?php endif; break;?>
+		<?php case "myAlbum": ?><link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/MyAlbum.css">
 <div class="shareDiv">
 		<div class="shareDiv_head">共享相册<span id="shareDiv_close" title="关闭">&#xe601;</span></div>
 		<form name="shareAlbum" method="post" id="shareAlbum">
@@ -475,9 +476,8 @@
 		});
 	</script>
 	<script type="text/javascript" src="/YunPhotoAlbum/Public/JS/textOpt.js"></script>
-</div>
-	<?php elseif($init['viewType'] == 'photo'): ?>
-		<script type="text/javascript">
+</div><?php break;?>
+		<?php case "photo": ?><script type="text/javascript">
 	var moveHtml="";
 	(function(){
 		var getMyAlbumURL="/YunPhotoAlbum/MyAlbum/getMyAlbum/t/"+$.now();
@@ -502,7 +502,7 @@
 <div id="showImg">
 	<div id="showImg-close" title="关闭">&#xe601;</div>
 	<div id="imgDiv">
-		<img src="" id="showBigImg">
+		<img src="javascript:void(0)" id="showBigImg">
 	</div>
 	<div id="smallImgDiv"><ul id="smallImgUl"></ul></div>
 	<img src="/YunPhotoAlbum/Public/SysImg/loading2.gif" id="showImgLoading">
@@ -992,6 +992,7 @@
 	$("#delAllPrev").click(function(){
 		restoryUpldVar();
 		$(".preview").remove();
+		$("#uploadPhoto").val("");
 	});
 
 	var canShow=true;	//避免重复点击
@@ -1023,7 +1024,7 @@
 	$("#showBigImg").on("load",function(){
 		showImgLoading.hide();
 		imgDiv.css({"margin":0});
-		var showImgHeight=showImg.height()-30-60;
+		var showImgHeight=showImg.height()-30-60; //30是#showImg-close的高度,60是#smallImgDiv的高度
 		var height=this.offsetHeight;
 		if(showImgHeight>=height){
 			//var marginTop=(100-(height/showImgHeight*100))/4;
@@ -1067,7 +1068,238 @@
 		src=src.replace("thumb1","thumb1org");
 		showBigImg.attr("src",src);
 	});
-</script><?php endif; ?>
+</script><?php break;?>
+		<?php case "myShare": ?><link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/myShare.css">
+<div class="allContent" style="padding-bottom:10px;font-size:0;">
+	<?php if(empty($MyShare)): ?><div class="nothing"></div><?php endif; ?>
+	<?php if(!empty($MyShare)): if(is_array($MyShare)): foreach($MyShare as $k=>$v): ?><a href="/YunPhotoAlbum/Index/showSH/sid/<?php echo ($v["sid"]); ?>/" target="_blank" class='myShare'>
+				<div class="cancleShare" id='<?php echo ($v["sid"]); ?>' title='取消共享' onselectstart="return false;">&#xe619;</div>
+				<img src="/YunPhotoAlbum/Public/SysImg/folderImg2.png">
+				<div class="myShareName"><?php echo ($v["sName"]); ?></div>
+			</a><?php endforeach; endif; endif; ?>
+</div>
+<script type="text/javascript">
+	$(".myShareName").each(function(){
+		var _this=$(this);
+		var sName=_this.text();
+		if(sName.length>5){
+			_this.parent().attr("title",sName);
+			_this.text(sName.substring(0,5)+"...");
+		}
+	});
+	$(".allContent").on("mouseenter",".myShare",function(){
+		var _this=$(this);
+		var cancleShare=_this.children(".cancleShare");
+		cancleShare.stop(true,false).animate({"top":0},200);
+		_this.on("mouseleave",function(){
+			cancleShare.stop(true,false).animate({"top":"-25px"},200);
+		});
+	});
+	var canCancleShare=true;
+	$(".allContent").on("click",".cancleShare",function(event){
+		if(!canCancleShare){return false;}
+		var sid=this.id;
+		var parent=$(this).parent();
+		parent.hide();
+		var cancleShareURL="/YunPhotoAlbum/MyShare/cancleShare/t/"+$.now();
+		$.get(cancleShareURL,{"sid":sid},function(data){
+			switch(data.info){
+				case 'success':fail("&#xe687;","取消成功");parent.remove();break;
+				case 'noLogin':login();parent.show();break;
+				case 'error':
+				default:parent.show();fail("&#xe691;","发生错误");
+			}
+			canCancleShare=true;
+		}).fail(function(){
+			parent.show();
+			canCancleShare=true;
+			fail("&#xe691;","发生错误");
+		});
+		return false;
+	});
+</script><?php break;?>
+		<?php case "myCollection": ?><link rel="stylesheet" type="text/css" href="/YunPhotoAlbum/Public/CSS/MyCollection.css">
+<div class="allContent" style="padding-bottom:10px;font-size:0;">
+	<?php if(empty($myCollection)): ?><div class="nothing"></div><?php endif; ?>
+	<?php if(!empty($myCollection)): if(is_array($myCollection)): foreach($myCollection as $k=>$v): ?><a href="/YunPhotoAlbum/Index/showSH/sid/<?php echo ($v["sid"]); ?>/" target="_blank" class='myCollection'>
+				<div class="cancleClt" id='<?php echo ($v["cltId"]); ?>' title='取消收藏' onselectstart="return false;">&#xe619;</div>
+				<img src="/YunPhotoAlbum/Public/SysImg/folderImg2.png">
+				<div class="cltName"><?php echo ($v["sName"]); ?></div>
+			</a><?php endforeach; endif; endif; ?>
+</div>
+<script type="text/javascript">
+	$(".cltName").each(function(){
+		var _this=$(this);
+		var sName=_this.text();
+		if(sName.length>5){
+			_this.parent().attr("title",sName);
+			_this.text(sName.substring(0,5)+"...");
+		}
+	});
+	$(".allContent").on("mouseenter",".myCollection",function(){
+		var _this=$(this);
+		var cancleClt=_this.children(".cancleClt");
+		cancleClt.stop(true,false).animate({"top":0},200);
+		_this.on("mouseleave",function(){
+			cancleClt.stop(true,false).animate({"top":"-25px"},200);
+		});
+	});
+	var canCancleClt=true;
+	$(".allContent").on("click",".cancleClt",function(event){
+		if(!canCancleClt){return false;}
+		var cltId=this.id;
+		var parent=$(this).parent();
+		parent.hide();
+		var cancleCltURL="/YunPhotoAlbum/MyCollection/cancleClt/t/"+$.now();
+		$.get(cancleCltURL,{"cltId":cltId},function(data){
+			switch(data.info){
+				case 'success':fail("&#xe687;","取消成功");parent.remove();break;
+				case 'noLogin':login();parent.show();break;
+				case 'error':
+				default:parent.show();fail("&#xe691;","发生错误");
+			}
+			canCancleClt=true;
+		}).fail(function(){
+			parent.show();
+			canCancleClt=true;
+			fail("&#xe691;","发生错误");
+		});
+		return false;
+	});
+</script><?php break;?>
+		<?php default: ?><link type="text/css" rel="stylesheet" href="/YunPhotoAlbum/Public/CSS/shareFolders.css">
+<div class="allContent">
+	<div class="pcTittle">图片分类</div>
+	<div class="photoClass">
+		<span class="pcContent" style="font-weight:bold;">
+			<a href='/YunPhotoAlbum/'>综合</a>
+		</span>
+	</div>
+	<script type="text/javascript">
+		var photoClassJson;
+		var classPan="";
+		$.getJSON("/YunPhotoAlbum/Public/Json/photoClassJson.json",function(data){
+			photoClassJson=data;
+			$.each(data,function(photoClass,childrenPC){
+				classPan+="<span class='pcContent'>";
+				classPan+="<a href='/YunPhotoAlbum/Index/index/page/1/condition/"+photoClass+"'>";
+				classPan+=photoClass+"</a></span>";
+			});
+			$(".photoClass").append(classPan);
+		}).fail(function(){
+			fail("&#xe691;","出错啦~");
+			setTimeout(function(){
+				$(".errorORwarn").remove();
+			},1500);
+		});
+	</script>
+	<?php if($selRst != null): if(is_array($selRst)): foreach($selRst as $selKey=>$selVal): ?><a href="/YunPhotoAlbum/Index/showSH/sid/<?php echo ($selVal['sid']); ?>/" target="_blank" class="theA">
+				<div class="shareAlbum" id="<?php echo ($selVal['sid']); ?>">
+					<div class="SAImg">
+						<img src="/YunPhotoAlbum/Public/SysImg/folderImg.png">
+					</div>
+					<div class="SPtxt">
+						<div class="SANmeAdTme">
+							<span class="sName"><?php echo ($selVal['sName']); ?></span>
+							<span class="titleCss1"><?php echo ($selVal['shareTime']); ?></span>
+						</div>
+						<div class="SAProfile">
+							<span class="titleCss2">简介：</span>
+							<span class="profile"><?php echo ($selVal['profile']); ?></span>
+						</div>
+						<div class="SAClsAndTme">
+							<span class="titleCss2">所属分类：</span>
+							<?php echo ($selVal['sclass']); ?>	
+						</div>
+					</div>
+				</div>
+			</a><?php endforeach; endif; ?>
+		<script type="text/javascript">
+			$.each($(".sName"),function(){
+				var _this=$(this);
+				ellipsis(_this,9);
+			});
+			$.each($(".profile"),function(){
+				var _this=$(this);
+				ellipsis(_this,30);
+			});
+			function ellipsis(_this,maxLen){
+				var txt=$.trim(_this.text());
+				var len=txt.length;
+				var tmpTxt="";
+				if(len>maxLen){
+					tmpTxt+=txt.substring(0,maxLen);
+					tmpTxt+="...";
+					_this.text(tmpTxt);
+					_this.attr("title",txt);
+				}
+			}
+		</script>
+	<?php else: ?>
+		<div class="nothing"></div><?php endif; ?>
+</div>
+<?php if($init['totalPage'] >= 2): ?><div class="pageNum">
+		
+			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
+		
+		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_7385__=$init['page']+1;$__FOR_END_7385__=$init['totalPage']+1;for($i=$__FOR_START_7385__;$i < $__FOR_END_7385__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php else: ?>
+				<?php $__FOR_START_5790__=$init['page']+1;$__FOR_END_5790__=$init['page']+5;for($i=$__FOR_START_5790__;$i < $__FOR_END_5790__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+		<?php elseif($init['page'] < $init['lastpg']): ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_30079__=1;$__FOR_END_30079__=$init['page'];for($i=$__FOR_START_30079__;$i < $__FOR_END_30079__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php else: ?>
+				<?php $__FOR_START_26956__=$init['page']-4;$__FOR_END_26956__=$init['page'];for($i=$__FOR_START_26956__;$i < $__FOR_END_26956__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
+		
+			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>
+		
+		<?php if($init['totalPage'] > 2): ?><span id="showTotalPage">共<?php echo ($init['totalPage']); ?>页</span><?php endif; ?>
+		<?php if($init['totalPage'] >= 6): ?><form method="post" action="" id="pageFrom">
+				<dl>
+					<dt>
+						<span>到第</span>
+						<input type="text" name="page" autocomplete="off">
+						<span>页</span>
+						<input type="submit" name="gotoBtt" value="确定">
+					</dt>
+				</dl>
+			</form><?php endif; ?>
+	</div>
+	<script type="text/javascript">
+		var totalPage=<?php echo ($init['totalPage']); ?>;
+		$("input[name=page]").on("input propertychange",function(){
+			var gtpgval=$(this).val();
+			var gtpvaltmp1=gtpgval.replace(/[^0-9]+/g,"");
+			if(gtpvaltmp1>totalPage){
+				gtpvaltmp1=totalPage;
+			}
+			$(this).val(gtpvaltmp1);
+		});
+		$("input[name=page]").on("blur",function(){
+			var gtpgval=$(this).val();
+			if(gtpgval<=0){
+				$(this).val("1");
+			}
+		});
+		var canOpt=true;
+		$("#pageFrom").on("submit",function(event){
+			if(canOpt){
+				canOpt=false;
+				setTimeout(function(){
+					canOpt=true;
+				},1500);
+				var gtpvaltmp2=$.trim($("input[name=page]").val());
+				if(gtpvaltmp2==""||gtpvaltmp2<=0){
+					return false;
+				}
+				event.preventDefault();
+				window.location.href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/"+gtpvaltmp2+"/";
+			}else{
+				return false;
+			}
+		});
+	</script><?php endif; endswitch;?>
 	<div id="endInfo">
 		增值电信业务经营许可证:&nbsp;<a href="javascript:void(0)">粤B2-20110446</a>&nbsp;网络文化经营许可证:&nbsp;<a href="javascript:void(0)">粤网文[2015]0295-065号</a>&nbsp;<a href="javascript:void(0)">12318举报</a><br>互联网药品信息服务资质证书编号:&nbsp;<a href="javascript:void(0)">粤-（经营性）-2017-0005</a>&nbsp;&nbsp;<img src="/YunPhotoAlbum/Public/SysImg/beianbgs.png" width="20" height="20" id="beianbgs">粤公网安备&nbsp;<a href="javascript:void(0)">33010002000120号</a>
 	</div>

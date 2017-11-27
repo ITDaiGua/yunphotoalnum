@@ -1,0 +1,55 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/MyCollection.css">
+<div class="allContent" style="padding-bottom:10px;font-size:0;">
+	<empty name="myCollection">
+		<div class="nothing"></div>
+	</empty>
+	<notempty name="myCollection">
+		<foreach name="myCollection" key="k" item="v">
+			<a href="/YunPhotoAlbum/Index/showSH/sid/<{$v.sid}>/" target="_blank" class='myCollection'>
+				<div class="cancleClt" id='<{$v.cltId}>' title='取消收藏' onselectstart="return false;">&#xe619;</div>
+				<img src="/YunPhotoAlbum/Public/SysImg/folderImg2.png">
+				<div class="cltName"><{$v.sName}></div>
+			</a>
+		</foreach>
+	</notempty>
+</div>
+<script type="text/javascript">
+	$(".cltName").each(function(){
+		var _this=$(this);
+		var sName=_this.text();
+		if(sName.length>5){
+			_this.parent().attr("title",sName);
+			_this.text(sName.substring(0,5)+"...");
+		}
+	});
+	$(".allContent").on("mouseenter",".myCollection",function(){
+		var _this=$(this);
+		var cancleClt=_this.children(".cancleClt");
+		cancleClt.stop(true,false).animate({"top":0},200);
+		_this.on("mouseleave",function(){
+			cancleClt.stop(true,false).animate({"top":"-25px"},200);
+		});
+	});
+	var canCancleClt=true;
+	$(".allContent").on("click",".cancleClt",function(event){
+		if(!canCancleClt){return false;}
+		var cltId=this.id;
+		var parent=$(this).parent();
+		parent.hide();
+		var cancleCltURL="/YunPhotoAlbum/MyCollection/cancleClt/t/"+$.now();
+		$.get(cancleCltURL,{"cltId":cltId},function(data){
+			switch(data.info){
+				case 'success':fail("&#xe687;","取消成功");parent.remove();break;
+				case 'noLogin':login();parent.show();break;
+				case 'error':
+				default:parent.show();fail("&#xe691;","发生错误");
+			}
+			canCancleClt=true;
+		}).fail(function(){
+			parent.show();
+			canCancleClt=true;
+			fail("&#xe691;","发生错误");
+		});
+		return false;
+	});
+</script>

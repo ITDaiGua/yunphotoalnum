@@ -1,0 +1,55 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/myShare.css">
+<div class="allContent" style="padding-bottom:10px;font-size:0;">
+	<empty name="MyShare">
+		<div class="nothing"></div>
+	</empty>
+	<notempty name="MyShare">
+		<foreach name="MyShare" key="k" item="v">
+			<a href="/YunPhotoAlbum/Index/showSH/sid/<{$v.sid}>/" target="_blank" class='myShare'>
+				<div class="cancleShare" id='<{$v.sid}>' title='取消共享' onselectstart="return false;">&#xe619;</div>
+				<img src="/YunPhotoAlbum/Public/SysImg/folderImg2.png">
+				<div class="myShareName"><{$v.sName}></div>
+			</a>
+		</foreach>
+	</notempty>
+</div>
+<script type="text/javascript">
+	$(".myShareName").each(function(){
+		var _this=$(this);
+		var sName=_this.text();
+		if(sName.length>5){
+			_this.parent().attr("title",sName);
+			_this.text(sName.substring(0,5)+"...");
+		}
+	});
+	$(".allContent").on("mouseenter",".myShare",function(){
+		var _this=$(this);
+		var cancleShare=_this.children(".cancleShare");
+		cancleShare.stop(true,false).animate({"top":0},200);
+		_this.on("mouseleave",function(){
+			cancleShare.stop(true,false).animate({"top":"-25px"},200);
+		});
+	});
+	var canCancleShare=true;
+	$(".allContent").on("click",".cancleShare",function(event){
+		if(!canCancleShare){return false;}
+		var sid=this.id;
+		var parent=$(this).parent();
+		parent.hide();
+		var cancleShareURL="/YunPhotoAlbum/MyShare/cancleShare/t/"+$.now();
+		$.get(cancleShareURL,{"sid":sid},function(data){
+			switch(data.info){
+				case 'success':fail("&#xe687;","取消成功");parent.remove();break;
+				case 'noLogin':login();parent.show();break;
+				case 'error':
+				default:parent.show();fail("&#xe691;","发生错误");
+			}
+			canCancleShare=true;
+		}).fail(function(){
+			parent.show();
+			canCancleShare=true;
+			fail("&#xe691;","发生错误");
+		});
+		return false;
+	});
+</script>
