@@ -1466,7 +1466,7 @@ function send_mail($to,$title,$content){
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
     $mail->CharSet = 'UTF-8';
-    $mail->FromName = 'YunPhotoAibum';
+    $mail->FromName = 'YunPhotoAlbum';
     $mail->Username ='1571190644@qq.com';
     $mail->Password = 'nniheojkxvxfjfea';
     $mail->From = '1571190644@qq.com';
