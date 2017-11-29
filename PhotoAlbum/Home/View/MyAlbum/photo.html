@@ -334,6 +334,8 @@
 	var maxSize=3145728; //图片最大的大小3M；
 	var uploadDiv=$(".uploadDiv");  //上传框的jq对象
 	$("#uploadPhoto").change(function(){		//上传图片
+		arrImgObj=[];
+		arrImgName=[];
 		var txt=$.trim($(this).val());
 		if(txt==""){return false;}
 		var imgLen=$(".preview").length;
@@ -433,13 +435,13 @@
 		}
 	});
 
-	var formData=new FormData();
 	var hasUploadSum=0; //统计已经上传的数量(无论是否成功)
 	function uploadImg(imgObj,index){
 		hasUploadSum++;
+		var formData=new FormData();
 		formData.append("photo",imgObj);
 		var xmlHttp=new XMLHttpRequest;
-		var uploadURL="/YunPhotoAlbum/MyAlbum/uploadPhoto/PAId/"+PAId+"/t/"+$.now();
+		var uploadURL="/YunPhotoAlbum/MyAlbum/uploadPhoto/PAId/"+PAId+"/t/"+$.now()+"/index/"+index;
 		xmlHttp.open("POST",uploadURL,true);
 		xmlHttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
 		xmlHttp.onerror=function(){
@@ -479,9 +481,10 @@
 	function uploadSuccess(imgName,saveName,plink){
 		var imgIndex=$.inArray(imgName,arrImgName);
 		if(imgIndex<0){
-			fail("&#xe691;","发生错误");
+			fail("&#xe691;","发生错误s");
 			return false;
 		}
+		
 		var successURL="/YunPhotoAlbum/Public/SysImg/success.png";
 		if(upldLadgObj==""){
 			upldLadgObj=$(".upldLadg");
@@ -511,6 +514,7 @@
 		arrImgObjLen=0;
 		hasUploadSum=0;
 		upldLadgObj="";		//清空前面提到的：避免重复遍历获取$(".upldLadg");
+
 	}
 	$("#delAllPrev").click(function(){
 		restoryUpldVar();
