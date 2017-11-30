@@ -13,6 +13,10 @@ class IndexController extends CommonOneController{
 	       	"searchURL"=>"/YunPhotoAlbum/",
 	       	"placeholder"=>"搜索共享文件夹"
         );
+        $triggerLogin=trim(I("get.login",""));
+        if(!empty($triggerLogin)&&$triggerLogin=="triggerLogin"){
+          $init["triggerLogin"]="triggerLogin";
+        }
         $getSharePA=D("IndexSelect");
         $condition=I('param.condition',"综合");
         $init['condition']=$condition;

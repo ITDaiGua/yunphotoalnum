@@ -23,6 +23,13 @@
 				login();
 			});
 		</script>
+		<if condition="$init['triggerLogin'] eq 'triggerLogin'">
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$("#wannaLg").trigger("click");
+				});
+			</script>
+		</if>
 	</if>
 </div>
 <script type="text/javascript" src="__PUBLIC__/JS/commonJs.js"></script>

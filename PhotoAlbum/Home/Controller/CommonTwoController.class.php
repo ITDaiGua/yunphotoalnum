@@ -32,7 +32,7 @@ use Think\Controller;
 				if(IS_AJAX){
 					$this->ajaxReturn(array("info"=>"noLogin"));
 				}else{
-					header("Location:/YunPhotoAlbum/");
+					header("Location:/YunPhotoAlbum/Index/index/login/triggerLogin");
 				}
 			}
 		}
