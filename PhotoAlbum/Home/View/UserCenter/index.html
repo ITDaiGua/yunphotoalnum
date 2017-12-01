@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">    
+		<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache">    
+		<meta HTTP-EQUIV="Expires" CONTENT="0"> 
+		<title><{$init.title}></title>
+		<link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/SysImg/cloud.ico">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/commonCss.css">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/userCenter.css">
+		<script type="text/javascript" src="__PUBLIC__/JS/jquery-3.1.1.min.js"></script>
+		<!--[if lte IE 8]>
+			<script type="text/javascript" src="__PUBLIC__/JS/jquery.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<!--[if lte IE 9]>
+			<div style="position:fixed;z-index:9999;width:100%;height=40px;background-color:#FFC125;letter-spacing:10px;text-align:center;color:#ff0000;font-size:18px;line-height:40px;left:0;top:0;">
+			您的浏览器版本过低，不能正常使用该系统
+			</div>
+		<![endif]-->
+		<include file="CommonView/HeadMenu"/>
+		<div class="allContent" id="<{$init['uid']}>">
+			<ul id="menuUl">
+				<a href="/YunPhotoAlbum/UserCenter/index">
+					<li class="menuLi" onselectstart="return false;" <{$init.style1}>>我的信息</li>
+				</a>
+				<li class="menuLi" onselectstart="return false;" <{$init.style2}>>消息查看</li>
+				<li class="menuLi" onselectstart="return false;" <{$init.style3}>>密码更改</li>
+			</ul>
+			<div class="content">
+				<include file="UserCenter/myInfo" />
+			</div>
+		</div>
+		<script type="text/javascript" src="__PUBLIC__/JS/commonJs.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="__PUBLIC__/JS/userCenter.js" charset="UTF-8"></script>
+	</body>
+</html>

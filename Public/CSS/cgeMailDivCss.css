@@ -1,0 +1,109 @@
+@charset 'utf-8';
+#cgeMailDiv{
+	position:fixed;
+	z-index:103;
+	width:400px;
+	height:auto;
+	left:50%;
+	top:20%;
+	margin-left:-200px;
+	border:1px solid #ccc;
+	border-radius:5px;
+	box-shadow:0 0 5px #ccc;
+	background-color:#fff;
+	text-align:center;
+	overflow:hidden;
+}
+#cgeMailDiv-hd{
+	width:100%;
+	height:30px;
+	padding-left:10px;
+	font:25px "黑体","微软雅黑";
+	line-height:30px;
+	text-align:left;
+	color:#fff;
+	letter-spacing:2px;
+	background-color:#00a2ff;
+	margin-bottom:15px;
+}
+#cgeMailDiv-close{
+	display:inline-block;
+	width:30px;
+	height:30px;
+	font:25px iconfont;
+	text-align:center;
+	line-height:30px;
+	color:#ccc;
+	float:right;
+	margin-right:10px;
+	cursor:pointer;
+}
+#cgeMailDiv-close:hover{
+	color:#ff0000;
+}
+#toOldMail-txt{
+	font:18px "微软雅黑","黑体";
+}
+#sendmailDiv,#sendmailDiv2{
+	display:inline-block;
+	width:240px;
+	height:40px;
+	border:1px solid #ccc;
+	font-size:0;
+	white-space:nowrap;
+	margin:10px 0;
+}
+#authcoreValue,#authcoreValue2{
+	display:inline-block;
+	width:100px;
+	height:40px;
+	padding:0 3px;
+	border:0;
+	outline:none;
+	font-size:16px;
+	vertical-align:middle;
+}
+.getAuthcore,.getAuthcore2{
+	display:inline-block;
+	width:140px;
+	height:40px;
+	font:16px "微软雅黑","黑体";
+	text-align:center;
+	line-height:40px;
+	color:#fff;
+	background-color:#00a2ff;
+	vertical-align:middle;
+	cursor:pointer;
+}
+.getAuthcore:hover,.getAuthcore2:hover{
+	background-color:#0793e3;
+}
+#setNewMailDiv{
+	display:none;
+}
+#newEmail{
+	display:inline-block;
+	width:234px;
+	height:40px;
+	font:16px "微软雅黑","黑体";
+	padding:0 5px;
+	border:1px solid #ccc;
+	outline:none;
+}
+#sendmailBtt,#cgeMailBtt{
+	display:inline-block;
+	width:100px;
+	height:30px;
+	font:16px "黑体","微软雅黑";
+	line-height:30px;
+	color:#fff;
+	border:0;
+	outline:none;
+	background-color:#00a2ff;
+	border-radius:5px;
+	cursor:pointer;
+	margin-bottom:10px;
+}
+#sendmailBtt:hover,#cgeMailBtt:hover{
+	background-color:#0793e3;
+}

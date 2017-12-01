@@ -1,5 +1,5 @@
-$(document).ready(function(){
-	var canGetAc=true;
+var canGetAc=true;
+function(parent,bindSelector,emailVal){
 	$('body').on("click",".getAuthcore",function(){
 		var email=$.trim($(".email").val());
 		if(!canGetAc){
@@ -54,4 +54,4 @@ $(document).ready(function(){
 			_this.text("重新获取");
 		});
 	});
-});
+}

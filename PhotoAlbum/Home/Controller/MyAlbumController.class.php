@@ -163,7 +163,6 @@ use Home\Controller\CommonTwoController;
 			}else{
 				$this->ajaxReturn($rst);
 			}
-			//print_r($rst);
 		}
 
 		public function movePhoto(){

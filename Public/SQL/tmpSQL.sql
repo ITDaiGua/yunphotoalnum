@@ -228,6 +228,18 @@ insert into sharephoto values("s123456","p79456","大海","/YunPhotoAlbum/Public
 	("s123456","p85457","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0),
 	("s123456","p25496","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0)
 #==========================================
+create table if not exists `info`(  /*用户通知表*/
+	`uid` varchar(16) not null,
+	`title` varchar(30) not null,
+	`content` varchar(300) not null ,
+	`publishTime` int(10) unsigned not null,
+	`status` tinyint not null default 0,
+	key `uid`(`uid`)
+)DEFAULT CHARSET=UTF8;
+#==========================================
+insert into `info`(`uid`,`title`,`content`,`publishTime`,`status`) values(
+'u789123456','用户通知','这只是一个测试',1512052617,0);
+#==========================================
 管理员身份：admid、admRank、admSectionId、admAuth=e51b9d5c21e543b8f93b9aa95b4c7cc7
 admRank=ad_1：普通员工、ad_2：部门主管、ad_3：高级管理
 admSectionId=a001:高级管理、a002:客服部、a003:法务部、a004:运营部

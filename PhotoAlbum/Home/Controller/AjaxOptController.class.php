@@ -25,54 +25,6 @@ use Home\Controller\CommonTwoController;
 				$this->ajaxReturn(array("info"=>"error"));
 			}
 		}
-
-		/*public function getComment(){
-			if(!IS_AJAX){
-				PHPerr();
-			}
-			$sid=trim(I('get.sid'));
-			$page=trim(I('get.page'));
-			if(empty($sid)||empty($page)){
-				PHPerr();
-			}
-			$page=numCheck2($page,1);
-			$commentTB=M();
-			$selRst=$commentTB->field("cid,sid,uname,content,time,status")->table("comments")->where("sid='%s' AND status=0",$sid)->order("time desc")->page("$page,30")->select();
-			$selRst=$this->timeFmtCge($selRst);
-			$this->ajaxReturn($selRst);
-		}*/
-
-		/*private function timeFmtCge($selRst){
-	        $timeNow=time();
-	        $yesterday=date("Ymd",strtotime('-1 day'));
-	        $justNow=60; //如果$shareTime-$timeNow<=60,则改为“刚刚”
-	        $dividend=60; */
-	        /*
-	        *如果($shareTime-$timeNow)/$dividend>1,则改为“xx分钟前”,大于等于60小于120一个小时前,以此类推，大于等于1440即第二天直接记录时间;
-	        */
-	       /* foreach ($selRst as $key => $value) {
-	          $selRst[$key]['content']=htmlspecialchars_decode($value['content']);
-	          $time=$value['time'];
-	          if(date("Ymd",$time)==$yesterday){
-	            $selRst[$key]['time']="昨天";
-	            continue;
-	          }
-	          $tempTime1=$timeNow-$time;
-	          if($tempTime1<=$justNow){
-	            $selRst[$key]['time']="刚刚";
-	            continue;
-	          }
-	          $tempTime2=($timeNow-$time)/$dividend;
-	          if($tempTime2<60){
-	            $selRst[$key]['time']=floor($tempTime2)."分钟前";
-	          }elseif($tempTime2<1440){
-	            $selRst[$key]['time']=floor($tempTime2/60)."小时前";
-	          }else{
-	            $selRst[$key]['time']=date("Y年m月d日",$time);
-	          }
-	        }
-	        return $selRst;
-	    }*/
 		
 		public function cmtTipoff(){
 			if(!IS_AJAX){

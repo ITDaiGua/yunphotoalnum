@@ -1,0 +1,31 @@
+@charset 'utf-8';
+#menuUl{
+	display:block;
+	width:100%;
+	height:40px;
+	font-size:0;
+	white-space:nowrap;
+	text-align:left;
+	background-color:#00a2ff;
+}
+.menuLi{
+	display:inline-block;
+	width:120px;
+	height:40px;
+	font:20px "微软雅黑","黑体";
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+	cursor:pointer;
+}
+.menuLi:hover{
+	background-color:#f68017;
+}
+.content{
+	position:relative;
+	width:100%;
+	height:auto;
+	min-height:660px;
+	border:1px solid #ccc;
+	box-shadow:0 0 5px #ccc;
+}

@@ -20,16 +20,32 @@
 	<div class="taslctLayer"></div>
 <div id="headMenu">
 	<a href="/YunPhotoAlbum/" style="float:left;margin-left:200px;">首页</a>
-	<?php if($isLogin === 'isLogin'): ?><a href="" title="查看消息">
+	<?php if($isLogin === 'isLogin'): ?><a href="" title="查看消息" id="info">
 			<img src="/YunPhotoAlbum/Public/SysImg/infowarn.png" id="infowarn">
 		</a>
 		<a href="/YunPhotoAlbum/User/logout">退出</a>
 		<span style="vertical-align:middle;">|</span>
 		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
-		<a href="" class="PsnlCtr" title="个人中心">
+		<a href="/YunPhotoAlbum/UserCenter/index" target="_blank" class="PsnlCtr" title="个人中心">
 			<span style="vertical-align:middle;"><?php echo ($userName); ?></span>
 			<img src="<?php echo ($uImg); ?>" class="uImg">
 		</a>
+		<script type="text/javascript">
+		(function(){
+				var infowarn=document.getElementById("infowarn");
+				getInfo(infowarn);
+		})();
+		function getInfo(infowarn){
+			var isExistsInfoURL="/YunPhotoAlbum/Info/index/t/"+$.now();
+			$.get(isExistsInfoURL,function(data){
+				switch(data.info){
+					case 'exists':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.gif";break;
+					case 'noLogin':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.png";break;
+					default:getInfo(infowarn);
+				}
+			});
+		}
+		</script>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
 		<a href="javascript:void(0);" id="wannaLg">登陆</a>
@@ -40,9 +56,15 @@
 			$("#wannaLg").click(function(){
 				login();
 			});
-		</script><?php endif; ?>
+		</script>
+		<?php if($init['triggerLogin'] == 'triggerLogin'): ?><script type="text/javascript">
+				$(document).ready(function(){
+					$("#wannaLg").trigger("click");
+				});
+			</script><?php endif; endif; ?>
 </div>
 <script type="text/javascript" src="/YunPhotoAlbum/Public/JS/commonJs.js"></script>
+
 	<div class="goTop" onselectstart="return false;" title="回到顶部">&#xe64a;</div>
 	<script type="text/javascript">
 		$(".goTop").click(function(){
