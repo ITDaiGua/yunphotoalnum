@@ -5,7 +5,7 @@
 	width:400px;
 	height:auto;
 	left:50%;
-	top:20%;
+	top:10%;
 	margin-left:-200px;
 	border:1px solid #ccc;
 	border-radius:5px;
@@ -13,6 +13,7 @@
 	background-color:#fff;
 	text-align:center;
 	overflow:hidden;
+	padding-bottom:10px;
 }
 #cgeMailDiv-hd{
 	width:100%;
@@ -24,7 +25,6 @@
 	color:#fff;
 	letter-spacing:2px;
 	background-color:#00a2ff;
-	margin-bottom:15px;
 }
 #cgeMailDiv-close{
 	display:inline-block;
@@ -41,19 +41,37 @@
 #cgeMailDiv-close:hover{
 	color:#ff0000;
 }
-#toOldMail-txt{
-	font:18px "微软雅黑","黑体";
-}
-#sendmailDiv,#sendmailDiv2{
+.inputSpan{
 	display:inline-block;
 	width:240px;
 	height:40px;
 	border:1px solid #ccc;
 	font-size:0;
 	white-space:nowrap;
-	margin:10px 0;
+	overflow:hidden;
+	margin-top:10px;
 }
-#authcoreValue,#authcoreValue2{
+.inputImg{
+	display:inline-block;
+	width:40px;
+	height:40px;
+	font:25px iconfont;
+	line-height:40px;
+	text-align:center;
+	vertical-align:middle;
+	background-color:#00a2ff;
+}
+.inputCss{
+	width:195px;
+	height:40px;
+	font:18px "微软雅黑","黑体";
+	line-height:40px;
+	vertical-align:middle;
+	border:0;
+	outline:none;
+	padding-left:5px;
+}
+#authcoreValue{
 	display:inline-block;
 	width:100px;
 	height:40px;
@@ -63,7 +81,7 @@
 	font-size:16px;
 	vertical-align:middle;
 }
-.getAuthcore,.getAuthcore2{
+.getAuthcore{
 	display:inline-block;
 	width:140px;
 	height:40px;
@@ -75,22 +93,22 @@
 	vertical-align:middle;
 	cursor:pointer;
 }
-.getAuthcore:hover,.getAuthcore2:hover{
+.getAuthcore:hover{
 	background-color:#0793e3;
+}
+.cgeMailErr{
+	display:none;
+	color:#ff0000;
+	width:240px;
+	height:auto;
+	font:15px iconfont;
+	line-height:15px;
+	text-align:left;
 }
 #setNewMailDiv{
 	display:none;
 }
-#newEmail{
-	display:inline-block;
-	width:234px;
-	height:40px;
-	font:16px "微软雅黑","黑体";
-	padding:0 5px;
-	border:1px solid #ccc;
-	outline:none;
-}
-#sendmailBtt,#cgeMailBtt{
+#cgeMailBtt{
 	display:inline-block;
 	width:100px;
 	height:30px;
@@ -102,8 +120,8 @@
 	background-color:#00a2ff;
 	border-radius:5px;
 	cursor:pointer;
-	margin-bottom:10px;
+	margin-top:10px;
 }
-#sendmailBtt:hover,#cgeMailBtt:hover{
+#cgeMailBtt:hover{
 	background-color:#0793e3;
 }

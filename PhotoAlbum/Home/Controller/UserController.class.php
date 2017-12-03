@@ -125,7 +125,7 @@ use Home\Controller\CommonOneController;
 				PHPerr();
 			}
 			$UTB=D('User');
-			$onlySend=I('get.onlySend',"","trim");
+			$onlySend=trim(I('get.onlySend',""));
 			if(empty($onlySend)||$onlySend!="os"){
 				$data=$UTB->validate($this->rules)->field('umail')->create();
 			}else{
@@ -256,9 +256,34 @@ use Home\Controller\CommonOneController;
 			}else{
 				$this->ajaxReturn(array("info"=>"err1"));
 			}
-			
-			
 		}
-
+		public function cgeMail(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D("User");
+			$data=$UTB->field("upw,umail")->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+			$newMailAuthcore=md5($data['umail'].trim(I("post.newMailAuthcore","")));
+			$authcore=session("authcore");
+			$authcoreTime=session("authcoreTime");
+			$timeNow=time()-900;
+			if($newMailAuthcore!=$authcore||$authcoreTime<$timeNow){
+				$this->ajaxReturn(array("info"=>"authcoreErr"));
+			}
+			session("authcore",null);
+			session("authcoreTime",null);
+			$uid=session("uid");
+			$cgeRst=$UTB->where("uid='%s' AND upw='%s'",$uid,$data['upw'])->save(array("umail"=>$data['umail']));
+			if($cgeRst===FALSE){
+				$this->ajaxReturn(array("info"=>"error1"));
+			}elseif($cgeRst==1){
+				$this->ajaxReturn(array("info"=>"success"));
+			}else{
+				$this->ajaxReturn(array("info"=>"error2"));
+			}
+		}
 	}
 ?>

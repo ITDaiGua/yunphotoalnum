@@ -57,39 +57,159 @@
 </div>
 <textarea id="cgeMailHideHtml" style="display:none;">
 		<div id="cgeMailDiv">
-			<div id="cgeMailDiv-hd">
-			更改注册邮件
-			<span id="cgeMailDiv-close" onselectstart="return false;">&#xe601;</span>
+			<div id="cgeMailDiv-hd">更改注册邮箱
+				<span id="cgeMailDiv-close" onselectstart="return false;">&#xe601;</span>
 			</div>
-			<div id="toOldMail">
-				<div id="toOldMail-txt"></div>
-				<div id="sendmailDiv">
-					<input type="text" id="authcoreValue" maxlength="8">
-					<div class="getAuthcore" onselectstart="return false;">点击获取验证码</div>
-				</div><br/>
-				<span class="cgeMailErr" id="authcoreValueErr"></span>
-				<button id="sendmailBtt">下一步</button>
-			</div>
-			<div id="setNewMailDiv">
-				<input type="text" class="email" id="newEmail" maxlength="40" placeholder="邮件地址"><br/>
-				<span class="cgeMailErr" id="newEmailErr"></span>
-				<div id="sendmailDiv2">
-					<input type="text" id="authcoreValue2" maxlength="8">
-					<div class="getAuthcore2" onselectstart="return false;">点击获取验证码</div>
-				</div><br/>
-				<span class="cgeMailErr" id="authcoreValue2Err"></span>
-				<button id="cgeMailBtt">立即修改</button>
-			</div>
+			<span class='inputSpan'>
+				<span class="inputImg">&#xe6cb;</span>
+				<input type="password" maxlength="16" placeholder="请输入登陆密码" id="inputpw" class="inputCss pw">
+			</span>
+			<span class="cgeMailErr" id="inputpwErr"></span>
+			<span class='inputSpan'>
+				<span class="inputImg">&#xe6e6;</span>
+				<input type="text" class="email inputCss" id="umail" maxlength="40" placeholder="新邮件地址">
+			</span>
+			<span class="cgeMailErr" id="umailErr"></span>
+			<span class="inputSpan">
+				<input type="text" id="authcoreValue" class="authcore" maxlength="8" placeholder="验证码">
+				<div class="getAuthcore" onselectstart="return false;">点击获取验证码</div>
+			</span>
+			<span class="cgeMailErr" id="authcoreValueErr"></span><br/>
+			<button id="cgeMailBtt">立即修改</button><br/>
+			<span class="cgeMailErr" id="cgeMailAllErr" style="margin-bottom:10px;"></span>
 		</div>
 		<script type="text/javascript">
-			var oldEmail=$("#myMail").text();
-			oldEmail=oldEmail.substring(0,6)+"***";
-			$("#toOldMail-txt").text("向"+oldEmail+"发送邮件...");
 			$(".allContent").on("click","#cgeMailDiv-close",function(){
 				$("#cgeMailDiv").hide();
 				$(".taslctLayer2").hide();
 			});
+			var canCge=true;
+			$(".allContent").on("click","#cgeMailBtt",function(){
+				if(!canCge){return false;}
+				var isRight=true;
+				if(isTrue("#inputpw","pw")){
+					isRight=isRight&true;
+				}else{
+					isRight=isRight&false;
+				}
+				if(isTrue("#umail","email")){
+					isRight=isRight&true;
+				}else{
+					isRight=isRight&false;
+				}
+				if(isNotBlank("#authcoreValue")){
+					isRight=isRight&true;
+				}else{
+					isRight=isRight&false;
+				}
+				if(!isRight){
+					return false;
+				}
+				canCge=false;
+				var cgeMailData={
+					"upw":$.trim($("#inputpw").val()),
+					"umail":$.trim($("#umail").val()),
+					"newMailAuthcore":$.trim($("#authcoreValue").val())
+				}
+				var cgeMailURL="/YunPhotoAlbum/User/cgeMail/t/"+$.now();
+				$.post(cgeMailURL,cgeMailData,function(data){
+					if(data.info){
+						switch(data.info){
+							case 'success':fail("&#xe687;","修改成功");setTimeReload();break;
+							case 'authcoreErr':$("#authcoreValueErr").css("display","inline-block").html("&#xe601;验证码错误");break;
+							case 'noLogin':fail("&#xe691;","请先登陆");setTimeReload();break;
+							case 'error2':$("#inputpwErr").css("display","inline-block").html("&#xe601;密码错误");break;
+							case 'error1':
+							default:$("#cgeMailAllErr").css("display","inline-block").html("&#xe601;发生错误");
+						}
+					}else{
+						if(data.upw){
+							$("#inputpwErr").css("display","inline-block").html("&#xe601;"+data.upw);
+						}
+						if(data.umail){
+							$("#umail").css("display","inline-block").html("&#xe601;"+data.umail);
+						}
+					}
+					canCge=true;
+				}).fail(function(){
+					canCge=true;
+					fail("&#xe691;","发生错误");
+				});
+			});
 		</script>
+</textarea>
+<textarea id="changeImgScript" style="display:none;">
+	<script type="text/javascript">
+		var allowType=["image/png","image/jpeg","image/jpg"];
+		$("#changeImgInput").change(function(){
+			var val=$.trim(this.value);
+			if(!val){return false;}
+			var file=this.files[0];
+			var imgSize=file.size;
+			if(imgSize>2097152){
+				$("#changeImgWarn-close").trigger("click");
+				fail("&#xe691;","图片不能大于2M");
+				return false;
+			}
+			if($.inArray(file.type,allowType)<0){
+				$("#changeImgWarn-close").trigger("click");
+				fail("&#xe691;","图片格式不合法");
+				return false;
+			}
+			var imgURL=window.URL.createObjectURL(file);
+			document.getElementById("userBigImg").src=imgURL;
+			document.getElementsByClassName("uImg")[0].src=imgURL;
+			uploadUserImg(file);
+		});
+
+		function uploadUserImg(fileObj){
+			var changeImgURL="/YunPhotoAlbum/UserCenter/uploadUserImg/t/"+$.now();
+			var formdata=new FormData();
+			formdata.append("userImg",fileObj);
+			var xmlHttp=new XMLHttpRequest;
+			xmlHttp.open("POST",changeImgURL,true);
+			xmlHttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
+			xmlHttp.onerror=function(){
+				xmlHttp.abort();
+				fail("&#xe691;","上传失败");
+			};
+			var uploadedper="";
+			xmlHttp.onloadstart=function(){
+				$("#userImgOptDiv").prepend("<span id='uploadedper'>0%</span>");
+				uploadedper=$("#uploadedper");
+			}
+			xmlHttp.onprogress=function(event){ 
+				if(event.lengthComputable){
+					var uploaded=event.loaded;
+					var total=event.total;
+					var percent=Math.floor(uploaded/total)*100;
+					uploadedper.text(percent+"%");
+				}
+			};
+			xmlHttp.onreadystatechange = function() {
+	        if (xmlHttp.readyState === 4) {
+	            if (xmlHttp.status === 200) {
+	              var responseText=xmlHttp.responseText;
+	             	responseText=$.parseJSON(responseText);
+	              switch(responseText.info){
+	             	  case "success":fail("&#xe687;","上传成功");break;
+	             	  case "noLogin":login();break;
+	             	  case "error":
+	             	  default:fail("&#xe691;","上传失败");
+	              }
+	              var timer=setTimeout(function(){
+	              	uploadedper.remove();
+	              	clearTimeout(timer);
+	              },1000);
+	            }else {
+	            	uploadedper.remove();
+	              fail("&#xe691;","上传失败");
+	            }
+	        }
+	    }
+	    xmlHttp.send(formdata);
+		}
+	</script>
 </textarea>
 <script type="text/javascript">
 	$("#changeImg").click(function(){
@@ -102,77 +222,11 @@
 	});
 	$("#changeImgWarn-btt").click(function(){
 		$("#changeImgWarn-close").trigger("click");
+		var changeImgScript=$("#changeImgScript").val();
+		$("body").append(changeImgScript);
 		$("#changeImgInput").trigger("click");
 	});
-	var allowType=["image/png","image/jpeg","image/jpg"];
-	$("#changeImgInput").change(function(){
-		var val=$.trim(this.value);
-		if(!val){return false;}
-		var file=this.files[0];
-		var imgSize=file.size;
-		if(imgSize>2097152){
-			$("#changeImgWarn-close").trigger("click");
-			fail("&#xe691;","图片不能大于2M");
-			return false;
-		}
-		if($.inArray(file.type,allowType)<0){
-			$("#changeImgWarn-close").trigger("click");
-			fail("&#xe691;","图片格式不合法");
-			return false;
-		}
-		var imgURL=window.URL.createObjectURL(file);
-		document.getElementById("userBigImg").src=imgURL;
-		document.getElementsByClassName("uImg")[0].src=imgURL;
-		uploadUserImg(file);
-	});
-
-	function uploadUserImg(fileObj){
-		var changeImgURL="/YunPhotoAlbum/UserCenter/uploadUserImg/t/"+$.now();
-		var formdata=new FormData();
-		formdata.append("userImg",fileObj);
-		var xmlHttp=new XMLHttpRequest;
-		xmlHttp.open("POST",changeImgURL,true);
-		xmlHttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
-		xmlHttp.onerror=function(){
-			xmlHttp.abort();
-			fail("&#xe691;","上传失败");
-		};
-		var uploadedper="";
-		xmlHttp.onloadstart=function(){
-			$("#userImgOptDiv").prepend("<span id='uploadedper'>0%</span>");
-			uploadedper=$("#uploadedper");
-		}
-		xmlHttp.onprogress=function(event){ 
-			if(event.lengthComputable){
-				var uploaded=event.loaded;
-				var total=event.total;
-				var percent=Math.floor(uploaded/total)*100;
-				uploadedper.text(percent+"%");
-			}
-		};
-		xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4) {
-            if (xmlHttp.status === 200) {
-              var responseText=xmlHttp.responseText;
-             	responseText=$.parseJSON(responseText);
-              switch(responseText.info){
-             	  case "success":fail("&#xe687;","上传成功");break;
-             	  case "noLogin":login();break;
-             	  case "error":
-             	  default:fail("&#xe691;","上传失败");
-              }
-              var timer=setTimeout(function(){
-              	uploadedper.remove();
-              	clearTimeout(timer);
-              },1000);
-            }else {
-            	uploadedper.remove();
-              fail("&#xe691;","上传失败");
-            }
-        }
-    }
-    xmlHttp.send(formdata);
-	}
+	
 	$("#changeInfo").click(function(){
 		$(this).hide();
 		$("#saveChange").show();
@@ -248,23 +302,17 @@
 				case 'noLogin':location.reload();break;
 				case 'success':
 					fail("&#xe687;","修改成功");
-					setTimeout(function(){
-						location.reload();
-					},1500);
+					setTimeReload();
 					break;
 				case 'error':
 				default:
 					fail("&#xe691;","修改失败");
-					setTimeout(function(){
-						location.reload();
-					},1500);
+					setTimeReload();
 			}
 			canSave=true;
 		}).fail(function(){
 			fail("&#xe691;","修改失败");
-			setTimeout(function(){
-				location.reload();
-			},1500);
+			setTimeReload();
 		});
 	});
 	$("#myProfile").on("input propertychange","#cge-myProfile",function(){
@@ -298,6 +346,12 @@
 		}));
 		var cgeMailHideHtml=$("#cgeMailHideHtml").val();
 		taslctLayer2.after(cgeMailHideHtml);
+		$.getScript("/YunPhotoAlbum/Public/JS/sendmail.js");
 		taslctLayer2.show();
 	});
+	function setTimeReload(){
+		setTimeout(function(){
+			location.reload();
+		},1500);
+	}
 </script>
