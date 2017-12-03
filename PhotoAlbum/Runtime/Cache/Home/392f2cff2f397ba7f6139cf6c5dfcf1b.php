@@ -128,6 +128,8 @@
 	</dd>
 </dl>
 <div id="setQstDiv">
+	<input type="password" id="passWord" class="pw" placeholder="输入原密码" maxlength="16">
+	<span class="qstErr" id="passWordErr"></span><br/>
 	<textarea id="setQst" maxlength="30" placeholder="设置密保"></textarea>
 	<span class="qstErr" id="setQstErr"></span><br/>
 	<textarea id="setAnswer" maxlength="30" placeholder="密保答案"></textarea>
@@ -376,7 +378,7 @@
 			"autonym":myName,
 			"usex":mySex,
 			"birthday":myBirthday
-		}
+		};
 		$.get(infoChangeUrl,cgeData,function(data){
 			switch(data.info){
 				case 'noLogin':location.reload();break;
@@ -429,11 +431,76 @@
 		$.getScript("/YunPhotoAlbum/Public/JS/sendmail.js");
 		taslctLayer2.show();
 	});
+
 	function setTimeReload(){
 		setTimeout(function(){
 			location.reload();
 		},1500);
 	}
+
+	$("#setQst,#setAnswer").on("input propertychange",function(){
+		var val=this.value;
+		val=val.replace(/\s/g," ");
+		this.value=val;
+	});
+	var canSetQst=true;
+	$("#setQstBtt").click(function(){
+		if(!canSetQst){return false;}
+		var isRight=true;
+		if(isTrue("#passWord","pw")){
+			isRight=isRight&true;
+		}else{
+			isRight=isRight&false;
+		}
+		if(isNotBlank("#setQst")){
+			isRight=isRight&true;
+		}else{
+			isRight=isRight&false;
+		}
+		if(isNotBlank("#setAnswer")){
+			isRight=isRight&true;
+		}else{
+			isRight=isRight&false;
+		}
+		if(!isRight){return false;}
+		canSetQst=false;
+		var setQstData={
+			"upw":$.trim($("#passWord").val()),
+			"securityQst":$.trim($("#setQst").val()),
+			"securityAsw":$.trim($("#setAnswer").val())
+		};
+		var setQstURL="/YunPhotoAlbum/User/setQst/t/"+$.now();
+		$.post(setQstURL,setQstData,function(data){
+			if(data.info){
+				switch(data.info){
+					case 'success':fail("&#xe687;","设置成功");setTimeReload();break;
+					case 'noLogin':location.reload();break;
+					case 'error2':$("#passWordErr").css("display","inline-block").html("&#xe601;密码错误");break;
+					case 'error1':
+					default:$("#setQstAllErr").css("display","inline-block").html("&#xe601;发生错误");break;
+				}
+			}else{
+				if(data.upw){
+					$("#passWordErr").css("display","inline-block").html("&#xe601;"+data.upw);
+				}
+				if(data.securityQst){
+					$("#setQstErr").css("display","inline-block").html("&#xe601;"+data.securityQst);
+				}
+				if(data.securityAsw){
+					$("#setAnswerErr").css("display","inline-block").html("&#xe601;"+data.securityAsw);
+				}
+			}
+			/*document.write(data.info+"<br/>");
+			document.write(data.upw+"<br/>");
+			document.write(data.securityQst+"<br/>");
+			document.write(data.securityAsw+"<br/>");*/
+			canSetQst=true;
+		}).fail(function(){
+			canSetQst=true;
+			fail("&#xe691;","发生错误");
+		});
+	});
+
 </script>
 			</div>
 		</div>

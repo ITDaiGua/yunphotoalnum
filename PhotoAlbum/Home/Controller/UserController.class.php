@@ -279,7 +279,27 @@ use Home\Controller\CommonOneController;
 			$cgeRst=$UTB->where("uid='%s' AND upw='%s'",$uid,$data['upw'])->save(array("umail"=>$data['umail']));
 			if($cgeRst===FALSE){
 				$this->ajaxReturn(array("info"=>"error1"));
-			}elseif($cgeRst==1){
+			}elseif($cgeRst>=1){
+				$this->ajaxReturn(array("info"=>"success"));
+			}else{
+				$this->ajaxReturn(array("info"=>"error2"));
+			}
+		}
+
+		public function setQst(){
+			if(!IS_AJAX){
+				PHPerr();
+			}
+			$UTB=D("User");
+			$data=$UTB->field("upw,securityQst,securityAsw")->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+			$uid=session("uid");
+			$setQstRst=$UTB->where("uid='%s' AND upw='%s'",$uid,$data['upw'])->save(array("securityQst"=>$data['securityQst'],"securityAsw"=>$data['securityAsw']));
+			if($setQstRst===FALSE){
+				$this->ajaxReturn(array("info"=>"error1"));
+			}elseif($setQstRst>=1){
 				$this->ajaxReturn(array("info"=>"success"));
 			}else{
 				$this->ajaxReturn(array("info"=>"error2"));

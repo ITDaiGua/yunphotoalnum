@@ -199,6 +199,7 @@
 	font:16px iconfont;
 	color:#ff0000;
 	vertical-align:middle;
+	display:inline-block;
 }
 #cge-myProfile{
 	width:400px;
@@ -242,6 +243,14 @@ input[name='sex']{
 	margin-top:20px;
 	border-top:3px solid #00a2ff;
 	padding:20px 10px 10px 10px;
+}
+#passWord{
+	width:200px;
+	height:40px;
+	font:16px "黑体","微软雅黑";
+	line-height:40px;
+	margin-bottom:15px;
+	padding-left:10px;
 }
 #setQst{
 	width:400px;
