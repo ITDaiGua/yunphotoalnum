@@ -28,8 +28,8 @@ create table if not exists `uloginlog`(
 	`uid` varchar(30) not null,
 	`loginIp` varchar(128) not null,
 	`loginTime` varchar(11) not null,
-	`status` int not null #0：正常、1：密码错误
-	index `lgerr`(`uname`,`loginTime`)
+	`status` int not null, #0：正常、1：密码错误
+	unique key `lgLog`(`uid`,`loginTime`)
 )DEFAULT CHARSET=UTF8;
 #==============================================
 use YunPhotoAlbum;

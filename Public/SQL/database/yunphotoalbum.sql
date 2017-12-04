@@ -117,6 +117,35 @@ INSERT INTO `comments` VALUES ('c15093521287848','s123456','编程','&lt;img src
 UNLOCK TABLES;
 
 --
+-- Table structure for table `info`
+--
+
+DROP TABLE IF EXISTS `info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `info` (
+  `iid` varchar(16) NOT NULL,
+  `uid` varchar(16) NOT NULL,
+  `title` varchar(20) NOT NULL,
+  `content` varchar(300) NOT NULL,
+  `publishTime` int(10) unsigned NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`iid`),
+  KEY `uid` (`uid`,`content`(30))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `info`
+--
+
+LOCK TABLES `info` WRITE;
+/*!40000 ALTER TABLE `info` DISABLE KEYS */;
+INSERT INTO `info` VALUES ('i1512052617','u789123456','用户通知','这只是一个测试',1512052617,1);
+/*!40000 ALTER TABLE `info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `like`
 --
 
@@ -226,7 +255,7 @@ CREATE TABLE `sharepa` (
 
 LOCK TABLES `sharepa` WRITE;
 /*!40000 ALTER TABLE `sharepa` DISABLE KEYS */;
-INSERT INTO `sharepa` VALUES ('s123456','u789123','pa15106798745864','莫白柏','这是文件夹','这是我的旅游记录','旅;游','风;景;热;情',142,2,2,'1234567899',0),('s4567813456','u789123','pa15106798745126','莫柏模','我的旅游相册','这是在香港旅游拍的相片','旅游','旅 游;香 港;',24,2,1,'1508835243',0),('s15117909529799','u789123456','pa15106798524014','代号','未命名2','方法反反复复反复反复反复反复反复反复反复反复反复反复反复反复付付付付付付付或或或或或或或或或或或或或或或','人;物;','没;变;',4,1,0,'1511790952',0);
+INSERT INTO `sharepa` VALUES ('s123456','u789123','pa15106798745864','莫白柏','这是文件夹','这是我的旅游记录','旅;游','风;景;热;情',144,2,2,'1234567899',0),('s4567813456','u789123','pa15106798745126','莫柏模','我的旅游相册','这是在香港旅游拍的相片','旅游','旅 游;香 港;',26,2,1,'1508835243',0),('s15117909529799','u789123456','pa15106798524014','代号','未命名2','方法反反复复反复反复反复反复反复反复反复反复反复反复反复反复付付付付付付付或或或或或或或或或或或或或或或','人;物;','没;变;',8,1,0,'1511790952',0);
 /*!40000 ALTER TABLE `sharepa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -311,35 +340,6 @@ INSERT INTO `spatipoff` VALUES ('stf150998858803','u789123456','s123456','血腥
 UNLOCK TABLES;
 
 --
--- Table structure for table `temp`
---
-
-DROP TABLE IF EXISTS `temp`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `temp` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `char` char(50) NOT NULL,
-  `varchar` varchar(50) NOT NULL,
-  `text` text NOT NULL,
-  PRIMARY KEY (`id`),
-  FULLTEXT KEY `char` (`char`),
-  FULLTEXT KEY `varchar` (`varchar`),
-  FULLTEXT KEY `text` (`text`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `temp`
---
-
-LOCK TABLES `temp` WRITE;
-/*!40000 ALTER TABLE `temp` DISABLE KEYS */;
-INSERT INTO `temp` VALUES (1,'a bc 我 知道 1 23','a bc 我 知道 1 23','a bc 我 知道 1 23');
-/*!40000 ALTER TABLE `temp` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `uloginlog`
 --
 
@@ -351,7 +351,7 @@ CREATE TABLE `uloginlog` (
   `loginIp` varchar(128) NOT NULL,
   `loginTime` varchar(11) NOT NULL,
   `status` int(11) NOT NULL,
-  KEY `loginIp` (`loginIp`,`loginTime`)
+  UNIQUE KEY `lgLog` (`uid`,`loginTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -363,30 +363,6 @@ LOCK TABLES `uloginlog` WRITE;
 /*!40000 ALTER TABLE `uloginlog` DISABLE KEYS */;
 /*!40000 ALTER TABLE `uloginlog` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `lgErr_count` BEFORE INSERT ON `uloginlog` FOR EACH ROW BEGIN
-	IF new.status=1 THEN
-		set @maxTime=(select unix_timestamp(now()));
-		set @minTime=@maxTime-900;
-		set @errcount=(select count(*) from uloginlog where uid=new.uid and (loginTime between @minTime and @maxTime));
-		IF @errcount>=4 THEN
-			update user set status=1 where uid=new.uid;
-		END IF;
-	END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `user`
@@ -402,7 +378,7 @@ CREATE TABLE `user` (
   `upw` varchar(32) NOT NULL,
   `autonym` varchar(30) DEFAULT NULL,
   `usex` enum('男','女') NOT NULL DEFAULT '男',
-  `birthday` varchar(11) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
   `profile` varchar(250) DEFAULT NULL,
   `userImg` varchar(100) DEFAULT NULL,
   `securityQst` varchar(100) DEFAULT NULL,
@@ -421,7 +397,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('u15101611795007','157@qq.com','1234','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101620789365','1578@qq.com','3人体','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101635125508','15789@qq.com','辅导费','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101636225993','1578910@qq.com','的法国','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101637977410','1578911@qq.com','美白','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101640546891','157812@qq.com','的法国2','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101644547815','157813@qq.com','uname','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15102205741218','2059078284@qq.com','7946','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',1),('u7871123','1789461315@qq.com','刘焕子','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,'/YunPhotoAlbum/Index/thumb1/p/UserImg/fn/u789123/t/jpg','',NULL,'2009-01-02',0),('u789123','1571190643@qq.com','莫白柏','asadce15xscvbn2er',NULL,'男',NULL,NULL,'/YunPhotoAlbum/Index/thumb1/p/UserImg/fn/u7871123/t/jpg',NULL,NULL,'2014-01-07',0),('u789123456','1571190644@qq.com','代号','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,'/YunPhotoAlbum/Index/thumb1/p/UserImg/fn/u789123456/t/jpg/','我的密保','e3464a5c98bacd98fe692de5a51c75f0','2016-03-03',0);
+INSERT INTO `user` VALUES ('u15101611795007','157@qq.com','1234','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101620789365','1578@qq.com','3人体','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101635125508','15789@qq.com','辅导费','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101636225993','1578910@qq.com','的法国','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101637977410','1578911@qq.com','美白','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101640546891','157812@qq.com','的法国2','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15101644547815','157813@qq.com','uname','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',0),('u15102205741218','2059078284@qq.com','7946','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,NULL,NULL,NULL,'2017-11-09',1),('u7871123','1789461315@qq.com','刘焕子','e3464a5c98bacd98fe692de5a51c75f0',NULL,'男',NULL,NULL,'/YunPhotoAlbum/Index/thumb1/p/UserImg/fn/u789123/t/jpg','',NULL,'2009-01-02',0),('u789123','1571190643@qq.com','莫白柏','asadce15xscvbn2er',NULL,'男',NULL,NULL,'/YunPhotoAlbum/Index/thumb1/p/UserImg/fn/u7871123/t/jpg',NULL,NULL,'2014-01-07',0),('u789123456','1571190644@qq.com','代号','352d779208ca6289bb8b5d0ef796853c','许彦焜','男','0000-00-00','这是测试使用！','/YunPhotoAlbum/Index/thumb1/p/UserImg/fn/u789123456/t/jpg','这是测试使用','09e8aad678e7de69ab8f6f921dba6e58','2016-03-03',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -434,4 +410,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-30 15:22:30
+-- Dump completed on 2017-12-04 18:43:27
