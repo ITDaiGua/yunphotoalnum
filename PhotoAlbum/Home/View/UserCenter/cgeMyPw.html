@@ -1,0 +1,72 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/CSS/cgeMyPw.css">
+<div class="taslctLayer2"></div>
+<form id="cgePwForm" method="post">
+	<div class="cgePwDiv">
+		<div class="cgePwImg">&#xe6cb;</div>
+		<input type="password" name="inputupw" id="inputupw" class="pw" placeholder="请输入原密码" maxlength="16">
+	</div>
+	<span class="cgePwErr" id="inputupwErr">ww</span>
+	<div class="cgePwDiv">
+		<div class="cgePwImg">&#xe6cb;</div>
+		<input type="password" name="myNewPw" id="myNewPw" class="pw" placeholder="新密码" maxlength="16">
+	</div>
+	<span class="cgePwErr" id="myNewPwErr">eee</span>
+	<div class="cgePwDiv">
+		<div class="cgePwImg">&#xe714;</div>
+		<input type="password" name="cmfMyNewPw" id="cmfMyNewPw" class="pw" placeholder="确认新密码" maxlength="16">
+	</div>
+	<span class="cgePwErr" id="cmfMyNewPwErr">tt</span>
+	<button id="cgeMyPwBtt">立即修改</button><br/>
+	<span class="cgePwErr" id="cgePwAllErr">yy</span>
+</form>
+<script type="text/javascript">
+	var canCge=true;
+	$("#cgePwForm").on("submit",function(event){
+		event.preventDefault();
+		if(!canCge){return false;}
+		var isRight=true;
+		if(isTrue("#inputupw","pw")){
+			isRight=isRight&true;
+		}else{
+			isRight=isRight&false;
+		}
+		if(isTrue("#myNewPw","pw")){
+			isRight=isRight&true;
+		}else{
+			isRight=isRight&false;
+		}
+		if(isTrue("#cmfMyNewPw","pw")){
+			isRight=isRight&true;
+		}else{
+			isRight=isRight&false;
+		}
+		if(!isRight){return false;}
+		canCge=false;
+		var _this=$(this);
+		var cgePwData=_this.serialize();
+		var cgePwURL="/YunPhotoAlbum/User/cgePw/t/"+$.now();
+		$.post(cgePwURL,cgePwData,function(data){
+			if(data.info){
+				switch(data.info){
+					case 'success':fail("&#xe687;","修改成功");$(".cgePwErr").hide();_this.get(0).reset();break;
+					case 'noLogin':fail("&#xe691;","请先登录");
+						setTimeout(function(){location.reload();},1500);break;
+					case 'pwErr':$("#inputupwErr").css("display","inline-block").html("&#xe601;密码错误");break;
+					case 'error':
+					default:fail("&#xe691;","发生错误");
+				}
+			}else{
+				if(data.upw){
+					$("#myNewPwErr").css("display","inline-block").html("&#xe601;"+data.upw);
+				}
+				if(data.cmfMyNewPw){
+					$("#cmfMyNewPwErr").css("display","inline-block").html("&#xe601;"+data.cmfMyNewPw);
+				}
+			}
+			canCge=true;
+		}).fail(function(){
+			fail("&#xe691;","发生错误");
+			canCge=true;
+		});
+	});
+</script>

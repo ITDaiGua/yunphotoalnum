@@ -1,0 +1,68 @@
+@charset "utf-8";
+.allContent{
+	text-align:center;
+}
+#cgePwForm{
+	display:inline-block;
+	width:240px;
+	height:auto;
+}
+.cgePwDiv{
+	display:inline-block;
+	width:240px;
+	height:40px;
+	border:1px solid #ccc;
+	vertical-align:middle;
+	white-space:nowrap;
+	font-size:0;
+	margin-top:15px;
+}
+.cgePwImg{
+	display:inline-block;
+	width:40px;
+	height:40px;
+	font:30px iconfont;
+	text-align:center;
+	line-height:40px;
+	vertical-align:middle;
+	background-color:#00a2ff;
+}
+.pw{
+	display:inline-block;
+	width:190px;
+	height:40px;
+	border:0;
+	outline:none;
+	vertical-align:middle;
+	font:16px "微软雅黑","黑体";
+	padding-left:10px;
+}
+.pw:focus{
+	background-color:#ffa;
+}
+.cgePwErr{
+	display:none;
+	width:240px;
+	height:auto;
+	font:16px iconfont;
+	color:#ff0000;
+	text-align:left;
+	vertical-align:middle;
+}
+#cgeMyPwBtt{
+	width:150px;
+	height:30px;
+	border:0;
+	outline:none;
+	font:18px "微软雅黑","黑体";
+	line-height:30px;
+	border-radius:5px;
+	color:#fff;
+	background-color:#00a2ff;
+	margin-top:15px;
+	letter-spacing:3px;
+	cursor:pointer;
+}
+#cgeMyPwBtt:hover{
+	background-color:#4F94CD;
+}

@@ -20,7 +20,7 @@
 	<div class="taslctLayer"></div>
 <div id="headMenu">
 	<a href="/YunPhotoAlbum/" style="float:left;margin-left:200px;">首页</a>
-	<?php if($isLogin === 'isLogin'): ?><a href="" title="查看消息" id="info">
+	<?php if($isLogin === 'isLogin'): ?><a href="/YunPhotoAlbum/UserCenter/getInfo" title="查看消息" id="info">
 			<img src="/YunPhotoAlbum/Public/SysImg/infowarn.png" id="infowarn">
 		</a>
 		<a href="/YunPhotoAlbum/User/logout">退出</a>
@@ -31,20 +31,20 @@
 			<img src="<?php echo ($uImg); ?>" class="uImg">
 		</a>
 		<script type="text/javascript">
-		(function(){
-				var infowarn=document.getElementById("infowarn");
-				getInfo(infowarn);
-		})();
-		function getInfo(infowarn){
-			var isExistsInfoURL="/YunPhotoAlbum/Info/index/t/"+$.now();
-			$.get(isExistsInfoURL,function(data){
-				switch(data.info){
-					case 'exists':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.gif";break;
-					case 'noLogin':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.png";break;
-					default:getInfo(infowarn);
-				}
-			});
-		}
+			var infowarn=document.getElementById("infowarn");
+			getInfo(infowarn);
+			function getInfo(infowarn){
+				var isExistsInfoURL="/YunPhotoAlbum/Info/index/t/"+$.now();
+				$.get(isExistsInfoURL,function(data){
+					switch(data.info){
+						case 'exists':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.gif";break;
+						case 'notexists':
+						case 'noLogin':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.png";break;
+						case 'error':
+						default:fail("&#xe691;","发生错误");
+					}
+				});
+			}
 		</script>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>

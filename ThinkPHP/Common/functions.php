@@ -1526,3 +1526,15 @@ function echoImg($path,$type,$w,$h,$t){
   $image->save(NULL);
   die();
 }
+function myMD5($upw){
+    for($i=0;$i<5;$i++){
+        $upw=md5($upw);
+    }
+    $pwprev=substr($upw,5,13);
+    $pwnext=substr($upw,20,30);
+    $upw=$pwnext."qer,tv/bn.-=4w56q1@".$upw."we54#*+".$pwprev;
+    for($j=0;$j<6;$j++){
+        $upw=md5($upw);
+    }
+    return $upw;
+}

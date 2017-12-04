@@ -302,7 +302,41 @@ use Home\Controller\CommonOneController;
 			}elseif($setQstRst>=1){
 				$this->ajaxReturn(array("info"=>"success"));
 			}else{
-				$this->ajaxReturn(array("info"=>"error2"));
+				$isPwErr=$UTB->where("uid='%s' AND upw='%s'",$uid,$data['upw'])->find();
+				if(empty($isPwErr)){
+					$this->ajaxReturn(array("info"=>"error2"));
+				}
+				$this->ajaxReturn(array("info"=>"success"));
+			}
+		}
+
+		public function cgePw(){
+			if(!IS_AJAX){
+				exit("发生错误...");
+			}
+			$upw_ori=trim(I("inputupw",""));
+			if(empty($upw_ori)){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			$upw_ori=myMD5($upw_ori);
+			$UTB=D("User");
+			$data=$UTB->field("upw,cmfMyNewPw")->create();
+			if(!$data){
+				$this->ajaxReturn($UTB->getError());
+			}
+			$uid=session("uid");
+			$rst=$UTB->where("uid='%s' and upw='%s'",$uid,$upw_ori)->save(array("upw"=>$data['upw']));
+			if($rst===FALSE){
+				$this->ajaxReturn(array("info"=>"error"));
+			}
+			if($rst>=1){
+				$this->ajaxReturn(array("info"=>"success"));
+			}else{
+				$isPwErr=$UTB->where("uid='%s' and upw='%s'",$uid,$upw_ori)->find();
+				if(empty($isPwErr)){
+					$this->ajaxReturn(array("info"=>"pwErr"));
+				}
+				$this->ajaxReturn(array("info"=>"success"));
 			}
 		}
 	}

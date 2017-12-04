@@ -229,12 +229,13 @@ insert into sharephoto values("s123456","p79456","大海","/YunPhotoAlbum/Public
 	("s123456","p25496","大海","/YunPhotoAlbum/Public/image/p1547896.jpg",0)
 #==========================================
 create table if not exists `info`(  /*用户通知表*/
+	`iid` varchar(16) not null primary key,
 	`uid` varchar(16) not null,
-	`title` varchar(30) not null,
+	`title` varchar(20) not null,
 	`content` varchar(300) not null ,
 	`publishTime` int(10) unsigned not null,
 	`status` tinyint not null default 0,
-	key `uid`(`uid`)
+	key `uid_title`(`uid`,`title`(30))
 )DEFAULT CHARSET=UTF8;
 #==========================================
 insert into `info`(`uid`,`title`,`content`,`publishTime`,`status`) values(

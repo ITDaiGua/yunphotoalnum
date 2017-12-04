@@ -27,11 +27,20 @@
 				<a href="/YunPhotoAlbum/UserCenter/index">
 					<li class="menuLi" onselectstart="return false;" <{$init.style1}>>我的信息</li>
 				</a>
-				<li class="menuLi" onselectstart="return false;" <{$init.style2}>>消息查看</li>
-				<li class="menuLi" onselectstart="return false;" <{$init.style3}>>密码更改</li>
+				<a href="/YunPhotoAlbum/UserCenter/getInfo">
+					<li class="menuLi" onselectstart="return false;" <{$init.style2}>>消息查看</li>
+				</a>
+				<a href="/YunPhotoAlbum/UserCenter/cgeMyPw">
+					<li class="menuLi" onselectstart="return false;" <{$init.style3}>>密码更改</li>
+				</a>
 			</ul>
 			<div class="content">
-				<include file="UserCenter/myInfo" />
+				<switch name="init.viewType">
+					<case value='myInfo'><include file="UserCenter/myInfo" /></case>
+					<case value="getInfo"><include file="UserCenter/getInfo" /></case>
+					<case value="cgeMyPw"><include file="UserCenter/cgeMyPw" /></case>
+					<default /><include file="UserCenter/myInfo" />
+				</switch>
 			</div>
 		</div>
 		<script type="text/javascript" src="__PUBLIC__/JS/commonJs.js" charset="UTF-8"></script>

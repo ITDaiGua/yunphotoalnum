@@ -25,16 +25,32 @@
 	<div class="taslctLayer"></div>
 <div id="headMenu">
 	<a href="/YunPhotoAlbum/" style="float:left;margin-left:200px;">首页</a>
-	<?php if($isLogin === 'isLogin'): ?><a href="" title="查看消息">
+	<?php if($isLogin === 'isLogin'): ?><a href="/YunPhotoAlbum/UserCenter/getInfo" title="查看消息" id="info">
 			<img src="/YunPhotoAlbum/Public/SysImg/infowarn.png" id="infowarn">
 		</a>
 		<a href="/YunPhotoAlbum/User/logout">退出</a>
 		<span style="vertical-align:middle;">|</span>
 		<span style="color:#ff0000;vertical-align:middle;">欢迎:</span>
-		<a href="" class="PsnlCtr" title="个人中心">
+		<a href="/YunPhotoAlbum/UserCenter/index" target="_blank" class="PsnlCtr" title="个人中心">
 			<span style="vertical-align:middle;"><?php echo ($userName); ?></span>
 			<img src="<?php echo ($uImg); ?>" class="uImg">
 		</a>
+		<script type="text/javascript">
+			var infowarn=document.getElementById("infowarn");
+			getInfo(infowarn);
+			function getInfo(infowarn){
+				var isExistsInfoURL="/YunPhotoAlbum/Info/index/t/"+$.now();
+				$.get(isExistsInfoURL,function(data){
+					switch(data.info){
+						case 'exists':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.gif";break;
+						case 'notexists':
+						case 'noLogin':infowarn.src="/YunPhotoAlbum/Public/SysImg/infowarn.png";break;
+						case 'error':
+						default:fail("&#xe691;","发生错误");
+					}
+				});
+			}
+		</script>
 	<?php else: ?>
 		<span style="color:#ff0000;vertical-align:middle;">您还没有登陆！</span>
 		<a href="javascript:void(0);" id="wannaLg">登陆</a>
@@ -157,13 +173,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_15912__=$init['page']+1;$__FOR_END_15912__=$init['totalPage']+1;for($i=$__FOR_START_15912__;$i < $__FOR_END_15912__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_14088__=$init['page']+1;$__FOR_END_14088__=$init['totalPage']+1;for($i=$__FOR_START_14088__;$i < $__FOR_END_14088__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_22337__=$init['page']+1;$__FOR_END_22337__=$init['page']+5;for($i=$__FOR_START_22337__;$i < $__FOR_END_22337__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_3745__=$init['page']+1;$__FOR_END_3745__=$init['page']+5;for($i=$__FOR_START_3745__;$i < $__FOR_END_3745__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_9446__=1;$__FOR_END_9446__=$init['page'];for($i=$__FOR_START_9446__;$i < $__FOR_END_9446__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_30918__=1;$__FOR_END_30918__=$init['page'];for($i=$__FOR_START_30918__;$i < $__FOR_END_30918__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_31271__=$init['page']-4;$__FOR_END_31271__=$init['page'];for($i=$__FOR_START_31271__;$i < $__FOR_END_31271__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_28807__=$init['page']-4;$__FOR_END_28807__=$init['page'];for($i=$__FOR_START_28807__;$i < $__FOR_END_28807__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>
@@ -1253,13 +1269,13 @@
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']-1); ?>/" id="lastPage">上一页</a>
 		
 		<?php if($init['page'] >= $init['lastpg']): ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a>
-			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_5332__=$init['page']+1;$__FOR_END_5332__=$init['totalPage']+1;for($i=$__FOR_START_5332__;$i < $__FOR_END_5332__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']+5 > $init['totalPage']): $__FOR_START_15284__=$init['page']+1;$__FOR_END_15284__=$init['totalPage']+1;for($i=$__FOR_START_15284__;$i < $__FOR_END_15284__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_9853__=$init['page']+1;$__FOR_END_9853__=$init['page']+5;for($i=$__FOR_START_9853__;$i < $__FOR_END_9853__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_29661__=$init['page']+1;$__FOR_END_29661__=$init['page']+5;for($i=$__FOR_START_29661__;$i < $__FOR_END_29661__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 		<?php elseif($init['page'] < $init['lastpg']): ?>
-			<?php if($init['page']-4 <= 0): $__FOR_START_10610__=1;$__FOR_END_10610__=$init['page'];for($i=$__FOR_START_10610__;$i < $__FOR_END_10610__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
+			<?php if($init['page']-4 <= 0): $__FOR_START_23378__=1;$__FOR_END_23378__=$init['page'];for($i=$__FOR_START_23378__;$i < $__FOR_END_23378__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } ?>
 			<?php else: ?>
-				<?php $__FOR_START_4547__=$init['page']-4;$__FOR_END_4547__=$init['page'];for($i=$__FOR_START_4547__;$i < $__FOR_END_4547__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
+				<?php $__FOR_START_3619__=$init['page']-4;$__FOR_END_3619__=$init['page'];for($i=$__FOR_START_3619__;$i < $__FOR_END_3619__;$i+=1){ ?><a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($i); ?>/"><?php echo ($i); ?></a><?php } endif; ?>
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']); ?>/" style="border-color:#00a2ff;color:#00a2ff;margin:0;"><?php echo ($init['page']); ?></a><?php endif; ?>
 		
 			<a href="/YunPhotoAlbum/Index/index/condition/<?php echo ($init['condition']); ?>/lastpg/<?php echo ($init['page']); ?>/page/<?php echo ($init['page']+1); ?>/" id="nextPage">下一页</a>

@@ -14,5 +14,7 @@ photo视图的#photo_loading3的z-index为101
 photo视图的#selMoveAlbum的z-index为102
 photo视图的#uploadAll的z-index为102
 photo视图的#showImg的z-index为103
+UserCenter视图文件下的index视图的.taslctLayer2的z-index为100
 myInfo视图的#changeImgWarn的z-index为101
 myInfo视图的#cgeMailDiv的z-index为103
+getInfo视图的#showCont的z-index为101
